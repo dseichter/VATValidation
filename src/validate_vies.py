@@ -65,13 +65,10 @@ def defaultencode(o):
 def load_codes(lang, errorcode):
     if errorcode is None:
         return None
-    
+
     for code in codes_vies.returncodes:
         if code["status"] == errorcode:
-            if lang == "de":
-                return code["de"]
-            if lang == "en":
-                return code["en"]
+            return code[lang]
     return None
 
 
@@ -118,7 +115,7 @@ def start_validation(payload):
         #     <faultstring>MS_UNAVAILABLE</faultstring>
         # </env:Fault></env:Body></env:Envelope>
         dom = minidom.parseString(resp.data)
-        
+
         logger.debug(resp.data)
         node = dom.documentElement
         print(resp.data)
@@ -155,24 +152,22 @@ def start_validation(payload):
                 node.getElementsByTagName("faultstring")[0].childNodes[0].nodeValue
             )
         except Exception as e:
-            result["errorcode"] = 'INVALID_INPUT'
+            result["errorcode"] = "INVALID_INPUT"
 
         logger.debug(result)
         # bring result in right format
-        print('before validationresult')
-        print('result', result)
-        print('payload', payload)
+        print("before validationresult")
+        print("result", result)
+        print("payload", payload)
         validationresult = {
             "key1": payload["key1"],
             "key2": payload["key2"],
             "ownvat": payload["ownvat"],
             "foreignvat": payload["foreignvat"],
-            "type": 'VIES',
+            "type": "VIES",
             "valid": result["valid"] == "true",
             "errorcode": result["errorcode"],
-            "errorcode_description": load_codes(
-                payload["lang"], result["errorcode"]
-            ),
+            "errorcode_description": load_codes(payload["lang"], result["errorcode"]),
             "valid_from": "",
             "valid_to": "",
             "timestamp": result["requestDate"],

@@ -3,10 +3,10 @@ import json
 import logging
 
 
-VERSION = "v2024-05-24"
+VERSION = "v2024-07-06"
 UPDATEURL = 'https://api.github.com/repos/dseichter/VATValidation/releases/latest'
 RELEASES = 'https://github.com/dseichter/VATValidation/releases'
-NAME = 'VAT Service GUI'
+NAME = 'VAT-Validation'
 LICENCE = 'GPL-3.0'
 
 

@@ -63,13 +63,10 @@ def defaultencode(o):
 def load_codes(lang, message):
     if message is None:
         return message
-    
+
     for code in codes_hmrc.returncodes:
         if message.startswith(code["status"]):
-            if lang == "de":
-                return code["de"]
-            if lang == "en":
-                return code["en"]
+            return code[lang]
     return message
 
 
@@ -84,25 +81,26 @@ def start_validation(payload):
             "key2": payload["key2"],
             "ownvat": payload["ownvat"],
             "foreignvat": payload["foreignvat"],
-            "type": 'HMRC',
+            "type": "HMRC",
             "valid": resp.status == 200,
-            "errorcode": result.get('errorcode',''),
-            "errorcode_description": load_codes(
-                payload["lang"], result["message"]
-            ),
+            "errorcode": result.get("errorcode", ""),
+            "errorcode_description": load_codes(payload["lang"], result["message"]),
             "valid_from": "",
             "valid_to": "",
             "timestamp": datetime.datetime.now(datetime.timezone.utc).strftime(
                 "%Y-%m-%dT%H:%M:%S"
-            )
+            ),
         }
-        if "target" in result:  
-            validationresult["company"]= result["target"]["name"]
-            validationresult["address"]= result["target"]["address"]["line1"] + chr(13) + result["target"]["address"]["line2"]
-            validationresult["town"]= ""
-            validationresult["zip"]= result["target"]["address"]["postcode"]
-            validationresult["street"]= ""
-        
+        if "target" in result:
+            validationresult["company"] = result["target"]["name"]
+            validationresult["address"] = (
+                result["target"]["address"]["line1"]
+                + chr(13)
+                + result["target"]["address"]["line2"]
+            )
+            validationresult["town"] = ""
+            validationresult["zip"] = result["target"]["address"]["postcode"]
+            validationresult["street"] = ""
 
         return validationresult
     except Exception as e:

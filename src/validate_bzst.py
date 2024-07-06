@@ -52,13 +52,10 @@ def gettext(nodelist):
 def load_codes(lang, errorcode):
     if errorcode is None:
         return None
-    
+
     for code in codes_bzst.returncodes:
         if code["status"] == errorcode:
-            if lang == "de":
-                return code["de"]
-            if lang == "en":
-                return code["en"]
+            return code[lang]
     return None
 
 
@@ -121,8 +118,18 @@ def start_validation(payload):
             "zip": rc["PLZ"],
             "street": rc["Strasse"],
         }
-
+        validationresult = substitute_variables_in_description(validationresult)
         return validationresult
     except Exception as e:
         logger.error(repr(e))
         return {"vatError": "VAT3500", "vatErrorMessage": repr(e)}
+
+
+def substitute_variables_in_description(payload):
+    description = payload["errorcode_description"]
+    
+    description = description.replace("%validfrom", payload["valid_from"])
+    description = description.replace("%validto", payload["valid_to"])
+    
+    payload["errorcode_description"] = description
+    return payload    
