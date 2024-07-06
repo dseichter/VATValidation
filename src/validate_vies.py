@@ -1,4 +1,3 @@
-import boto3
 import datetime
 from decimal import Decimal
 import os
@@ -6,34 +5,29 @@ import urllib3
 from xml.dom import minidom
 import logging
 
+import codes_vies
+
 logger = logging.getLogger()
 http = urllib3.PoolManager()
 
-TABLENAME = os.environ['DYNAMODB']
-TABLENAME_CODES = os.environ['DYNAMODB_CODES']
-URL = os.environ['URL']
-TYPE = os.environ['TYPE']
+URL = "https://ec.europa.eu/taxation_customs/vies/services/checkVatService"
 
 # get loglevel from environment
-if 'LOGLEVEL' in os.environ:
-    loglevel = os.environ['LOGLEVEL']
-    if loglevel == 'DEBUG':
+if "LOGLEVEL" in os.environ:
+    loglevel = os.environ["LOGLEVEL"]
+    if loglevel == "DEBUG":
         logger.setLevel(logging.DEBUG)
-    if loglevel == 'INFO':
+    if loglevel == "INFO":
         logger.setLevel(logging.INFO)
-    if loglevel == 'ERROR':
+    if loglevel == "ERROR":
         logger.setLevel(logging.ERROR)
-
-dynamodb = boto3.resource('dynamodb')
-table = dynamodb.Table(TABLENAME)
-codes = dynamodb.Table(TABLENAME_CODES)
 
 validationresult = {
     "key1": None,
     "key2": None,
     "ownvat": None,
     "foreignvat": None,
-    "type": TYPE,
+    "type": "VIES",
     "valid": None,
     "errorcode": None,
     "errorcode_description": None,
@@ -45,12 +39,10 @@ validationresult = {
     "address": None,
     "town": None,
     "zip": None,
-    "street": None
+    "street": None,
 }
 
-HEADERS = {
-    'Content-Type': 'text/xml; charset=utf-8'
-}
+HEADERS = {"Content-Type": "text/xml; charset=utf-8"}
 
 
 class fakefloat(float):
@@ -73,82 +65,28 @@ def defaultencode(o):
 def load_codes(lang, errorcode):
     if errorcode is None:
         return None
-
-    response = codes.get_item(Key={
-        'status': errorcode
-    })
-
-    if 'Item' in response:
-        if 'de' in response['Item'] and lang == 'de':
-            return response['Item']['de']
-        if 'en' in response['Item'] and lang == 'en':
-            return response['Item']['en']
-
+    
+    for code in codes_vies.returncodes:
+        if code["status"] == errorcode:
+            if lang == "de":
+                return code["de"]
+            if lang == "en":
+                return code["en"]
     return None
 
 
-def save_validation(result, rawdata=None):
-    today = datetime.date.today()
-    try:
-        logger.debug('before db')
-        table.update_item(
-            Key={"vat": result['foreignvat'], "date": today.strftime("%Y-%m-%d") + "|" + result['type']},
-            UpdateExpression="""
-            set validationtimestamp=:validationtimestamp,
-                checktype=:checktype,
-                valid=:valid,
-                errorcode=:errorcode,
-                valid_from=:valid_from,
-                valid_to=:valid_to,
-                company=:company,
-                address=:address,
-                town=:town,
-                zip=:zip,
-                street=:street,
-                rawdata=:rawdata
-            """,
-            ExpressionAttributeValues={":validationtimestamp": result['timestamp'],
-                                       ":checktype": result['type'],
-                                       ":valid": result['valid'],
-                                       ":errorcode": result['errorcode'],
-                                       ":valid_from": result['valid_from'],
-                                       ":valid_to": result['valid_to'],
-                                       ":company": result['company'],
-                                       ":address": result['address'],
-                                       ":town": result['town'],
-                                       ":zip": result['zip'],
-                                       ":street": result['street'],
-                                       ":rawdata": rawdata
-                                       },
-            ReturnValues="UPDATED_NEW",
-        )
-        logger.debug('after db')
-    except Exception as e:
-        logger.error(repr(e))
-        return False
+def start_validation(payload):
+    logger.debug(payload)
 
-    return True
-
-
-def lambda_handler(event, context):  # NOSONAR
-
-    logger.debug(event)
-    requestfields = event
-    # read the values from the payload
-
-    # check, if there is valid history of the vat
-
-    # optimize the request
-
-    foreign_vat = requestfields['foreignvat']
-    own_vat = requestfields['ownvat']
+    foreign_vat = payload["foreignvat"]
+    own_vat = payload["ownvat"]
 
     foreign_country_code = foreign_vat[:2]
     foreign_vat_number = foreign_vat[2:]
     own_country_code = own_vat[:2]
     own_vat_number = own_vat[2:]
 
-    payload = f"""<Envelope xmlns='http://schemas.xmlsoap.org/soap/envelope/'>
+    requestpayload = f"""<Envelope xmlns='http://schemas.xmlsoap.org/soap/envelope/'>
                     <Body xmlns='http://schemas.xmlsoap.org/soap/envelope/'>
                     <checkVatApprox xmlns='urn:ec.europa.eu:taxud:vies:services:checkVat:types'>
                         <countryCode>{foreign_country_code}</countryCode>
@@ -160,7 +98,7 @@ def lambda_handler(event, context):  # NOSONAR
                 </Envelope>"""
 
     try:
-        resp = http.request("POST", URL, headers=HEADERS, body=payload)
+        resp = http.request("POST", URL, headers=HEADERS, body=requestpayload)
 
         # example response:
         # <env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header/><env:Body>
@@ -180,58 +118,72 @@ def lambda_handler(event, context):  # NOSONAR
         #     <faultstring>MS_UNAVAILABLE</faultstring>
         # </env:Fault></env:Body></env:Envelope>
         dom = minidom.parseString(resp.data)
+        
         logger.debug(resp.data)
         node = dom.documentElement
-
+        print(resp.data)
         result = {}
         try:
-            result['traderName'] = node.getElementsByTagName('ns2:traderName')[0].childNodes[0].nodeValue
+            result["traderName"] = (
+                node.getElementsByTagName("ns2:traderName")[0].childNodes[0].nodeValue
+            )
         except Exception as e:
-            result['traderName'] = None
+            result["traderName"] = None
         try:
-            result['traderAddress'] = node.getElementsByTagName('ns2:traderAddress')[0].childNodes[0].nodeValue
+            result["traderAddress"] = (
+                node.getElementsByTagName("ns2:traderAddress")[0]
+                .childNodes[0]
+                .nodeValue
+            )
         except Exception as e:
-            result['traderAddress'] = None
+            result["traderAddress"] = None
         try:
-            result['valid'] = node.getElementsByTagName('ns2:valid')[0].childNodes[0].nodeValue
+            result["valid"] = (
+                node.getElementsByTagName("ns2:valid")[0].childNodes[0].nodeValue
+            )
         except Exception as e:
-            result['valid'] = None
+            result["valid"] = None
         try:
-            result['requestDate'] = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S")
+            result["requestDate"] = datetime.datetime.now(
+                datetime.timezone.utc
+            ).strftime("%Y-%m-%dT%H:%M:%S")
         except Exception as e:
-            result['requestDate'] = None
+            result["requestDate"] = None
         # in case of faultcode
         try:
-            result['errorcode'] = node.getElementsByTagName('faultstring')[0].childNodes[0].nodeValue
+            result["errorcode"] = (
+                node.getElementsByTagName("faultstring")[0].childNodes[0].nodeValue
+            )
         except Exception as e:
-            result['errorcode'] = None
+            result["errorcode"] = 'INVALID_INPUT'
 
         logger.debug(result)
         # bring result in right format
+        print('before validationresult')
+        print('result', result)
+        print('payload', payload)
         validationresult = {
-            'key1': requestfields['key1'],
-            'key2': requestfields['key2'],
-            'ownvat': requestfields['ownvat'],
-            'foreignvat': requestfields['foreignvat'],
-            'type': TYPE,
-            'valid': result['valid'] == "true",
-            'errorcode': result['errorcode'],
-            'errorcode_description': load_codes(requestfields['lang'], result['errorcode']),
-            'valid_from': '',
-            'valid_to': '',
-            'timestamp': result['requestDate'],
-            'company': result['traderName'],
-            'address': result['traderAddress'],
-            'town': '',
-            'zip': '',
-            'street': ''
+            "key1": payload["key1"],
+            "key2": payload["key2"],
+            "ownvat": payload["ownvat"],
+            "foreignvat": payload["foreignvat"],
+            "type": 'VIES',
+            "valid": result["valid"] == "true",
+            "errorcode": result["errorcode"],
+            "errorcode_description": load_codes(
+                payload["lang"], result["errorcode"]
+            ),
+            "valid_from": "",
+            "valid_to": "",
+            "timestamp": result["requestDate"],
+            "company": result["traderName"],
+            "address": result["traderAddress"],
+            "town": "",
+            "zip": "",
+            "street": "",
         }
-
-        # save only, if response itself is valid
-        if resp.status == 200:
-            save_validation(validationresult, rawdata=resp.data.decode('utf-8'))
-
+        print(validationresult)
         return validationresult
     except Exception as e:
         logger.error(repr(e))
-        return {'vatError': 'VAT1500', 'vatErrorMessage': repr(e)}
+        return {"vatError": "VAT1500", "vatErrorMessage": repr(e)}

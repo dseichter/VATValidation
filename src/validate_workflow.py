@@ -1,13 +1,15 @@
-import boto3
 import json
 import datetime
 from decimal import Decimal
 import os
 import logging
 
+import validate_bzst
+import validate_vies
+import validate_hmrc
+
 logger = logging.getLogger()
 
-STEPFUNCTION = os.environ['STEPFUNCTION']
 # get loglevel from environment
 if 'LOGLEVEL' in os.environ:
     loglevel = os.environ['LOGLEVEL']
@@ -17,8 +19,6 @@ if 'LOGLEVEL' in os.environ:
         logger.setLevel(logging.INFO)
     if loglevel == 'ERROR':
         logger.setLevel(logging.ERROR)
-
-sf = boto3.client('stepfunctions', region_name='eu-central-1')
 
 
 class fakefloat(float):
@@ -46,10 +46,9 @@ def return_fielderror(fieldname):
     }
 
 
-def lambda_handler(event, context):  # NOSONAR
+def start_validation(payload):
 
-    logger.debug(event)
-    payload = json.loads(event['body'])
+    logger.debug(payload)
 
     if 'key1' not in payload:
         return return_fielderror('key1')
@@ -77,34 +76,14 @@ def lambda_handler(event, context):  # NOSONAR
     if payload['lang'] not in ['en', 'de']:
         payload['lang'] = 'en'
 
-    # trigger stepfunction
-    try:
-        response = sf.start_sync_execution(
-            stateMachineArn=STEPFUNCTION,
-            name=payload['foreignvat'],
-            input=json.dumps(payload)
-        )
-        logger.debug(response)
-        if response['status'] == 'SUCCEEDED' and 'output' in response:
-            result = json.loads(response['output'])
-            if 'vatError' not in result:
-                return {
-                    'statusCode': 200,
-                    'body': response['output']
-                }
-            else:
-                return {
-                    'statusCode': 500,
-                    'body': response['output']
-                }
-        else:
-            return {
-                'statusCode': 400,
-                'body': json.dumps({'errorcode': 'VAT0400', 'errormessage': response})
-            }
-    except Exception as e:
-        logger.error(repr(e))
-        return {
-            'statusCode': 500,
-            'body': json.dumps({'errorcode': 'VAT0500', 'errormessage': repr(e)}, default=defaultencode)
-        }
+    # start the validation
+    if payload['ownvat'].upper().startswith('DE') and not payload['foreignvat'].upper().startswith('GB'):
+        response = validate_bzst.start_validation(payload)
+    elif payload['foreignvat'].upper().startswith('GB'):
+        response = validate_hmrc.start_validation(payload)
+    else:
+        response = validate_vies.start_validation(payload)
+
+    print(response)
+    
+    return response

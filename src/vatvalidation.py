@@ -6,6 +6,7 @@ import gui
 import single
 import batch
 import helper
+import settings
 import about_ui
 import icons
 
@@ -46,10 +47,10 @@ class CalcFrame(gui.MainFrame):
 
     # load the config file
     def loadConfig(self, event):
-        self.textUrl.SetValue(helper.load_value_from_json_file('url'))
-        self.comboBoxInterface.SetValue(helper.load_value_from_json_file('interface'))
-        self.comboBoxLanguage.SetValue(helper.load_value_from_json_file('language'))
-        self.textCSVdelimiter.SetValue(helper.load_value_from_json_file('delimiter'))
+        settings.create_config()
+        self.comboBoxInterface.SetValue(settings.load_value_from_json_file('interface'))
+        self.comboBoxLanguage.SetValue(settings.load_value_from_json_file('language'))
+        self.textCSVdelimiter.SetValue(settings.load_value_from_json_file('delimiter'))
 
     # save the config file
     def saveConfig(self, event):
@@ -57,7 +58,6 @@ class CalcFrame(gui.MainFrame):
         with open('config.json', 'w') as f:
             # write the data
             f.write(json.dumps({
-                'url': self.textUrl.GetValue(),
                 'interface': self.comboBoxInterface.GetValue(),
                 'language': self.comboBoxLanguage.GetValue(),
                 'delimiter': self.textCSVdelimiter.GetValue()
@@ -83,18 +83,18 @@ class CalcFrame(gui.MainFrame):
 
     def validateSingle(self, event):
         wx.MessageBox('Start the single validation.', 'Single Validation', wx.OK | wx.ICON_INFORMATION)
-        returncode, message = single.validatesingle(ownvat=self.textOwnvat.GetValue(),
+        message = single.validatesingle(ownvat=self.textOwnvat.GetValue(),
                                                     foreignvat=self.textForeignvat.GetValue(),
                                                     company=self.textCompany.GetValue(),
                                                     street=self.textStreet.GetValue(),
                                                     zip=self.textZip.GetValue(),
                                                     town=self.textTown.GetValue(),
-                                                    type=helper.load_value_from_json_file('interface'),
-                                                    lang=helper.load_value_from_json_file('language'))
-        message = json.loads(message)
-        self.textResultIsValid.SetValue(str(message['valid']))
-        self.textResultCode.SetValue(str(returncode))
-        self.textResultDetails.SetValue(json.dumps(message, indent=2))
+                                                    type=settings.load_value_from_json_file('interface'),
+                                                    lang=settings.load_value_from_json_file('language'))
+        
+        self.textResultIsValid.SetValue('Yes' if message['valid'] else 'No')
+        self.textResultCode.SetValue(message['errorcode'])
+        self.textResultDetails.SetValue(message['errorcode_description'])
 
     def validateBatch(self, event):
         if wx.MessageBox('Are you sure you want to start the batch validation?', 'Batch Validation', wx.YES_NO | wx.ICON_HAND) == wx.NO:
@@ -106,8 +106,8 @@ class CalcFrame(gui.MainFrame):
 
         batch.validatebatch(inputfile=self.filePickerInput.GetPath(),
                             outputfile=self.m_filePickerOutput.GetPath(),
-                            type=helper.load_value_from_json_file('interface'),
-                            lang=helper.load_value_from_json_file('language'))
+                            type=settings.load_value_from_json_file('interface'),
+                            lang=settings.load_value_from_json_file('language'))
 
     def checkForUpdates(self, event):
         if helper.check_for_new_release():

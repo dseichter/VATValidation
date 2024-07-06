@@ -1,7 +1,5 @@
-import helper
-
-import urllib3
 import json
+import validate_workflow
 
 
 def validatesingle(key1='',
@@ -15,10 +13,6 @@ def validatesingle(key1='',
                    type='vies',
                    lang='en'):
 
-    # create POST request with all input parameters
-    http = urllib3.PoolManager()
-    url = helper.load_value_from_json_file('url')
-    headers = {'Content-Type': 'application/json'}
     data = {
         'key1': key1,
         'key2': key2,
@@ -31,5 +25,6 @@ def validatesingle(key1='',
         'type': type,
         'lang': lang
     }
-    r = http.request('POST', url, headers=headers, body=json.dumps(data))
-    return r.status, r.data
+    r = validate_workflow.start_validation(data)
+    
+    return r
