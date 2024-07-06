@@ -1,7 +1,7 @@
 import datetime
 import os
 import urllib3
-from xml.dom import minidom
+import defusedxml.minidom as minidom
 import logging
 import codes_bzst
 
@@ -127,9 +127,9 @@ def start_validation(payload):
 
 def substitute_variables_in_description(payload):
     description = payload["errorcode_description"]
-    
+
     description = description.replace("%validfrom", payload["valid_from"])
     description = description.replace("%validto", payload["valid_to"])
-    
+
     payload["errorcode_description"] = description
-    return payload    
+    return payload

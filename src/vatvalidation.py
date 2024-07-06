@@ -1,7 +1,9 @@
 # importing wx files
 import wx
+
 # import the newly created GUI file
 import gui
+
 # Import the VATValidation library
 import single
 import batch
@@ -23,21 +25,47 @@ class CalcFrame(gui.MainFrame):
         gui.MainFrame.__init__(self, parent)
 
         # add the version to the label
-        self.SetTitle(helper.NAME + ' ' + helper.VERSION)
+        self.SetTitle(helper.NAME + " " + helper.VERSION)
 
         # specify all the icons
         gui.MainFrame.SetIcon(self, icons.tick_box.GetIcon())
-        self.menuitemFileClose.SetBitmap(icons.cancel.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
-        self.menuitemHelpSupport.SetBitmap(icons.get_help.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
-        self.menuitemHelpUpdate.SetBitmap(icons.restart.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
-        self.menuitemHelpAbout.SetBitmap(icons.info.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
+        self.menuitemFileClose.SetBitmap(
+            icons.cancel.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap()
+        )
+        self.menuitemHelpSupport.SetBitmap(
+            icons.get_help.GetBitmap()
+            .ConvertToImage()
+            .Rescale(16, 16)
+            .ConvertToBitmap()
+        )
+        self.menuitemHelpUpdate.SetBitmap(
+            icons.restart.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap()
+        )
+        self.menuitemHelpAbout.SetBitmap(
+            icons.info.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap()
+        )
         self.m_notebook3.SetSelection(0)
         # create image list
         self.imageList = wx.ImageList(16, 16)
         # add the icons
-        self.imageList.Add(icons.document.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
-        self.imageList.Add(icons.microsoft_excel.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
-        self.imageList.Add(icons.settings.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
+        self.imageList.Add(
+            icons.document.GetBitmap()
+            .ConvertToImage()
+            .Rescale(16, 16)
+            .ConvertToBitmap()
+        )
+        self.imageList.Add(
+            icons.microsoft_excel.GetBitmap()
+            .ConvertToImage()
+            .Rescale(16, 16)
+            .ConvertToBitmap()
+        )
+        self.imageList.Add(
+            icons.settings.GetBitmap()
+            .ConvertToImage()
+            .Rescale(16, 16)
+            .ConvertToBitmap()
+        )
         # set the image list
         self.m_notebook3.AssignImageList(self.imageList)
         # set the icons
@@ -48,74 +76,109 @@ class CalcFrame(gui.MainFrame):
     # load the config file
     def loadConfig(self, event):
         settings.create_config()
-        self.comboBoxInterface.SetValue(settings.load_value_from_json_file('interface'))
-        self.comboBoxLanguage.SetValue(settings.load_value_from_json_file('language'))
-        self.textCSVdelimiter.SetValue(settings.load_value_from_json_file('delimiter'))
+        self.textCtrlOwnVat.SetValue(settings.load_value_from_json_file("ownvat"))
+        self.textOwnvat.SetValue(settings.load_value_from_json_file("ownvat"))
+        self.comboBoxInterface.SetValue(settings.load_value_from_json_file("interface"))
+        self.comboBoxLanguage.SetValue(settings.load_value_from_json_file("language"))
+        self.textCSVdelimiter.SetValue(settings.load_value_from_json_file("delimiter"))
 
     # save the config file
     def saveConfig(self, event):
         # open the file
-        with open('config.json', 'w') as f:
+        with open("config.json", "w") as f:
             # write the data
-            f.write(json.dumps({
-                'interface': self.comboBoxInterface.GetValue(),
-                'language': self.comboBoxLanguage.GetValue(),
-                'delimiter': self.textCSVdelimiter.GetValue()
-            }, indent=2))
+            f.write(
+                json.dumps(
+                    {
+                        "ownvat": self.textCtrlOwnVat.GetValue(),
+                        "interface": self.comboBoxInterface.GetValue(),
+                        "language": self.comboBoxLanguage.GetValue(),
+                        "delimiter": self.textCSVdelimiter.GetValue(),
+                    },
+                    indent=2,
+                )
+            )
+
+        self.textOwnvat.SetValue(settings.load_value_from_json_file("ownvat"))
 
     # put a blank string in text when 'Clear' is clicked
     def clearFunc(self, event):
-        self.textOwnvat.SetValue(str(''))
-        self.textForeignvat.SetValue(str(''))
-        self.textCompany.SetValue(str(''))
-        self.textStreet.SetValue(str(''))
-        self.textZip.SetValue(str(''))
-        self.textTown.SetValue(str(''))
-        self.textResultIsValid.SetValue(str(''))
-        self.textResultCode.SetValue(str(''))
-        self.textResultDetails.SetValue(str(''))
+        self.textOwnvat.SetValue(str(""))
+        self.textForeignvat.SetValue(str(""))
+        self.textCompany.SetValue(str(""))
+        self.textStreet.SetValue(str(""))
+        self.textZip.SetValue(str(""))
+        self.textTown.SetValue(str(""))
+        self.textResultIsValid.SetValue(str(""))
+        self.textResultCode.SetValue(str(""))
+        self.textResultDetails.SetValue(str(""))
 
     def vatvalidationClose(self, event):
         self.Close()
 
     def vatvalidationGitHub(self, event):
-        webbrowser.open_new_tab('https://github.com/dseichter/VATValidation')  # Add the URL of the GitHub repository
+        webbrowser.open_new_tab(
+            "https://github.com/dseichter/VATValidation"
+        )  # Add the URL of the GitHub repository
 
     def validateSingle(self, event):
-        wx.MessageBox('Start the single validation.', 'Single Validation', wx.OK | wx.ICON_INFORMATION)
-        message = single.validatesingle(ownvat=self.textOwnvat.GetValue(),
-                                                    foreignvat=self.textForeignvat.GetValue(),
-                                                    company=self.textCompany.GetValue(),
-                                                    street=self.textStreet.GetValue(),
-                                                    zip=self.textZip.GetValue(),
-                                                    town=self.textTown.GetValue(),
-                                                    type=settings.load_value_from_json_file('interface'),
-                                                    lang=settings.load_value_from_json_file('language'))
-        
-        self.textResultIsValid.SetValue('Yes' if message['valid'] else 'No')
-        self.textResultCode.SetValue(message['errorcode'])
-        self.textResultDetails.SetValue(message['errorcode_description'])
+        wx.MessageBox(
+            "Start the single validation.",
+            "Single Validation",
+            wx.OK | wx.ICON_INFORMATION,
+        )
+        message = single.validatesingle(
+            ownvat=self.textOwnvat.GetValue(),
+            foreignvat=self.textForeignvat.GetValue(),
+            company=self.textCompany.GetValue(),
+            street=self.textStreet.GetValue(),
+            zip=self.textZip.GetValue(),
+            town=self.textTown.GetValue(),
+            type=settings.load_value_from_json_file("interface"),
+            lang=settings.load_value_from_json_file("language"),
+        )
+
+        self.textResultIsValid.SetValue("Yes" if message["valid"] else "No")
+        self.textResultCode.SetValue(message["errorcode"])
+        self.textResultDetails.SetValue(message["errorcode_description"])
 
     def validateBatch(self, event):
-        if wx.MessageBox('Are you sure you want to start the batch validation?', 'Batch Validation', wx.YES_NO | wx.ICON_HAND) == wx.NO:
+        if (
+            wx.MessageBox(
+                "Are you sure you want to start the batch validation?",
+                "Batch Validation",
+                wx.YES_NO | wx.ICON_HAND,
+            )
+            == wx.NO
+        ):
             return
 
-        if self.m_filePickerOutput.GetPath() == '':
-            wx.MessageBox('Please select an output file.', 'No output file', wx.OK | wx.ICON_ERROR)
+        if self.m_filePickerOutput.GetPath() == "":
+            wx.MessageBox(
+                "Please select an output file.", "No output file", wx.OK | wx.ICON_ERROR
+            )
             return
 
-        batch.validatebatch(inputfile=self.filePickerInput.GetPath(),
-                            outputfile=self.m_filePickerOutput.GetPath(),
-                            type=settings.load_value_from_json_file('interface'),
-                            lang=settings.load_value_from_json_file('language'))
+        batch.validatebatch(
+            inputfile=self.filePickerInput.GetPath(),
+            outputfile=self.m_filePickerOutput.GetPath(),
+            type=settings.load_value_from_json_file("interface"),
+            lang=settings.load_value_from_json_file("language"),
+        )
 
     def checkForUpdates(self, event):
         if helper.check_for_new_release():
-            result = wx.MessageBox('A new release is available.\nWould you like to open the download page?', 'Update available', wx.YES_NO | wx.ICON_INFORMATION)
+            result = wx.MessageBox(
+                "A new release is available.\nWould you like to open the download page?",
+                "Update available",
+                wx.YES_NO | wx.ICON_INFORMATION,
+            )
             if result == wx.YES:
                 webbrowser.open_new_tab(helper.RELEASES)
         else:
-            wx.MessageBox('No new release available.', 'No update', wx.OK | wx.ICON_INFORMATION)
+            wx.MessageBox(
+                "No new release available.", "No update", wx.OK | wx.ICON_INFORMATION
+            )
 
     def vatvalidationAbout(self, event):
         # open the about dialog

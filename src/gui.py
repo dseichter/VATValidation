@@ -138,7 +138,7 @@ class MainFrame ( wx.Frame ):
         self.panelSingle.SetSizer( fgSizer2 )
         self.panelSingle.Layout()
         fgSizer2.Fit( self.panelSingle )
-        self.m_notebook3.AddPage( self.panelSingle, _(u"Single"), False )
+        self.m_notebook3.AddPage( self.panelSingle, _(u"Single"), True )
         self.panelBatch = wx.Panel( self.m_notebook3, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
         fgSizer3 = wx.FlexGridSizer( 0, 2, 0, 0 )
         fgSizer3.AddGrowableCol( 1 )
@@ -178,6 +178,14 @@ class MainFrame ( wx.Frame ):
         fgSizer31.SetFlexibleDirection( wx.BOTH )
         fgSizer31.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
 
+        self.staticTextOwnVat = wx.StaticText( self.panelConfig, wx.ID_ANY, _(u"Own VAT"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.staticTextOwnVat.Wrap( -1 )
+
+        fgSizer31.Add( self.staticTextOwnVat, 0, wx.ALL, 5 )
+
+        self.textCtrlOwnVat = wx.TextCtrl( self.panelConfig, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+        fgSizer31.Add( self.textCtrlOwnVat, 0, wx.ALL, 5 )
+
         self.staticTextInterface = wx.StaticText( self.panelConfig, wx.ID_ANY, _(u"Interface"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.staticTextInterface.Wrap( -1 )
 
@@ -213,7 +221,7 @@ class MainFrame ( wx.Frame ):
         self.panelConfig.SetSizer( fgSizer31 )
         self.panelConfig.Layout()
         fgSizer31.Fit( self.panelConfig )
-        self.m_notebook3.AddPage( self.panelConfig, _(u"Configuration"), True )
+        self.m_notebook3.AddPage( self.panelConfig, _(u"Configuration"), False )
 
         bSizer2.Add( self.m_notebook3, 1, wx.EXPAND |wx.ALL, 5 )
 

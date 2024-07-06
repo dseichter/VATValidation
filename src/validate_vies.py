@@ -2,7 +2,7 @@ import datetime
 from decimal import Decimal
 import os
 import urllib3
-from xml.dom import minidom
+import defusedxml.minidom as minidom
 import logging
 
 import codes_vies
