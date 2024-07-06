@@ -60,17 +60,17 @@ def defaultencode(o):
     raise TypeError(repr(o) + " is not JSON serializable")
 
 
-def load_codes(lang, errorcode):
-    if errorcode is None:
-        return None
+def load_codes(lang, message):
+    if message is None:
+        return message
     
     for code in codes_hmrc.returncodes:
-        if code["status"] == errorcode:
+        if message.startswith(code["status"]):
             if lang == "de":
                 return code["de"]
             if lang == "en":
                 return code["en"]
-    return None
+    return message
 
 
 def start_validation(payload):
@@ -79,8 +79,6 @@ def start_validation(payload):
         logger.debug(resp.status, resp.data)
         result = json.loads(resp.data)
 
-        result["errorcode"] = None
-
         validationresult = {
             "key1": payload["key1"],
             "key2": payload["key2"],
@@ -88,23 +86,23 @@ def start_validation(payload):
             "foreignvat": payload["foreignvat"],
             "type": 'HMRC',
             "valid": resp.status == 200,
-            "errorcode": result["errorcode"],
+            "errorcode": result.get('errorcode',''),
             "errorcode_description": load_codes(
-                payload["lang"], result["errorcode"]
+                payload["lang"], result["message"]
             ),
             "valid_from": "",
             "valid_to": "",
             "timestamp": datetime.datetime.now(datetime.timezone.utc).strftime(
                 "%Y-%m-%dT%H:%M:%S"
-            ),
-            "company": result["target"]["name"],
-            "address": result["target"]["address"]["line1"]
-            + chr(13)
-            + result["target"]["address"]["line2"],
-            "town": "",
-            "zip": result["target"]["address"]["postcode"],
-            "street": "",
+            )
         }
+        if "target" in result:  
+            validationresult["company"]= result["target"]["name"]
+            validationresult["address"]= result["target"]["address"]["line1"] + chr(13) + result["target"]["address"]["line2"]
+            validationresult["town"]= ""
+            validationresult["zip"]= result["target"]["address"]["postcode"]
+            validationresult["street"]= ""
+        
 
         return validationresult
     except Exception as e:
