@@ -147,7 +147,7 @@ class CalcFrame(gui.MainFrame):
             wx.MessageBox(
                 "Are you sure you want to start the batch validation?",
                 "Batch Validation",
-                wx.YES_NO | wx.ICON_HAND,
+                wx.YES_NO | wx.ICON_QUESTION,
             )
             == wx.NO
         ):
@@ -164,6 +164,11 @@ class CalcFrame(gui.MainFrame):
             outputfile=self.m_filePickerOutput.GetPath(),
             type=settings.load_value_from_json_file("interface"),
             lang=settings.load_value_from_json_file("language"),
+        )
+
+        # if done, show a message box
+        wx.MessageBox(
+            "Batch validation done.", "Batch Validation", wx.OK | wx.ICON_INFORMATION
         )
 
     def checkForUpdates(self, event):

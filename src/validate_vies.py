@@ -118,7 +118,6 @@ def start_validation(payload):
 
         logger.debug(resp.data)
         node = dom.documentElement
-        print(resp.data)
         result = {}
         try:
             result["traderName"] = (
@@ -156,9 +155,6 @@ def start_validation(payload):
 
         logger.debug(result)
         # bring result in right format
-        print("before validationresult")
-        print("result", result)
-        print("payload", payload)
         validationresult = {
             "key1": payload["key1"],
             "key2": payload["key2"],
@@ -177,7 +173,6 @@ def start_validation(payload):
             "zip": "",
             "street": "",
         }
-        print(validationresult)
         return validationresult
     except Exception as e:
         logger.error(repr(e))

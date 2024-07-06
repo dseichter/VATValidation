@@ -92,6 +92,4 @@ def start_validation(payload):
     else:
         response = validate_vies.start_validation(payload)
 
-    print(response)
-
     return response
