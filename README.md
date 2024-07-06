@@ -21,7 +21,7 @@ You can use the software at your workplace and check directly against the offici
 
 ### Batch Validation
 
-Export your master data into a file (JSON, XLSX or CSV) format and check them completly.
+Export your master data into a file (JSON, XLSX or CSV) format and check them completly. The codepage should be UTF-8.
 
 ![batch validation](images/batch.png "VAT Validation Batch Processing")
 
