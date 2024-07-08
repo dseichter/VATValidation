@@ -8,7 +8,7 @@ import pandas as pd
 columns = ["key1", "key2", "ownvat", "foreignvat", "company", "street", "zip", "town"]
 
 
-def validatebatch(inputfile, outputfile="", type="vies", lang="en"):
+def validatebatch(inputfile, outputfile="", type="vies", lang="en", iscli=False):
     """
     Validate the batch file and write the results to the output file.
     """
@@ -21,13 +21,20 @@ def validatebatch(inputfile, outputfile="", type="vies", lang="en"):
 
     match ext:
         case "csv":
-            processcsv(inputfile, outputfile, type, lang)
+            resultcode = processcsv(inputfile, outputfile, type, lang)
+            if iscli:
+                return resultcode
         case "xlsx":
-            processxlsx(inputfile, outputfile, type, lang)
+            resultcode = processxlsx(inputfile, outputfile, type, lang)
+            if iscli:
+                return resultcode
         case "json":
-            processjson(inputfile, outputfile, type, lang)
+            resultcode = processjson(inputfile, outputfile, type, lang)
+            if iscli:
+                return resultcode
         case _:
             print("Unsupported file format")
+            return 127
 
 
 def processcsv(inputfile, outputfile, type, lang):
@@ -56,6 +63,7 @@ def processcsv(inputfile, outputfile, type, lang):
             town=row["town"],
             type=type,
             lang=lang,
+            iscli=True
         )
         # append the result to the results list
         results.append(message)
@@ -88,6 +96,7 @@ def processxlsx(inputfile, outputfile, type, lang):
             town=row["town"],
             type=type,
             lang=lang,
+            iscli=True,
         )
         # append the result to the results list
         results.append(message)
@@ -117,6 +126,7 @@ def processjson(inputfile, outputfile, type, lang):
             town=row["town"],
             type=type,
             lang=lang,
+            iscli=True,
         )
         # append the result to the results list
         results.append(message)

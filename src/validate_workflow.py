@@ -51,7 +51,7 @@ def return_fielderror(fieldname):
     }
 
 
-def start_validation(payload):
+def start_validation(payload, iscli=True):
     logger.debug(payload)
 
     if "key1" not in payload:
@@ -86,10 +86,10 @@ def start_validation(payload):
     if payload["ownvat"].upper().startswith("DE") and not payload[
         "foreignvat"
     ].upper().startswith("GB"):
-        response = validate_bzst.start_validation(payload)
+        response = validate_bzst.start_validation(payload, iscli)
     elif payload["foreignvat"].upper().startswith("GB"):
-        response = validate_hmrc.start_validation(payload)
+        response = validate_hmrc.start_validation(payload, iscli)
     else:
-        response = validate_vies.start_validation(payload)
+        response = validate_vies.start_validation(payload, iscli)
 
     return response
