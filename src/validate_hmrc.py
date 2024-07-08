@@ -62,15 +62,14 @@ def defaultencode(o):
 
 def load_codes(lang, message):
     if message is None:
-        return message
-
+        return ""
     for code in codes_hmrc.returncodes:
         if message.startswith(code["status"]):
             return code[lang]
     return message
 
 
-def start_validation(payload):
+def start_validation(payload, iscli=True):
     try:
         resp = http.request("GET", URL + payload["foreignvat"][2:])
         logger.debug(resp.status, resp.data)
@@ -84,7 +83,9 @@ def start_validation(payload):
             "type": "HMRC",
             "valid": resp.status == 200,
             "errorcode": result.get("errorcode", ""),
-            "errorcode_description": load_codes(payload["lang"], result["message"]),
+            "errorcode_description": load_codes(
+                payload["lang"], result.get("message", None)
+            ),
             "valid_from": "",
             "valid_to": "",
             "timestamp": datetime.datetime.now(datetime.timezone.utc).strftime(
@@ -94,9 +95,9 @@ def start_validation(payload):
         if "target" in result:
             validationresult["company"] = result["target"]["name"]
             validationresult["address"] = (
-                result["target"]["address"]["line1"]
-                + chr(13)
-                + result["target"]["address"]["line2"]
+                result["target"]["address"]["line1"].strip() + ""
+                if iscli
+                else chr(13) + result["target"]["address"]["line2"].strip()
             )
             validationresult["town"] = ""
             validationresult["zip"] = result["target"]["address"]["postcode"]

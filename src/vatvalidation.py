@@ -118,9 +118,7 @@ class VATValidationFrame(gui.MainFrame):
         self.Close()
 
     def vatvalidationGitHub(self, event):
-        webbrowser.open_new_tab(
-            "https://github.com/dseichter/VATValidation"
-        )
+        webbrowser.open_new_tab("https://github.com/dseichter/VATValidation")
 
     def validateSingle(self, event):
         wx.MessageBox(
@@ -137,11 +135,17 @@ class VATValidationFrame(gui.MainFrame):
             town=self.textTown.GetValue(),
             type=settings.load_value_from_json_file("interface"),
             lang=settings.load_value_from_json_file("language"),
+            iscli=False,
         )
-
         self.textResultIsValid.SetValue("Yes" if message["valid"] else "No")
         self.textResultCode.SetValue(message["errorcode"])
-        self.textResultDetails.SetValue(message["errorcode_description"])
+        self.textResultDetails.SetValue(message.get("errorcode_description", ""))
+
+        # In case of empty errorcode_description, load the company, address twon, zip and street into textResultDetails
+        if message.get("errorcode_description", "") == "":
+            self.textResultDetails.SetValue(
+                f"Company: {message['company']}\nAddress: {message['address']}\nTown: {message['town']}\nZip: {message['zip']}\nStreet: {message['street']}"
+            )
 
     def validateBatch(self, event):
         if (

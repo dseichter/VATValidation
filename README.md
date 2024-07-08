@@ -16,6 +16,34 @@ If you like this software, please don't hesitate to give it a :star: or send me 
 
 VAT Validation supports you in checking and validating your master data. Whether you want to check a VAT number directly at your workplace or integrate it into your ERP/CRM applications.
 
+## Command Line tool
+
+If you want to check batch files (e.g. json, csv or XLSX) you can download the releases like VATValidation-cli-windows-v2024-07-08.exe and rename it to vatvalidation_cli.exe.
+
+Just run the tool and by providing an input and an output file. For further information, please run
+
+``vatvalidation_cli.exe``
+
+```shell
+usage: vatvalidation_cli.py [-h] [--version] --input INPUT --output OUTPUT
+
+VAT-Validation CLI - v2024-07-06
+
+options:
+  -h, --help       show this help message and exit
+  --version        show program's version number and exit
+  --input INPUT    Input file path for VAT numbers.
+  --output OUTPUT  Output file path for validation results.
+
+For more information, visit our GitHub repository: https://github.com/dseichter/VATValidation License: MIT License - see LICENSE file at the root of the repository for details.
+```
+
+Only batch processing is provided.
+
+## Graphical User Interface
+
+I provide a graphical user interface for single and batch validation.
+
 ### Single Validation
 
 You can use the software at your workplace and check directly against the official supported interfaces of BZSt, VIES and/or HMRC.

@@ -12,6 +12,7 @@ def validatesingle(
     town="",
     type="vies",
     lang="en",
+    iscli=True
 ):
     data = {
         "key1": key1,
@@ -25,6 +26,6 @@ def validatesingle(
         "type": type,
         "lang": lang,
     }
-    r = validate_workflow.start_validation(data)
+    r = validate_workflow.start_validation(data, iscli)
 
     return r

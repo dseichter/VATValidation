@@ -28,13 +28,42 @@ jobs:
             run: pip install -r src/requirements.txt
 
           - name: Build Windows binary
-            run: pyinstaller --onefile -w src/vatvalidation.py -n VATValidation-windows-${{ github.ref_name }}.exe
+            run: pyinstaller --onefile -w src/vatvalidation.py -n VATValidation-windows-${{ github.ref_name }}.exe --icon=icons/Tick_Box.ico
 
           - name: Upload artifact
             uses: actions/upload-artifact@v4
             with:
                   name: VATValidation-windows-${{ github.ref_name }}.exe
-                  path: dist/VATValidation-windows-${{ github.ref_name }}.exe   
+                  path: dist/VATValidation-windows-${{ github.ref_name }}.exe
+
+  build-windows-binary-cli:
+    runs-on: windows-latest
+    steps:
+
+        - name: 'Checkout'
+          uses: actions/checkout@v4
+
+        - name: Set up Python
+          uses: actions/setup-python@v5
+          with:
+            python-version: 3.12
+
+        - name: Create and start virtual environment
+          run: |
+            python3 -m venv venv
+            venv\Scripts\activate.bat
+
+        - name: Install dependencies
+          run: pip install -r src/requirements.txt
+
+        - name: Build Windows binary
+          run: pyinstaller --onefile -w src/vatvalidation_cli.py -n VATValidation-cli-windows-${{ github.ref_name }}.exe
+
+        - name: Upload artifact
+          uses: actions/upload-artifact@v4
+          with:
+                name: VATValidation-cli-windows-${{ github.ref_name }}.exe
+                path: dist/VATValidation-cli-windows-${{ github.ref_name }}.exe                   
 
   build-linux-binary:
       runs-on: ubuntu-latest
@@ -60,13 +89,45 @@ jobs:
             run: pip install -r src/requirements.txt
 
           - name: Build Linux binary
-            run: pyinstaller --onefile src/vatvalidation.py -n VATValidation-linux-${{ github.ref_name }}
+            run: pyinstaller --onefile src/vatvalidation.py -n VATValidation-linux-${{ github.ref_name }} --icon=icons/Tick_Box.ico
 
           - name: Upload artifact
             uses: actions/upload-artifact@v4
             with:
               name: VATValidation-linux-${{ github.ref_name }}
               path: dist/VATValidation-linux-${{ github.ref_name }}
+
+  build-linux-binary-cli:
+    runs-on: ubuntu-latest
+    steps:
+
+        - name: 'Checkout'
+          uses: actions/checkout@v4
+
+        - name: Install dependencies
+          run: sudo apt-get install build-essential libgtk-3-dev
+
+        - name: Set up Python
+          uses: actions/setup-python@v5
+          with:
+            python-version: 3.12
+
+        - name: Create and start virtual environment
+          run: |
+            python3 -m venv venv
+            source venv/bin/activate
+
+        - name: Install dependencies
+          run: pip install -r src/requirements.txt
+
+        - name: Build Linux binary
+          run: pyinstaller --onefile src/vatvalidation.py -n VATValidation-cli-linux-${{ github.ref_name }}
+
+        - name: Upload artifact
+          uses: actions/upload-artifact@v4
+          with:
+            name: VATValidation-cli-linux-${{ github.ref_name }}
+            path: dist/VATValidation-cli-linux-${{ github.ref_name }}              
 
   deploy:
     runs-on: ubuntu-latest
@@ -78,7 +139,15 @@ jobs:
 
         - uses: actions/download-artifact@v4
           with:
+            name: VATValidation-cli-linux-${{ github.ref_name }}            
+
+        - uses: actions/download-artifact@v4
+          with:
             name: VATValidation-windows-${{ github.ref_name }}.exe
+
+        - uses: actions/download-artifact@v4
+          with:
+            name: VATValidation-cli-windows-${{ github.ref_name }}.exe            
 
         - name: Create Release
           id: create_release
@@ -92,3 +161,5 @@ jobs:
             files: |
               VATValidation-linux-${{ github.ref_name }}
               VATValidation-windows-${{ github.ref_name }}.exe
+              VATValidation-cli-linux-${{ github.ref_name }}
+              VATValidation-cli-windows-${{ github.ref_name }}.exe              

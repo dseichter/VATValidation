@@ -51,7 +51,7 @@ def gettext(nodelist):
 
 def load_codes(lang, errorcode):
     if errorcode is None:
-        return None
+        return ""
 
     for code in codes_bzst.returncodes:
         if code["status"] == errorcode:
@@ -59,7 +59,7 @@ def load_codes(lang, errorcode):
     return None
 
 
-def start_validation(payload):
+def start_validation(payload, iscli=True):
     logger.debug(payload)
 
     # map requested fields to bzst request
