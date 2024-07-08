@@ -32,7 +32,9 @@ class MainFrame ( wx.Frame ):
 
         self.m_notebook3 = wx.Notebook( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
         self.panelSingle = wx.Panel( self.m_notebook3, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
-        fgSizer2 = wx.FlexGridSizer( 0, 2, 0, 0 )
+        bSizer3 = wx.BoxSizer( wx.VERTICAL )
+
+        fgSizer2 = wx.FlexGridSizer( 0, 3, 0, 0 )
         fgSizer2.AddGrowableCol( 1 )
         fgSizer2.SetFlexibleDirection( wx.BOTH )
         fgSizer2.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
@@ -43,7 +45,10 @@ class MainFrame ( wx.Frame ):
         fgSizer2.Add( self.staticText_ownvat, 0, wx.ALL, 5 )
 
         self.textOwnvat = wx.TextCtrl( self.panelSingle, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-        fgSizer2.Add( self.textOwnvat, 1, wx.ALL|wx.EXPAND, 5 )
+        fgSizer2.Add( self.textOwnvat, 0, wx.ALL, 5 )
+
+        self.clearButton = wx.Button( self.panelSingle, wx.ID_ANY, _(u"Clear entries"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        fgSizer2.Add( self.clearButton, 0, wx.ALL, 5 )
 
         self.staticText_foreignvat = wx.StaticText( self.panelSingle, wx.ID_ANY, _(u"Foreign VAT"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.staticText_foreignvat.Wrap( -1 )
@@ -51,7 +56,10 @@ class MainFrame ( wx.Frame ):
         fgSizer2.Add( self.staticText_foreignvat, 0, wx.ALL, 5 )
 
         self.textForeignvat = wx.TextCtrl( self.panelSingle, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-        fgSizer2.Add( self.textForeignvat, 1, wx.ALL|wx.EXPAND, 5 )
+        fgSizer2.Add( self.textForeignvat, 0, wx.ALL, 5 )
+
+
+        fgSizer2.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 
         self.staticText_company = wx.StaticText( self.panelSingle, wx.ID_ANY, _(u"Company"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.staticText_company.Wrap( -1 )
@@ -59,7 +67,10 @@ class MainFrame ( wx.Frame ):
         fgSizer2.Add( self.staticText_company, 0, wx.ALL, 5 )
 
         self.textCompany = wx.TextCtrl( self.panelSingle, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-        fgSizer2.Add( self.textCompany, 1, wx.ALL|wx.EXPAND, 5 )
+        fgSizer2.Add( self.textCompany, 0, wx.ALL, 5 )
+
+
+        fgSizer2.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 
         self.staticText_street = wx.StaticText( self.panelSingle, wx.ID_ANY, _(u"Street"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.staticText_street.Wrap( -1 )
@@ -67,7 +78,10 @@ class MainFrame ( wx.Frame ):
         fgSizer2.Add( self.staticText_street, 0, wx.ALL, 5 )
 
         self.textStreet = wx.TextCtrl( self.panelSingle, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-        fgSizer2.Add( self.textStreet, 1, wx.ALL|wx.EXPAND, 5 )
+        fgSizer2.Add( self.textStreet, 0, wx.ALL, 5 )
+
+
+        fgSizer2.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 
         self.staticText_zip = wx.StaticText( self.panelSingle, wx.ID_ANY, _(u"ZIP"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.staticText_zip.Wrap( -1 )
@@ -75,7 +89,10 @@ class MainFrame ( wx.Frame ):
         fgSizer2.Add( self.staticText_zip, 0, wx.ALL, 5 )
 
         self.textZip = wx.TextCtrl( self.panelSingle, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-        fgSizer2.Add( self.textZip, 1, wx.ALL|wx.EXPAND, 5 )
+        fgSizer2.Add( self.textZip, 0, wx.ALL, 5 )
+
+
+        fgSizer2.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 
         self.staticText_town = wx.StaticText( self.panelSingle, wx.ID_ANY, _(u"Town"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.staticText_town.Wrap( -1 )
@@ -83,13 +100,10 @@ class MainFrame ( wx.Frame ):
         fgSizer2.Add( self.staticText_town, 0, wx.ALL, 5 )
 
         self.textTown = wx.TextCtrl( self.panelSingle, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-        fgSizer2.Add( self.textTown, 1, wx.ALL|wx.EXPAND, 5 )
+        fgSizer2.Add( self.textTown, 0, wx.ALL, 5 )
 
 
         fgSizer2.Add( ( 0, 0), 1, wx.EXPAND, 5 )
-
-        self.clearButton = wx.Button( self.panelSingle, wx.ID_ANY, _(u"clear"), wx.DefaultPosition, wx.DefaultSize, 0 )
-        fgSizer2.Add( self.clearButton, 0, wx.ALL, 5 )
 
 
         fgSizer2.Add( ( 0, 0), 1, wx.EXPAND, 5 )
@@ -98,46 +112,57 @@ class MainFrame ( wx.Frame ):
         fgSizer2.Add( self.buttonValidate1, 1, wx.ALL|wx.EXPAND, 5 )
 
 
-        fgSizer2.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+        bSizer3.Add( fgSizer2, 1, wx.EXPAND, 5 )
+
+        fgSizer5 = wx.FlexGridSizer( 0, 2, 0, 0 )
+        fgSizer5.AddGrowableCol( 1 )
+        fgSizer5.SetFlexibleDirection( wx.BOTH )
+        fgSizer5.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
+
+
+        fgSizer5.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 
         self.m_staticText_ValidationResult = wx.StaticText( self.panelSingle, wx.ID_ANY, _(u"Validation Result"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.m_staticText_ValidationResult.Wrap( -1 )
 
         self.m_staticText_ValidationResult.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, wx.EmptyString ) )
 
-        fgSizer2.Add( self.m_staticText_ValidationResult, 0, wx.ALL, 5 )
-
-        self.staticText_isvalid = wx.StaticText( self.panelSingle, wx.ID_ANY, _(u"Valid"), wx.DefaultPosition, wx.DefaultSize, 0 )
-        self.staticText_isvalid.Wrap( -1 )
-
-        fgSizer2.Add( self.staticText_isvalid, 0, wx.ALL, 5 )
-
-        self.textResultIsValid = wx.TextCtrl( self.panelSingle, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-        fgSizer2.Add( self.textResultIsValid, 0, wx.ALL, 5 )
+        fgSizer5.Add( self.m_staticText_ValidationResult, 0, wx.ALL, 5 )
 
         self.staticText_result = wx.StaticText( self.panelSingle, wx.ID_ANY, _(u"Result"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.staticText_result.Wrap( -1 )
 
-        fgSizer2.Add( self.staticText_result, 0, wx.ALL, 5 )
+        fgSizer5.Add( self.staticText_result, 0, wx.ALL, 5 )
 
         self.textResultCode = wx.TextCtrl( self.panelSingle, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-        fgSizer2.Add( self.textResultCode, 0, wx.ALL, 5 )
+        fgSizer5.Add( self.textResultCode, 0, wx.ALL, 5 )
+
+        self.staticText_isvalid = wx.StaticText( self.panelSingle, wx.ID_ANY, _(u"Valid"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.staticText_isvalid.Wrap( -1 )
+
+        fgSizer5.Add( self.staticText_isvalid, 0, wx.ALL, 5 )
+
+        self.textResultIsValid = wx.TextCtrl( self.panelSingle, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+        fgSizer5.Add( self.textResultIsValid, 0, wx.ALL, 5 )
 
         self.staticText_details = wx.StaticText( self.panelSingle, wx.ID_ANY, _(u"Details"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.staticText_details.Wrap( -1 )
 
-        fgSizer2.Add( self.staticText_details, 0, wx.ALL, 5 )
+        fgSizer5.Add( self.staticText_details, 0, wx.ALL, 5 )
 
         self.textResultDetails = wx.TextCtrl( self.panelSingle, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_MULTILINE )
         self.textResultDetails.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), wx.FONTFAMILY_SCRIPT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
         self.textResultDetails.SetMinSize( wx.Size( -1,100 ) )
 
-        fgSizer2.Add( self.textResultDetails, 1, wx.ALL|wx.EXPAND, 5 )
+        fgSizer5.Add( self.textResultDetails, 1, wx.ALL|wx.EXPAND, 5 )
 
 
-        self.panelSingle.SetSizer( fgSizer2 )
+        bSizer3.Add( fgSizer5, 1, wx.EXPAND, 5 )
+
+
+        self.panelSingle.SetSizer( bSizer3 )
         self.panelSingle.Layout()
-        fgSizer2.Fit( self.panelSingle )
+        bSizer3.Fit( self.panelSingle )
         self.m_notebook3.AddPage( self.panelSingle, _(u"Single"), True )
         self.panelBatch = wx.Panel( self.m_notebook3, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
         fgSizer3 = wx.FlexGridSizer( 0, 2, 0, 0 )
