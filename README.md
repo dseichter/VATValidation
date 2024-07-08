@@ -2,11 +2,14 @@
 
 Validate VAT number using the interfaces of BZSt, VIES and/or HMRC. Provides single or batch validation with support for CSV, XLSX and JSON.
 
-This is the successor of my VAT-Validation, released as commercial software. After closing my company I proceeded with the migration to Python.
+This is the successor of my VAT-Validation, released as commercial software. After closing my company I proceeded with the migration to Python. 
+
+If you like this software, please don't hesitate to give it a :star: or send me a :moneybag: donation in the amount you think the software is worth.
 
 ## Badges
 
 ![pep8](https://github.com/dseichter/VATValidation/actions/workflows/pep8.yml/badge.svg)
+![bandit](https://github.com/dseichter/VATValidation/actions/workflows/bandit.yml/badge.svg)
 ![trivy](https://github.com/dseichter/VATValidation/actions/workflows/trivy.yml/badge.svg)
 
 ## About

@@ -17,8 +17,8 @@ import webbrowser
 import json
 
 
-# inherit from the MainFrame created in wxFowmBuilder and create CalcFrame
-class CalcFrame(gui.MainFrame):
+# inherit from the MainFrame created in wxFowmBuilder and create VATValidationFrame
+class VATValidationFrame(gui.MainFrame):
     # constructor
     def __init__(self, parent):
         # initialize parent class
@@ -77,6 +77,7 @@ class CalcFrame(gui.MainFrame):
     def loadConfig(self, event):
         settings.create_config()
         self.textCtrlOwnVat.SetValue(settings.load_value_from_json_file("ownvat"))
+        # visible values of configuration
         self.textOwnvat.SetValue(settings.load_value_from_json_file("ownvat"))
         self.comboBoxInterface.SetValue(settings.load_value_from_json_file("interface"))
         self.comboBoxLanguage.SetValue(settings.load_value_from_json_file("language"))
@@ -103,7 +104,7 @@ class CalcFrame(gui.MainFrame):
 
     # put a blank string in text when 'Clear' is clicked
     def clearFunc(self, event):
-        self.textOwnvat.SetValue(str(""))
+        self.textCtrlOwnVat.SetValue(settings.load_value_from_json_file("ownvat"))
         self.textForeignvat.SetValue(str(""))
         self.textCompany.SetValue(str(""))
         self.textStreet.SetValue(str(""))
@@ -119,7 +120,7 @@ class CalcFrame(gui.MainFrame):
     def vatvalidationGitHub(self, event):
         webbrowser.open_new_tab(
             "https://github.com/dseichter/VATValidation"
-        )  # Add the URL of the GitHub repository
+        )
 
     def validateSingle(self, event):
         wx.MessageBox(
@@ -196,8 +197,8 @@ class CalcFrame(gui.MainFrame):
 # refer manual for details
 app = wx.App(False)
 
-# create an object of CalcFrame
-frame = CalcFrame(None)
+# create an object of VATValidationFrame
+frame = VATValidationFrame(None)
 
 # show the frame
 frame.Show(True)
