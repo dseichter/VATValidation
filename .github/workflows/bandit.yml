@@ -2,7 +2,8 @@ name: 'Bandit Check'
 on:
   push:
     branches:
-      - '*'
+      - main
+      - dseichter/*
   pull_request:
     branches:
       - '*'
