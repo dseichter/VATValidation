@@ -57,7 +57,7 @@ jobs:
 
         - name: Remove wxPython dependencies from requirements
           run: |
-            type src\requirements.txt | findstr /v "wxPython" >> src\requirements_tmp.txt
+            type src\requirements.txt | findstr /v "wxPython" >> src\requirements_new.txt
             del src\requirements.txt
             ren src\requirements_new.txt requirements.txt
 
