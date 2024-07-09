@@ -5,6 +5,8 @@ on:
       tags:
         - 'v*'
 
+    workflow_dispatch:
+
 jobs:
 
   build-windows-binary:
@@ -53,11 +55,17 @@ jobs:
             python3 -m venv venv
             venv\Scripts\activate.bat
 
+        - name: Remove wxPython dependencies from requirements
+          run: |
+            type src\requirements.txt | findstr /v "wxPython" >> src\requirements_tmp.txt
+            del src\requirements.txt
+            ren src\requirements_new.txt requirements.txt
+
         - name: Install dependencies
           run: pip install -r src/requirements.txt
 
         - name: Build Windows binary
-          run: pyinstaller --onefile -w src/vatvalidation_cli.py -n VATValidation-cli-windows-${{ github.ref_name }}.exe
+          run: pyinstaller --onefile src/vatvalidation_cli.py -n VATValidation-cli-windows-${{ github.ref_name }}.exe
 
         - name: Upload artifact
           uses: actions/upload-artifact@v4
@@ -116,6 +124,9 @@ jobs:
           run: |
             python3 -m venv venv
             source venv/bin/activate
+
+        - name: Remove wxPython from requirements
+          run: sed -i '/wxPython/d' src/requirements.txt
 
         - name: Install dependencies
           run: pip install -r src/requirements.txt
