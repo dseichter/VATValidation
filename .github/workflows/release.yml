@@ -132,7 +132,7 @@ jobs:
           run: pip install -r src/requirements.txt
 
         - name: Build Linux binary
-          run: pyinstaller --onefile src/vatvalidation.py -n VATValidation-cli-linux-${{ github.ref_name }}
+          run: pyinstaller --onefile src/vatvalidation_cli.py -n VATValidation-cli-linux-${{ github.ref_name }}
 
         - name: Upload artifact
           uses: actions/upload-artifact@v4
