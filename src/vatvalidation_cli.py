@@ -7,7 +7,7 @@ import batch
 parser = argparse.ArgumentParser(
     description=helper.NAME + " CLI" + " - " + helper.VERSION,
     epilog="For more information, visit our GitHub repository: https://github.com/dseichter/VATValidation\r\n\n"
-    "License: MIT License - see LICENSE file at the root of the repository for details.",
+    "License: GPL 3.0 - see LICENSE file at the root of the repository for details.",
 )
 
 # Add the version argument
