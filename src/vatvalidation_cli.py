@@ -15,12 +15,12 @@ parser.add_argument("--version", action="version", version=helper.VERSION)
 
 # Add the input file argument
 parser.add_argument(
-    "--input", type=str, help="Input file path for VAT numbers.", required=True
+    "--input", type=str, help="Input filename for VAT numbers.", required=True
 )
 
 # Add the output file argument
 parser.add_argument(
-    "--output", type=str, help="Output file path for validation results.", required=True
+    "--output", type=str, help="Output filename for validation results.", required=True
 )
 
 # Check if no arguments were passed

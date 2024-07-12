@@ -74,6 +74,7 @@ def load_codes(lang, errorcode):
 
 def start_validation(payload, iscli=True):
     logger.debug(payload)
+    logger.debug(iscli)
 
     foreign_vat = payload["foreignvat"]
     own_vat = payload["ownvat"]

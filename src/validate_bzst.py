@@ -61,6 +61,7 @@ def load_codes(lang, errorcode):
 
 def start_validation(payload, iscli=True):
     logger.debug(payload)
+    logger.debug(iscli)
 
     # map requested fields to bzst request
     bzstmap = {
@@ -75,9 +76,7 @@ def start_validation(payload, iscli=True):
 
     try:
         resp = http.request("GET", URL, fields=bzstmap)
-
         dom = minidom.parseString(resp.data)
-
         params = dom.childNodes
 
         rc = {}
