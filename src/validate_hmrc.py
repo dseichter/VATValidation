@@ -72,7 +72,7 @@ def load_codes(lang, message):
 def start_validation(payload, iscli=True):
     logger.debug(payload)
     logger.debug(iscli)
-        
+
     try:
         resp = http.request("GET", URL + payload["foreignvat"][2:])
         logger.debug(resp.status, resp.data)
