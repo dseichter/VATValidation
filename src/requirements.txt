@@ -1,4 +1,5 @@
-wxPython==4.2.1
+wxPython==4.2.1; sys_platform != "linux"
+https://github.com/dseichter/wxpython-whl/releases/download/4.2.1/wxPython-4.2.1-cp312-cp312-linux_x86_64.whl; sys_platform == "linux"
 urllib3==2.2.2
 pandas==2.2.2
 numpy==2.0.1
