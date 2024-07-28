@@ -69,22 +69,10 @@ def return_fielderror(fieldname):
 def start_validation(payload, iscli=True):
     logger.debug(payload)
 
-    if "key1" not in payload:
-        return return_fielderror("key1")
-    if "key2" not in payload:
-        return return_fielderror("key2")
-    if "ownvat" not in payload:
-        return return_fielderror("ownvat")
-    if "foreignvat" not in payload:
-        return return_fielderror("foreignvat")
-    if "company" not in payload:
-        return return_fielderror("company")
-    if "town" not in payload:
-        return return_fielderror("town")
-    if "zip" not in payload:
-        return return_fielderror("zip")
-    if "street" not in payload:
-        return return_fielderror("street")
+    required_fields = ["key1", "key2", "ownvat", "foreignvat", "company", "town", "zip", "street"]
+    for field in required_fields:
+        if field not in payload:
+            return return_fielderror(field)
 
     if "type" not in payload:
         payload["type"] = (

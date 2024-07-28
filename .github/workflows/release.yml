@@ -71,7 +71,20 @@ jobs:
           uses: actions/upload-artifact@v4
           with:
                 name: VATValidation-cli-windows-${{ github.ref_name }}.exe
-                path: dist/VATValidation-cli-windows-${{ github.ref_name }}.exe                   
+                path: dist/VATValidation-cli-windows-${{ github.ref_name }}.exe      
+                
+  test-cli-windows:
+    runs-on: windows-latest
+    needs: [build-windows-binary-cli]
+    steps:
+
+        - uses: actions/download-artifact@v4
+          with:
+            name: VATValidation-cli-windows-${{ github.ref_name }}.exe
+
+        - name: Run tests
+          run: |
+            VATValidation-cli-windows-${{ github.ref_name }}.exe --version                
 
   build-linux-binary:
       runs-on: ubuntu-latest
@@ -140,9 +153,22 @@ jobs:
             name: VATValidation-cli-linux-${{ github.ref_name }}
             path: dist/VATValidation-cli-linux-${{ github.ref_name }}              
 
+  test-cli-linux:
+    runs-on: ubuntu-latest
+    needs: [build-linux-binary-cli]
+    steps:
+
+        - uses: actions/download-artifact@v4
+          with:
+            name: VATValidation-cli-linux-${{ github.ref_name }}
+
+        - name: Run tests
+          run: |
+            ./VATValidation-cli-linux-${{ github.ref_name }} --version
+
   deploy:
     runs-on: ubuntu-latest
-    needs: [build-windows-binary, build-linux-binary, build-windows-binary-cli, build-linux-binary-cli]
+    needs: [build-windows-binary, build-linux-binary, test-cli-windows, test-cli-linux]
     steps:
         - uses: actions/download-artifact@v4
           with:

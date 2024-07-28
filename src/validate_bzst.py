@@ -91,26 +91,7 @@ def start_validation(payload, iscli=True):
 
     try:
         resp = http.request("GET", URL, fields=bzstmap)
-        dom = minidom.parseString(resp.data)
-        params = dom.childNodes
-
-        rc = {}
-        for param in params:
-            arrays = param.getElementsByTagName("array")
-            iskey = True
-            for array in arrays:
-                values = array.getElementsByTagName("value")
-                for value in values:
-                    strings = value.getElementsByTagName("string")
-                    if iskey:
-                        iskey = False
-                        for string in strings:
-                            newkey = gettext(string.childNodes)
-                    else:
-                        iskey = True
-                        for string in strings:
-                            newvalue = gettext(string.childNodes)
-                            rc[newkey] = newvalue
+        rc = parse_response(resp.data)
 
         validationresult = {
             "key1": payload["key1"],
@@ -118,14 +99,12 @@ def start_validation(payload, iscli=True):
             "ownvat": payload["ownvat"],
             "foreignvat": payload["foreignvat"],
             "type": "BZST",
-            "valid": rc["ErrorCode"] in ["200", "216"],
+            "valid": is_valid(rc["ErrorCode"]),
             "errorcode": rc["ErrorCode"],
             "errorcode_description": load_codes(payload["lang"], rc["ErrorCode"]),
             "valid_from": rc["Gueltig_ab"],
             "valid_to": rc["Gueltig_bis"],
-            "timestamp": datetime.datetime.now(datetime.timezone.utc).strftime(
-                "%Y-%m-%dT%H:%M:%S"
-            ),
+            "timestamp": get_current_timestamp(),
             "company": rc["Firmenname"],
             "address": "",
             "town": rc["Ort"],
@@ -137,6 +116,38 @@ def start_validation(payload, iscli=True):
     except Exception as e:
         logger.error(repr(e))
         return {"vatError": "VAT3500", "vatErrorMessage": repr(e)}
+
+
+def parse_response(response_data):
+    dom = minidom.parseString(response_data)
+    params = dom.childNodes
+
+    rc = {}
+    for param in params:
+        arrays = param.getElementsByTagName("array")
+        iskey = True
+        for array in arrays:
+            values = array.getElementsByTagName("value")
+            for value in values:
+                strings = value.getElementsByTagName("string")
+                if iskey:
+                    iskey = False
+                    for string in strings:
+                        newkey = gettext(string.childNodes)
+                else:
+                    iskey = True
+                    for string in strings:
+                        newvalue = gettext(string.childNodes)
+                        rc[newkey] = newvalue
+    return rc
+
+
+def is_valid(error_code):
+    return error_code in ["200", "216"]
+
+
+def get_current_timestamp():
+    return datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S")
 
 
 def substitute_variables_in_description(payload):
