@@ -83,8 +83,9 @@ jobs:
             name: VATValidation-cli-windows-${{ github.ref_name }}.exe
 
         - name: Run tests
+          shell: cmd
           run: |
-            VATValidation-cli-windows-${{ github.ref_name }}.exe --version                
+            VATValidation-cli-windows-${{ github.ref_name }}.exe --version
 
   build-linux-binary:
       runs-on: ubuntu-latest
@@ -164,6 +165,7 @@ jobs:
 
         - name: Run tests
           run: |
+            chmod +x VATValidation-cli-linux-${{ github.ref_name }}
             ./VATValidation-cli-linux-${{ github.ref_name }} --version
 
   deploy:
