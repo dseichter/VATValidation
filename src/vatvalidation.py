@@ -91,12 +91,12 @@ class VATValidationFrame(gui.MainFrame):
     # load the config file
     def loadConfig(self, event):
         settings.create_config()
-        self.textCtrlOwnVat.SetValue(settings.load_value_from_json_file("ownvat"))
+        self.textCtrlConfigOwnVat.SetValue(settings.load_value_from_json_file("ownvat"))
         # visible values of configuration
         self.textOwnvat.SetValue(settings.load_value_from_json_file("ownvat"))
-        self.comboBoxInterface.SetValue(settings.load_value_from_json_file("interface"))
-        self.comboBoxLanguage.SetValue(settings.load_value_from_json_file("language"))
-        self.textCSVdelimiter.SetValue(settings.load_value_from_json_file("delimiter"))
+        self.comboBoxConfigInterface.SetValue(settings.load_value_from_json_file("interface"))
+        self.comboBoxConfigLanguage.SetValue(settings.load_value_from_json_file("language"))
+        self.textConfigCSVdelimiter.SetValue(settings.load_value_from_json_file("delimiter"))
 
     # save the config file
     def saveConfig(self, event):
@@ -106,10 +106,10 @@ class VATValidationFrame(gui.MainFrame):
             f.write(
                 json.dumps(
                     {
-                        "ownvat": self.textCtrlOwnVat.GetValue(),
-                        "interface": self.comboBoxInterface.GetValue(),
-                        "language": self.comboBoxLanguage.GetValue(),
-                        "delimiter": self.textCSVdelimiter.GetValue(),
+                        "ownvat": self.textCtrlConfigOwnVat.GetValue(),
+                        "interface": self.comboBoxConfigInterface.GetValue(),
+                        "language": self.comboBoxConfigLanguage.GetValue(),
+                        "delimiter": self.textConfigCSVdelimiter.GetValue(),
                     },
                     indent=2,
                 )
@@ -118,8 +118,8 @@ class VATValidationFrame(gui.MainFrame):
         self.textOwnvat.SetValue(settings.load_value_from_json_file("ownvat"))
 
     # put a blank string in text when 'Clear' is clicked
-    def clearFunc(self, event):
-        self.textCtrlOwnVat.SetValue(settings.load_value_from_json_file("ownvat"))
+    def clearFields(self, event):
+        self.textCtrlConfigOwnVat.SetValue(settings.load_value_from_json_file("ownvat"))
         self.textForeignvat.SetValue(str(""))
         self.textCompany.SetValue(str(""))
         self.textStreet.SetValue(str(""))
@@ -173,15 +173,15 @@ class VATValidationFrame(gui.MainFrame):
         ):
             return
 
-        if self.m_filePickerOutput.GetPath() == "":
+        if self.filepickerOutput.GetPath() == "":
             wx.MessageBox(
                 "Please select an output file.", "No output file", wx.OK | wx.ICON_ERROR
             )
             return
 
         batch.validatebatch(
-            inputfile=self.filePickerInput.GetPath(),
-            outputfile=self.m_filePickerOutput.GetPath(),
+            inputfile=self.filepickerInput.GetPath(),
+            outputfile=self.filepickerOutput.GetPath(),
             type=settings.load_value_from_json_file("interface"),
             lang=settings.load_value_from_json_file("language"),
         )
