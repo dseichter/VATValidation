@@ -127,7 +127,7 @@
             <object class="notebookpage" expanded="true">
               <property name="bitmap"></property>
               <property name="label">Single</property>
-              <property name="select">1</property>
+              <property name="select">0</property>
               <object class="wxPanel" expanded="true">
                 <property name="BottomDockable">1</property>
                 <property name="LeftDockable">1</property>
@@ -377,7 +377,7 @@
                           <property name="minimize_button">0</property>
                           <property name="minimum_size"></property>
                           <property name="moveable">1</property>
-                          <property name="name">clearButton</property>
+                          <property name="name">buttonClear</property>
                           <property name="pane_border">1</property>
                           <property name="pane_position"></property>
                           <property name="pane_size"></property>
@@ -400,7 +400,7 @@
                           <property name="window_extra_style"></property>
                           <property name="window_name"></property>
                           <property name="window_style"></property>
-                          <event name="OnButtonClick">clearFunc</event>
+                          <event name="OnButtonClick">clearFields</event>
                         </object>
                       </object>
                       <object class="sizeritem" expanded="false">
@@ -1147,7 +1147,7 @@
                           <property name="minimize_button">0</property>
                           <property name="minimum_size"></property>
                           <property name="moveable">1</property>
-                          <property name="name">buttonValidate1</property>
+                          <property name="name">buttonValidateSingle</property>
                           <property name="pane_border">1</property>
                           <property name="pane_position"></property>
                           <property name="pane_size"></property>
@@ -1820,7 +1820,7 @@
                       <property name="minimize_button">0</property>
                       <property name="minimum_size"></property>
                       <property name="moveable">1</property>
-                      <property name="name">filePickerInput</property>
+                      <property name="name">filepickerInput</property>
                       <property name="pane_border">1</property>
                       <property name="pane_position"></property>
                       <property name="pane_size"></property>
@@ -1948,7 +1948,7 @@
                       <property name="minimize_button">0</property>
                       <property name="minimum_size"></property>
                       <property name="moveable">1</property>
-                      <property name="name">m_filePickerOutput</property>
+                      <property name="name">filepickerOutput</property>
                       <property name="pane_border">1</property>
                       <property name="pane_position"></property>
                       <property name="pane_size"></property>
@@ -2032,7 +2032,7 @@
                       <property name="minimize_button">0</property>
                       <property name="minimum_size"></property>
                       <property name="moveable">1</property>
-                      <property name="name">buttonValidate</property>
+                      <property name="name">buttonValidateBatch</property>
                       <property name="pane_border">1</property>
                       <property name="pane_position"></property>
                       <property name="pane_size"></property>
@@ -2064,7 +2064,7 @@
             <object class="notebookpage" expanded="true">
               <property name="bitmap"></property>
               <property name="label">Configuration</property>
-              <property name="select">0</property>
+              <property name="select">1</property>
               <object class="wxPanel" expanded="false">
                 <property name="BottomDockable">1</property>
                 <property name="LeftDockable">1</property>
@@ -2171,7 +2171,7 @@
                       <property name="minimize_button">0</property>
                       <property name="minimum_size"></property>
                       <property name="moveable">1</property>
-                      <property name="name">staticTextOwnVat</property>
+                      <property name="name">staticTextConfigOwnVat</property>
                       <property name="pane_border">1</property>
                       <property name="pane_position"></property>
                       <property name="pane_size"></property>
@@ -2232,7 +2232,7 @@
                       <property name="minimize_button">0</property>
                       <property name="minimum_size"></property>
                       <property name="moveable">1</property>
-                      <property name="name">textCtrlOwnVat</property>
+                      <property name="name">textCtrlConfigOwnVat</property>
                       <property name="pane_border">1</property>
                       <property name="pane_position"></property>
                       <property name="pane_size"></property>
@@ -2298,7 +2298,7 @@
                       <property name="minimize_button">0</property>
                       <property name="minimum_size"></property>
                       <property name="moveable">1</property>
-                      <property name="name">staticTextInterface</property>
+                      <property name="name">staticTextConfigInterface</property>
                       <property name="pane_border">1</property>
                       <property name="pane_position"></property>
                       <property name="pane_size"></property>
@@ -2359,7 +2359,7 @@
                       <property name="minimize_button">0</property>
                       <property name="minimum_size"></property>
                       <property name="moveable">1</property>
-                      <property name="name">comboBoxInterface</property>
+                      <property name="name">comboBoxConfigInterface</property>
                       <property name="pane_border">1</property>
                       <property name="pane_position"></property>
                       <property name="pane_size"></property>
@@ -2426,7 +2426,7 @@
                       <property name="minimize_button">0</property>
                       <property name="minimum_size"></property>
                       <property name="moveable">1</property>
-                      <property name="name">staticTextLanguage</property>
+                      <property name="name">staticTextConfigLanguage</property>
                       <property name="pane_border">1</property>
                       <property name="pane_position"></property>
                       <property name="pane_size"></property>
@@ -2487,7 +2487,7 @@
                       <property name="minimize_button">0</property>
                       <property name="minimum_size"></property>
                       <property name="moveable">1</property>
-                      <property name="name">comboBoxLanguage</property>
+                      <property name="name">comboBoxConfigLanguage</property>
                       <property name="pane_border">1</property>
                       <property name="pane_position"></property>
                       <property name="pane_size"></property>
@@ -2554,7 +2554,7 @@
                       <property name="minimize_button">0</property>
                       <property name="minimum_size"></property>
                       <property name="moveable">1</property>
-                      <property name="name">staticTextCSVDelimiter</property>
+                      <property name="name">staticTextConfigCSVDelimiter</property>
                       <property name="pane_border">1</property>
                       <property name="pane_position"></property>
                       <property name="pane_size"></property>
@@ -2615,7 +2615,7 @@
                       <property name="minimize_button">0</property>
                       <property name="minimum_size"></property>
                       <property name="moveable">1</property>
-                      <property name="name">textCSVdelimiter</property>
+                      <property name="name">textConfigCSVdelimiter</property>
                       <property name="pane_border">1</property>
                       <property name="pane_position"></property>
                       <property name="pane_size"></property>
