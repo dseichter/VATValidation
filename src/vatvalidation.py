@@ -59,6 +59,9 @@ class VATValidationFrame(gui.MainFrame):
         self.menuitemHelpAbout.SetBitmap(
             icons.info.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap()
         )
+        self.buttonValidateSingle.SetBitmap(icons.fry.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
+        self.buttonValidateSingle.SetSize(self.buttonValidateSingle.GetBestSize())
+        
         self.m_notebook3.SetSelection(0)
         # create image list
         self.imageList = wx.ImageList(16, 16)
