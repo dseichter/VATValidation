@@ -330,7 +330,7 @@
                       </object>
                       <object class="sizeritem" expanded="false">
                         <property name="border">5</property>
-                        <property name="flag">wxALL</property>
+                        <property name="flag">wxALIGN_CENTER</property>
                         <property name="proportion">0</property>
                         <object class="wxButton" expanded="false">
                           <property name="BottomDockable">1</property>
@@ -367,7 +367,7 @@
                           <property name="gripper">0</property>
                           <property name="hidden">0</property>
                           <property name="id">wxID_ANY</property>
-                          <property name="label">Clear entries</property>
+                          <property name="label">Clear</property>
                           <property name="margins"></property>
                           <property name="markup">0</property>
                           <property name="max_size"></property>
@@ -604,8 +604,8 @@
                       </object>
                       <object class="sizeritem" expanded="false">
                         <property name="border">5</property>
-                        <property name="flag">wxALL</property>
-                        <property name="proportion">0</property>
+                        <property name="flag">wxALL|wxEXPAND</property>
+                        <property name="proportion">1</property>
                         <object class="wxTextCtrl" expanded="false">
                           <property name="BottomDockable">1</property>
                           <property name="LeftDockable">1</property>
@@ -741,7 +741,7 @@
                       </object>
                       <object class="sizeritem" expanded="false">
                         <property name="border">5</property>
-                        <property name="flag">wxALL</property>
+                        <property name="flag">wxALL|wxEXPAND</property>
                         <property name="proportion">0</property>
                         <object class="wxTextCtrl" expanded="false">
                           <property name="BottomDockable">1</property>
@@ -1015,7 +1015,7 @@
                       </object>
                       <object class="sizeritem" expanded="false">
                         <property name="border">5</property>
-                        <property name="flag">wxALL</property>
+                        <property name="flag">wxALL|wxEXPAND</property>
                         <property name="proportion">0</property>
                         <object class="wxTextCtrl" expanded="false">
                           <property name="BottomDockable">1</property>
@@ -1100,8 +1100,8 @@
                       </object>
                       <object class="sizeritem" expanded="false">
                         <property name="border">5</property>
-                        <property name="flag">wxALL|wxEXPAND</property>
-                        <property name="proportion">1</property>
+                        <property name="flag">wxALIGN_CENTER</property>
+                        <property name="proportion">0</property>
                         <object class="wxButton" expanded="false">
                           <property name="BottomDockable">1</property>
                           <property name="LeftDockable">1</property>
@@ -1137,8 +1137,8 @@
                           <property name="gripper">0</property>
                           <property name="hidden">0</property>
                           <property name="id">wxID_ANY</property>
-                          <property name="label">Validate</property>
-                          <property name="margins"></property>
+                          <property name="label">Validate your entries</property>
+                          <property name="margins">-1,-1</property>
                           <property name="markup">0</property>
                           <property name="max_size"></property>
                           <property name="maximize_button">0</property>
@@ -1985,8 +1985,8 @@
                   </object>
                   <object class="sizeritem" expanded="false">
                     <property name="border">5</property>
-                    <property name="flag">wxEXPAND|wxALL</property>
-                    <property name="proportion">1</property>
+                    <property name="flag">wxALIGN_LEFT</property>
+                    <property name="proportion">0</property>
                     <object class="wxButton" expanded="false">
                       <property name="BottomDockable">1</property>
                       <property name="LeftDockable">1</property>
@@ -2022,7 +2022,7 @@
                       <property name="gripper">0</property>
                       <property name="hidden">0</property>
                       <property name="id">wxID_ANY</property>
-                      <property name="label">Start Validation</property>
+                      <property name="label">Start processing file</property>
                       <property name="margins"></property>
                       <property name="markup">0</property>
                       <property name="max_size"></property>
@@ -2610,10 +2610,10 @@
                       <property name="max_size"></property>
                       <property name="maximize_button">0</property>
                       <property name="maximum_size"></property>
-                      <property name="maxlength">0</property>
-                      <property name="min_size"></property>
+                      <property name="maxlength">1</property>
+                      <property name="min_size">-1,-1</property>
                       <property name="minimize_button">0</property>
-                      <property name="minimum_size"></property>
+                      <property name="minimum_size">20,-1</property>
                       <property name="moveable">1</property>
                       <property name="name">textConfigCSVdelimiter</property>
                       <property name="pane_border">1</property>

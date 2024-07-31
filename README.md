@@ -1,21 +1,30 @@
 # VATValidation
 
-Validate VAT number using the interfaces of BZSt, VIES and/or HMRC. Provides single or batch validation with support for CSV, XLSX and JSON.
-
-This is the successor of my VAT-Validation, released as commercial software. After closing my company I proceeded with the migration to Python. 
-
-If you like this software, please don't hesitate to give it a :star: or send me a :moneybag: donation in the amount you think the software is worth.
-
 ![pep8](https://github.com/dseichter/VATValidation/actions/workflows/pep8.yml/badge.svg)
 ![bandit](https://github.com/dseichter/VATValidation/actions/workflows/bandit.yml/badge.svg)
 ![trivy](https://github.com/dseichter/VATValidation/actions/workflows/trivy.yml/badge.svg)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dseichter_VATValidation&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=dseichter_VATValidation)
 
-[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=dseichter_VATValidation)
+Validate VAT numbers using the interfaces of BZSt, VIES and/or HMRC. Provides single or batch validation with support for CSV, XLSX and JSON.
+
+## Features
+
+* Single validation
+* Batch processing of CSV, JSON or XLSX
+* Validation using BZSt (if your vat is located at `DE`)
+* Validation using VIES (configurable as default)
+* Validation using HMRC (if you want to validate a vat starting with `UK`)
+* Provides a graphical user interface
+* Batch processing can be run using CLI interface
+* **NO** dependencies needed
+
+This is the successor of my VAT-Validation. Now released as Open Source.
+
+If you like this software, please don't hesitate to give it a :star: or send me a :moneybag: donation in the amount you think the software is worth.
 
 ## About
 
-VAT Validation supports you in checking and validating your master data. Whether you want to check a VAT number directly at your workplace or integrate it into your ERP/CRM applications.
+VAT Validation supports you in validating your vat numbers based on your master data. Whether you want to check a VAT number directly at your workplace or integrate it into your ERP/CRM applications.
 
 ## Command Line tool
 
