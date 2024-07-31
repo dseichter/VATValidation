@@ -47,8 +47,8 @@ class MainFrame ( wx.Frame ):
         self.textOwnvat = wx.TextCtrl( self.panelSingle, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
         fgSizer2.Add( self.textOwnvat, 0, wx.ALL, 5 )
 
-        self.buttonClear = wx.Button( self.panelSingle, wx.ID_ANY, _(u"Clear entries"), wx.DefaultPosition, wx.DefaultSize, 0 )
-        fgSizer2.Add( self.buttonClear, 0, wx.ALL, 5 )
+        self.buttonClear = wx.Button( self.panelSingle, wx.ID_ANY, _(u"Clear"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        fgSizer2.Add( self.buttonClear, 0, wx.ALIGN_CENTER, 5 )
 
         self.staticText_foreignvat = wx.StaticText( self.panelSingle, wx.ID_ANY, _(u"Foreign VAT"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.staticText_foreignvat.Wrap( -1 )
@@ -163,7 +163,7 @@ class MainFrame ( wx.Frame ):
         self.panelSingle.SetSizer( bSizer3 )
         self.panelSingle.Layout()
         bSizer3.Fit( self.panelSingle )
-        self.m_notebook3.AddPage( self.panelSingle, _(u"Single"), True )
+        self.m_notebook3.AddPage( self.panelSingle, _(u"Single"), False )
         self.panelBatch = wx.Panel( self.m_notebook3, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
         fgSizer3 = wx.FlexGridSizer( 0, 2, 0, 0 )
         fgSizer3.AddGrowableCol( 1 )
@@ -189,14 +189,14 @@ class MainFrame ( wx.Frame ):
 
         fgSizer3.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 
-        self.buttonValidateBatch = wx.Button( self.panelBatch, wx.ID_ANY, _(u"Start Validation"), wx.DefaultPosition, wx.DefaultSize, 0 )
-        fgSizer3.Add( self.buttonValidateBatch, 1, wx.EXPAND|wx.ALL, 5 )
+        self.buttonValidateBatch = wx.Button( self.panelBatch, wx.ID_ANY, _(u"Start processing file"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        fgSizer3.Add( self.buttonValidateBatch, 0, wx.ALIGN_LEFT, 5 )
 
 
         self.panelBatch.SetSizer( fgSizer3 )
         self.panelBatch.Layout()
         fgSizer3.Fit( self.panelBatch )
-        self.m_notebook3.AddPage( self.panelBatch, _(u"Batch"), False )
+        self.m_notebook3.AddPage( self.panelBatch, _(u"Batch"), True )
         self.panelConfig = wx.Panel( self.m_notebook3, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
         fgSizer31 = wx.FlexGridSizer( 0, 2, 0, 0 )
         fgSizer31.AddGrowableCol( 1 )
@@ -238,6 +238,8 @@ class MainFrame ( wx.Frame ):
 
         self.textConfigCSVdelimiter = wx.TextCtrl( self.panelConfig, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
         self.textConfigCSVdelimiter.SetMaxLength( 1 )
+        self.textConfigCSVdelimiter.SetMinSize( wx.Size( 20,-1 ) )
+
         fgSizer31.Add( self.textConfigCSVdelimiter, 0, wx.ALL, 5 )
 
         self.buttonSaveConfig = wx.Button( self.panelConfig, wx.ID_ANY, _(u"Save"), wx.DefaultPosition, wx.DefaultSize, 0 )
