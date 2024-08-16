@@ -53,7 +53,7 @@ print(
     + " and output file: "
     + args.output
 )
-response = batch.validatebatch(inputfile=args.input, outputfile=args.output, iscli=True)
+response = batch.validatebatch(inputfile=args.input, outputfile=args.output)
 
 match response:
     case 0:
@@ -62,9 +62,6 @@ match response:
     case 127:
         print("Unsupported file format")
         exit(127)
-    case True:
-        print("Validation successful")
-        exit(0)
     case _:
         print("Validation failed: " + str(response))
         exit(1)

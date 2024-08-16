@@ -74,9 +74,8 @@ def load_codes(lang, errorcode):
     return None
 
 
-def start_validation(payload, iscli=True):
+def start_validation(payload):
     logger.debug(payload)
-    logger.debug(iscli)
 
     # map requested fields to bzst request
     bzstmap = {

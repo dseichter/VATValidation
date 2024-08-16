@@ -84,9 +84,8 @@ def load_codes(lang, message):
     return message
 
 
-def start_validation(payload, iscli=True):
+def start_validation(payload):
     logger.debug(payload)
-    logger.debug(iscli)
 
     try:
         resp = http.request("GET", URL + payload["foreignvat"][2:])
@@ -113,9 +112,7 @@ def start_validation(payload, iscli=True):
         if "target" in result:
             validationresult["company"] = result["target"]["name"]
             validationresult["address"] = (
-                result["target"]["address"]["line1"].strip() + ""
-                if iscli
-                else chr(13) + result["target"]["address"]["line2"].strip()
+                               result["target"]["address"]["line1"].strip() + " " + result["target"]["address"]["line2"].strip()
             )
             validationresult["town"] = ""
             validationresult["zip"] = result["target"]["address"]["postcode"]
