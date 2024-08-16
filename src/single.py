@@ -40,6 +40,6 @@ def validatesingle(
         "type": type,
         "lang": lang,
     }
-    r = validate_workflow.start_validation(data)
+    r = validate_workflow.start_workflow(data)
 
     return r

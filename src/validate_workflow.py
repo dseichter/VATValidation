@@ -66,7 +66,7 @@ def return_fielderror(fieldname):
     }
 
 
-def start_validation(payload):
+def start_workflow(payload):
     logger.debug(payload)
 
     required_fields = ["key1", "key2", "ownvat", "foreignvat", "company", "town", "zip", "street"]
