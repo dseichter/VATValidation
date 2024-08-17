@@ -164,7 +164,7 @@ class VATValidationFrame(gui.MainFrame):
         self.textResultCode.SetValue(message["errorcode"])
         self.textResultDetails.SetValue(message.get("errorcode_description", ""))
 
-        # In case of empty errorcode_description, load the company, address twon, zip and street into textResultDetails
+        # In case of empty errorcode_description, load the company, address town, zip and street into textResultDetails
         if message.get("errorcode_description", "") == "":
             self.textResultDetails.SetValue(
                 f"Company: {message['company']}\nAddress: {message['address']}\nTown: {message['town']}\nZip: {message['zip']}\nStreet: {message['street']}"
