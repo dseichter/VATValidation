@@ -18,7 +18,7 @@ import json
 import logging
 
 
-VERSION = "v2024-07-28"
+VERSION = "v2024-08-17"
 UPDATEURL = 'https://api.github.com/repos/dseichter/VATValidation/releases/latest'
 RELEASES = 'https://github.com/dseichter/VATValidation/releases'
 NAME = 'VAT-Validation'

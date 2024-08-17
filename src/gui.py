@@ -183,7 +183,7 @@ class MainFrame ( wx.Frame ):
 
         fgSizer3.Add( self.staticText_Outputfile, 0, wx.ALL, 5 )
 
-        self.filepickerOutput = wx.FilePickerCtrl( self.panelBatch, wx.ID_ANY, wx.EmptyString, _(u"Select a file"), _(u"*.*"), wx.DefaultPosition, wx.DefaultSize, wx.FLP_DEFAULT_STYLE )
+        self.filepickerOutput = wx.FilePickerCtrl( self.panelBatch, wx.ID_ANY, wx.EmptyString, _(u"Select a file"), _(u"*.*"), wx.DefaultPosition, wx.DefaultSize, wx.FLP_SAVE|wx.FLP_USE_TEXTCTRL )
         fgSizer3.Add( self.filepickerOutput, 1, wx.ALL|wx.EXPAND, 5 )
 
 

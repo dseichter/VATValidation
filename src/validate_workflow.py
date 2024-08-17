@@ -66,7 +66,7 @@ def return_fielderror(fieldname):
     }
 
 
-def start_validation(payload, iscli=True):
+def start_workflow(payload):
     logger.debug(payload)
 
     required_fields = ["key1", "key2", "ownvat", "foreignvat", "company", "town", "zip", "street"]
@@ -86,13 +86,12 @@ def start_validation(payload, iscli=True):
         payload["lang"] = "en"
 
     # start the validation
-    if payload["ownvat"].upper().startswith("DE") and not payload[
-        "foreignvat"
-    ].upper().startswith("GB"):
-        response = validate_bzst.start_validation(payload, iscli)
-    elif payload["foreignvat"].upper().startswith("GB"):
-        response = validate_hmrc.start_validation(payload, iscli)
+    # Use hmrc for GB VAT numbers, otherwise use given type
+    if payload["foreignvat"].upper().startswith("GB"):
+        response = validate_hmrc.start_validation(payload)
+    elif payload["type"] == "bzst":
+        response = validate_bzst.start_validation(payload)
     else:
-        response = validate_vies.start_validation(payload, iscli)
+        response = validate_vies.start_validation(payload)
 
     return response

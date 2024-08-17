@@ -158,14 +158,13 @@ class VATValidationFrame(gui.MainFrame):
             zip=self.textZip.GetValue(),
             town=self.textTown.GetValue(),
             type=settings.load_value_from_json_file("interface"),
-            lang=settings.load_value_from_json_file("language"),
-            iscli=False,
+            lang=settings.load_value_from_json_file("language")
         )
         self.textResultIsValid.SetValue("Yes" if message["valid"] else "No")
         self.textResultCode.SetValue(message["errorcode"])
         self.textResultDetails.SetValue(message.get("errorcode_description", ""))
 
-        # In case of empty errorcode_description, load the company, address twon, zip and street into textResultDetails
+        # In case of empty errorcode_description, load the company, address town, zip and street into textResultDetails
         if message.get("errorcode_description", "") == "":
             self.textResultDetails.SetValue(
                 f"Company: {message['company']}\nAddress: {message['address']}\nTown: {message['town']}\nZip: {message['zip']}\nStreet: {message['street']}"
@@ -188,12 +187,25 @@ class VATValidationFrame(gui.MainFrame):
             )
             return
 
-        batch.validatebatch(
+        # check if given file exists
+        if not self.filepickerInput.GetPath():
+            wx.MessageBox(
+                "Please select an input file.", "No input file", wx.OK | wx.ICON_ERROR
+            )
+            return
+
+        resultcode = batch.validatebatch(
             inputfile=self.filepickerInput.GetPath(),
             outputfile=self.filepickerOutput.GetPath(),
             type=settings.load_value_from_json_file("interface"),
-            lang=settings.load_value_from_json_file("language"),
+            lang=settings.load_value_from_json_file("language")
         )
+
+        if resultcode == 127:
+            wx.MessageBox(
+                "Unsupported file format.", "Unsupported file format", wx.OK | wx.ICON_ERROR
+            )
+            return
 
         # if done, show a message box
         wx.MessageBox(
