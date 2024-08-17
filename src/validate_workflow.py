@@ -86,12 +86,11 @@ def start_workflow(payload):
         payload["lang"] = "en"
 
     # start the validation
-    if payload["ownvat"].upper().startswith("DE") and not payload[
-        "foreignvat"
-    ].upper().startswith("GB"):
-        response = validate_bzst.start_validation(payload)
-    elif payload["foreignvat"].upper().startswith("GB"):
+    # Use hmrc for GB VAT numbers, otherwise use given type
+    if payload["foreignvat"].upper().startswith("GB"):
         response = validate_hmrc.start_validation(payload)
+    elif payload["type"] == "bzst":
+        response = validate_bzst.start_validation(payload)
     else:
         response = validate_vies.start_validation(payload)
 

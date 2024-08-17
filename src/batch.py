@@ -19,6 +19,7 @@ import settings
 
 # import common libraries
 import logging
+import json
 import pandas as pd
 
 logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -81,6 +82,13 @@ def processcsv(inputfile, outputfile, type, lang):
                 type=type,
                 lang=lang
             )
+
+            # parse everything as string to easily replace newlines
+            tempstring = json.dumps(message)
+            tempstring = tempstring.replace('\\n', ' ').replace('\\r', ' ')
+            tempstring = tempstring.replace('  ', ' ')
+            message = json.loads(tempstring)
+
             # append the result to the results list
             results.append(message)
 
@@ -112,7 +120,7 @@ def processxlsx(inputfile, outputfile, type, lang):
         # iterate over the rows
         for index, row in data.iterrows():
             # validate the row
-            _, message = single.validatesingle(
+            message = single.validatesingle(
                 key1=row["key1"],
                 key2=row["key2"],
                 ownvat=row["ownvat"],
@@ -154,7 +162,7 @@ def processjson(inputfile, outputfile, type, lang):
         # iterate over the rows
         for index, row in data.iterrows():
             # validate the row
-            _, message = single.validatesingle(
+            message = single.validatesingle(
                 key1=row["key1"],
                 key2=row["key2"],
                 ownvat=row["ownvat"],

@@ -108,7 +108,6 @@ def start_validation(payload):
                     </checkVatApprox>
                     </Body>
                 </Envelope>"""
-
     try:
         resp = http.request("POST", URL, headers=HEADERS, body=requestpayload)
 
@@ -162,9 +161,11 @@ def start_validation(payload):
             result["requestDate"] = None
         # in case of faultcode
         try:
-            result["errorcode"] = (
-                node.getElementsByTagName("faultstring")[0].childNodes[0].nodeValue
-            )
+            result["errorcode"] = ""
+            if node.getElementsByTagName("faultstring"):
+                result["errorcode"] = (
+                    node.getElementsByTagName("faultstring")[0].childNodes[0].nodeValue
+                )
         except Exception as e:
             result["errorcode"] = "INVALID_INPUT"
 
