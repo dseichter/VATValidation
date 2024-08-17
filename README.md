@@ -9,13 +9,13 @@ Validate VAT numbers using the interfaces of BZSt, VIES and/or HMRC. Provides si
 
 ## Features
 
+* Graphical user interface
 * Single validation
 * Batch processing of CSV, JSON or XLSX
-* Validation using BZSt (if your vat is located at `DE`)
-* Validation using VIES (configurable as default)
+* Validation using BZSt (configurable, can only be used if your VAT starts with `DE`)
+* Validation using VIES (configurable)
 * Validation using HMRC (if you want to validate a vat starting with `UK`)
-* Provides a graphical user interface
-* Batch processing can be run using CLI interface
+* Batch processing can be run using CLI interface (see releases)
 * **NO** dependencies needed
 
 This is the successor of my VAT-Validation. Now released as Open Source.
@@ -52,7 +52,7 @@ Only batch processing is provided.
 
 ## Graphical User Interface
 
-I provide a graphical user interface for single and batch validation.
+The VAT Validation provides a graphical user interface for single and batch validation. It can be used on every workplace and does not need to be installed or any other 3rd party components.
 
 ### Single Validation
 
@@ -66,7 +66,7 @@ Export your master data into a file (JSON, XLSX or CSV) format and check them co
 
 ![batch validation](images/batch.png "VAT Validation Batch Processing")
 
-The imported files needs to include the following fields/columns:
+The imported files needs to include the following fields/columns. In case of CSV and XLSX, please add the field names into the first row. Do not add more columns.
 
 * key1
 * key2
