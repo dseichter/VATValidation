@@ -1,5 +1,8 @@
 # VATValidation
 
+[![en](https://img.shields.io/badge/lang-en-blue.svg)](https://github.com/dseichter/VATValidation/blob/master/README.md)
+[![de](https://img.shields.io/badge/lang-de-blue.svg)](https://github.com/dseichter/VATValidation/blob/master/README-de.md)
+
 ![pep8](https://github.com/dseichter/VATValidation/actions/workflows/pep8.yml/badge.svg)
 ![bandit](https://github.com/dseichter/VATValidation/actions/workflows/bandit.yml/badge.svg)
 ![trivy](https://github.com/dseichter/VATValidation/actions/workflows/trivy.yml/badge.svg)
@@ -28,7 +31,7 @@ VAT Validation supports you in validating your vat numbers based on your master 
 
 ## Command Line tool
 
-If you want to check batch files (e.g. json, csv or XLSX) you can download the releases like VATValidation-cli-windows-v2024-07-08.exe and rename it to vatvalidation_cli.exe.
+If you want to check batch files (e.g. json, csv or XLSX) you can download the releases like `VATValidation-cli-windows-v2024-07-08.exe` and rename it to vatvalidation_cli.exe.
 
 Just run the tool and by providing an input and an output file. For further information, please run
 
@@ -58,7 +61,7 @@ The VAT Validation provides a graphical user interface for single and batch vali
 
 You can use the software at your workplace and check directly against the official supported interfaces of BZSt, VIES and/or HMRC.
 
-![single validation](images/single.png "VAT Validation Single Validtion")
+![single validation](images/single.png "VAT Validation Single Validation")
 
 ### Batch Validation
 
