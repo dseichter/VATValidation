@@ -17,6 +17,7 @@ import urllib3
 import json
 import logging
 
+logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
 
 VERSION = "v2024-08-17"
 UPDATEURL = 'https://api.github.com/repos/dseichter/VATValidation/releases/latest'

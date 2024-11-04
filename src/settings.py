@@ -14,6 +14,7 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 import json
+import tempfile
 
 CONFIGFILE = 'config.json'
 
@@ -40,6 +41,13 @@ def create_config():
 
     with open(CONFIGFILE, 'r') as f:
         data = json.load(f)
+        
+    # add missing keys
+    if 'logfilename' not in data:
+        log_dir = tempfile.gettempdir()
+        data['logfilename'] = f'{log_dir}/vatvalidation.log'
+    if 'loglevel' not in data:
+        data['loglevel'] = 'ERROR'
 
     with open(CONFIGFILE, 'w') as f:
         json.dump(data, f, indent=4, sort_keys=True)

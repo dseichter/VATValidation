@@ -15,27 +15,19 @@
 
 import datetime
 from decimal import Decimal
-import os
 import urllib3
 import defusedxml.minidom as minidom
-import logging
 
 import codes_vies
 
-logger = logging.getLogger()
+import logging_config  # Setup the logging
+import logging
+
+logger = logging.getLogger(__name__)
+
 http = urllib3.PoolManager()
 
 URL = "https://ec.europa.eu/taxation_customs/vies/services/checkVatService"
-
-# get loglevel from environment
-if "LOGLEVEL" in os.environ:
-    loglevel = os.environ["LOGLEVEL"]
-    if loglevel == "DEBUG":
-        logger.setLevel(logging.DEBUG)
-    if loglevel == "INFO":
-        logger.setLevel(logging.INFO)
-    if loglevel == "ERROR":
-        logger.setLevel(logging.ERROR)
 
 validationresult = {
     "key1": None,
@@ -84,11 +76,14 @@ def load_codes(lang, errorcode):
     for code in codes_vies.returncodes:
         if code["status"] == errorcode:
             return code[lang]
-    return None
+    return ""
 
 
 def start_validation(payload):
-    logger.debug(payload)
+    logger.debug('-'*40)
+    logger.debug('VIES')
+    logger.debug('-'*40)
+    logger.debug("Starting validation with payload: %s", payload)
 
     foreign_vat = payload["foreignvat"]
     own_vat = payload["ownvat"]

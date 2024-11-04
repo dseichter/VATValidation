@@ -18,11 +18,13 @@ import single
 import settings
 
 # import common libraries
-import logging
 import json
 import pandas as pd
 
-logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
+import logging_config  # Setup the logging
+import logging
+
+logger = logging.getLogger(__name__)
 
 columns = ["key1", "key2", "ownvat", "foreignvat", "company", "street", "zip", "town"]
 
@@ -50,7 +52,7 @@ def validatebatch(inputfile, outputfile="", type="vies", lang="en"):
             resultcode = processjson(inputfile, outputfile, type, lang)
             return resultcode
         case _:
-            print("Unsupported file format")
+            logger.error("Unsupported file format")
             return 127
 
 
@@ -138,7 +140,7 @@ def processxlsx(inputfile, outputfile, type, lang):
         # load the results into a DataFrame
         dataframe = pd.DataFrame(results)
 
-        # save the dateframe to a csv file
+        # save the dateframe to a xlsx file
         dataframe.to_excel(outputfile, index=False, header=False)
 
         return 0

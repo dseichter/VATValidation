@@ -196,9 +196,9 @@ class MainFrame ( wx.Frame ):
         self.panelBatch.SetSizer( fgSizer3 )
         self.panelBatch.Layout()
         fgSizer3.Fit( self.panelBatch )
-        self.m_notebook3.AddPage( self.panelBatch, _(u"Batch"), True )
+        self.m_notebook3.AddPage( self.panelBatch, _(u"Batch"), False )
         self.panelConfig = wx.Panel( self.m_notebook3, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
-        fgSizer31 = wx.FlexGridSizer( 0, 2, 0, 0 )
+        fgSizer31 = wx.FlexGridSizer( 0, 3, 0, 0 )
         fgSizer31.AddGrowableCol( 1 )
         fgSizer31.SetFlexibleDirection( wx.BOTH )
         fgSizer31.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
@@ -211,6 +211,9 @@ class MainFrame ( wx.Frame ):
         self.textCtrlConfigOwnVat = wx.TextCtrl( self.panelConfig, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
         fgSizer31.Add( self.textCtrlConfigOwnVat, 0, wx.ALL, 5 )
 
+
+        fgSizer31.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+
         self.staticTextConfigInterface = wx.StaticText( self.panelConfig, wx.ID_ANY, _(u"Interface"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.staticTextConfigInterface.Wrap( -1 )
 
@@ -221,6 +224,9 @@ class MainFrame ( wx.Frame ):
         self.comboBoxConfigInterface.SetSelection( 0 )
         fgSizer31.Add( self.comboBoxConfigInterface, 0, wx.ALL, 5 )
 
+
+        fgSizer31.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+
         self.staticTextConfigLanguage = wx.StaticText( self.panelConfig, wx.ID_ANY, _(u"Language"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.staticTextConfigLanguage.Wrap( -1 )
 
@@ -230,6 +236,9 @@ class MainFrame ( wx.Frame ):
         self.comboBoxConfigLanguage = wx.ComboBox( self.panelConfig, wx.ID_ANY, _(u"Combo!"), wx.DefaultPosition, wx.DefaultSize, comboBoxConfigLanguageChoices, 0 )
         self.comboBoxConfigLanguage.SetSelection( 0 )
         fgSizer31.Add( self.comboBoxConfigLanguage, 0, wx.ALL, 5 )
+
+
+        fgSizer31.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 
         self.staticTextConfigCSVDelimiter = wx.StaticText( self.panelConfig, wx.ID_ANY, _(u"CSV delimiter"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.staticTextConfigCSVDelimiter.Wrap( -1 )
@@ -242,6 +251,35 @@ class MainFrame ( wx.Frame ):
 
         fgSizer31.Add( self.textConfigCSVdelimiter, 0, wx.ALL, 5 )
 
+
+        fgSizer31.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+
+        self.staticTextConfigLogfile = wx.StaticText( self.panelConfig, wx.ID_ANY, _(u"Logfile"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.staticTextConfigLogfile.Wrap( -1 )
+
+        fgSizer31.Add( self.staticTextConfigLogfile, 0, wx.ALL, 5 )
+
+        self.textCtrlConfigLogfile = wx.TextCtrl( self.panelConfig, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.textCtrlConfigLogfile.SetMinSize( wx.Size( 400,-1 ) )
+
+        fgSizer31.Add( self.textCtrlConfigLogfile, 1, wx.ALL|wx.EXPAND, 5 )
+
+        self.buttonConfigLogfile = wx.Button( self.panelConfig, wx.ID_ANY, _(u"Logfile"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        fgSizer31.Add( self.buttonConfigLogfile, 0, wx.ALL, 5 )
+
+        self.staticTextConfigLogLevel = wx.StaticText( self.panelConfig, wx.ID_ANY, _(u"Loglevel"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.staticTextConfigLogLevel.Wrap( -1 )
+
+        fgSizer31.Add( self.staticTextConfigLogLevel, 0, wx.ALL, 5 )
+
+        comboBoxConfigLoglevelChoices = [ _(u"DEBUG"), _(u"ERROR") ]
+        self.comboBoxConfigLoglevel = wx.ComboBox( self.panelConfig, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, comboBoxConfigLoglevelChoices, 0 )
+        self.comboBoxConfigLoglevel.SetSelection( 1 )
+        fgSizer31.Add( self.comboBoxConfigLoglevel, 0, wx.ALL, 5 )
+
+
+        fgSizer31.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+
         self.buttonSaveConfig = wx.Button( self.panelConfig, wx.ID_ANY, _(u"Save"), wx.DefaultPosition, wx.DefaultSize, 0 )
         fgSizer31.Add( self.buttonSaveConfig, 0, wx.ALL, 5 )
 
@@ -249,7 +287,7 @@ class MainFrame ( wx.Frame ):
         self.panelConfig.SetSizer( fgSizer31 )
         self.panelConfig.Layout()
         fgSizer31.Fit( self.panelConfig )
-        self.m_notebook3.AddPage( self.panelConfig, _(u"Configuration"), False )
+        self.m_notebook3.AddPage( self.panelConfig, _(u"Configuration"), True )
 
         bSizer2.Add( self.m_notebook3, 1, wx.EXPAND |wx.ALL, 5 )
 
@@ -286,6 +324,7 @@ class MainFrame ( wx.Frame ):
         self.buttonClear.Bind( wx.EVT_BUTTON, self.clearFields )
         self.buttonValidateSingle.Bind( wx.EVT_BUTTON, self.validateSingle )
         self.buttonValidateBatch.Bind( wx.EVT_BUTTON, self.validateBatch )
+        self.buttonConfigLogfile.Bind( wx.EVT_BUTTON, self.openLogfile )
         self.buttonSaveConfig.Bind( wx.EVT_BUTTON, self.saveConfig )
         self.Bind( wx.EVT_MENU, self.vatvalidationClose, id = self.menuitemFileClose.GetId() )
         self.Bind( wx.EVT_MENU, self.vatvalidationGitHub, id = self.menuitemHelpSupport.GetId() )
@@ -307,6 +346,9 @@ class MainFrame ( wx.Frame ):
         event.Skip()
 
     def validateBatch( self, event ):
+        event.Skip()
+
+    def openLogfile( self, event ):
         event.Skip()
 
     def saveConfig( self, event ):
