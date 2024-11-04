@@ -20,6 +20,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 def validatesingle(
     key1="",
     key2="",

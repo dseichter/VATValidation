@@ -41,7 +41,7 @@ def create_config():
 
     with open(CONFIGFILE, 'r') as f:
         data = json.load(f)
-        
+
     # add missing keys
     if 'logfilename' not in data:
         log_dir = tempfile.gettempdir()

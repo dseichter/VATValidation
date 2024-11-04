@@ -136,9 +136,9 @@ class VATValidationFrame(gui.MainFrame):
         self.textResultIsValid.SetValue(str(""))
         self.textResultCode.SetValue(str(""))
         self.textResultDetails.SetValue(str(""))
-        
+
     def openLogfile(self, event):
-        webbrowser.open_new_tab(self.textCtrlConfigLogfile.GetValue())        
+        webbrowser.open_new_tab(self.textCtrlConfigLogfile.GetValue())
 
     def vatvalidationClose(self, event):
         self.Close()
