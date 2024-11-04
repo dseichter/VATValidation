@@ -20,7 +20,7 @@ import defusedxml.minidom as minidom
 
 import codes_vies
 
-import logging_config  # Setup the logging
+import logging_config  # Setup the logging  # noqa: F401
 import logging
 
 logger = logging.getLogger(__name__)
@@ -132,7 +132,7 @@ def start_validation(payload):
             result["traderName"] = (
                 node.getElementsByTagName("ns2:traderName")[0].childNodes[0].nodeValue
             )
-        except Exception as e:
+        except Exception:
             result["traderName"] = None
         try:
             result["traderAddress"] = (
@@ -140,19 +140,19 @@ def start_validation(payload):
                 .childNodes[0]
                 .nodeValue
             )
-        except Exception as e:
+        except Exception:
             result["traderAddress"] = None
         try:
             result["valid"] = (
                 node.getElementsByTagName("ns2:valid")[0].childNodes[0].nodeValue
             )
-        except Exception as e:
+        except Exception:
             result["valid"] = None
         try:
             result["requestDate"] = datetime.datetime.now(
                 datetime.timezone.utc
             ).strftime("%Y-%m-%dT%H:%M:%S")
-        except Exception as e:
+        except Exception:
             result["requestDate"] = None
         # in case of faultcode
         try:
@@ -161,7 +161,7 @@ def start_validation(payload):
                 result["errorcode"] = (
                     node.getElementsByTagName("faultstring")[0].childNodes[0].nodeValue
                 )
-        except Exception as e:
+        except Exception:
             result["errorcode"] = "INVALID_INPUT"
 
         logger.debug(result)

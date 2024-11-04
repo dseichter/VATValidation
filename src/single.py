@@ -15,7 +15,7 @@
 
 import validate_workflow
 
-import logging_config  # Setup the logging
+import logging_config  # Setup the logging  # noqa: F401
 import logging
 
 logger = logging.getLogger(__name__)

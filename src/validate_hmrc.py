@@ -15,13 +15,12 @@
 
 import datetime
 from decimal import Decimal
-import os
 import urllib3
 import json
 
 import codes_hmrc
 
-import logging_config
+import logging_config  # noqa: F401
 import logging
 
 logger = logging.getLogger(__name__)

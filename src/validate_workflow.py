@@ -21,7 +21,7 @@ import validate_bzst
 import validate_vies
 import validate_hmrc
 
-import logging_config  # Setup the logging
+import logging_config  # Setup the logging  # noqa: F401
 import logging
 
 logger = logging.getLogger(__name__)

@@ -29,9 +29,8 @@ import icons
 
 # import common libraries
 import webbrowser
-import json
 
-import logging_config  # Setup the logging
+import logging_config  # Setup the logging  # noqa: F401
 import logging
 
 logger = logging.getLogger(__name__)
