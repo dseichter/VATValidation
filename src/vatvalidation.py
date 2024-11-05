@@ -104,9 +104,16 @@ class VATValidationFrame(gui.MainFrame):
     # load the config file
     def loadConfig(self, event):
         settings.create_config()
-        self.textCtrlConfigOwnVat.SetValue(settings.load_value_from_json_file("ownvat"))
+        try:
+            self.textCtrlConfigOwnVat.SetValue(settings.load_value_from_json_file("ownvat"))
+            self.textOwnvat.SetValue(settings.load_value_from_json_file("ownvat"))
+        except TypeError:
+            wx.MessageBox(
+                "Your own VAT is not set. Please provide your own VAT within the confguration.",
+                "Own VAT",
+                wx.OK | wx.ICON_WARNING,
+            )
         # visible values of configuration
-        self.textOwnvat.SetValue(settings.load_value_from_json_file("ownvat"))
         self.comboBoxConfigInterface.SetValue(settings.load_value_from_json_file("interface"))
         self.comboBoxConfigLanguage.SetValue(settings.load_value_from_json_file("language"))
         self.textConfigCSVdelimiter.SetValue(settings.load_value_from_json_file("delimiter"))

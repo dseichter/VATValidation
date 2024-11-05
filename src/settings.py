@@ -42,7 +42,13 @@ def create_config():
     with open(CONFIGFILE, 'r') as f:
         data = json.load(f)
 
-    # add missing keys
+    # check and add missing keys
+    if 'language' not in data:
+        data['language'] = 'en'
+    if 'interface' not in data:
+        data['interface'] = 'vies'
+    if 'delimiter' not in data:
+        data['delimiter'] = '|'
     if 'logfilename' not in data:
         log_dir = tempfile.gettempdir()
         data['logfilename'] = f'{log_dir}/vatvalidation.log'
