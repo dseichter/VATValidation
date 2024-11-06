@@ -98,7 +98,7 @@ def processcsv(inputfile, outputfile, type, lang):
         dataframe = pd.DataFrame(results)
 
         # save the dateframe to a csv file
-        dataframe.to_csv(outputfile, index=False, header=False)
+        dataframe.to_csv(outputfile, index=False, header=False, sep=settings.load_value_from_json_file("delimiter"))
 
         return 0
 
