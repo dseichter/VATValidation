@@ -17,6 +17,16 @@ import argparse
 import sys
 import helper
 import batch
+import settings
+
+import logging_config  # Setup the logging  # noqa: F401
+import logging
+
+logger = logging.getLogger(__name__)
+
+
+# Initialize the settings
+settings.create_config()
 
 # Create the parser with an extended description or epilog
 parser = argparse.ArgumentParser(
@@ -52,8 +62,11 @@ print(
     + args.input
     + " and output file: "
     + args.output
+    + " using "
+    + settings.load_value_from_json_file("interface")
+    + " interface."
 )
-response = batch.validatebatch(inputfile=args.input, outputfile=args.output)
+response = batch.validatebatch(inputfile=args.input, outputfile=args.output, type=settings.load_value_from_json_file("interface"), lang="en")
 
 match response:
     case 0:
