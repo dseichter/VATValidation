@@ -14,26 +14,17 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 import datetime
-import os
 import urllib3
 import defusedxml.minidom as minidom
-import logging
 import codes_bzst
+import logging_config  # Setup the logging  # noqa: F401
+import logging
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
+
 http = urllib3.PoolManager()
 
 URL = "https://evatr.bff-online.de/evatrRPC"
-
-# get loglevel from environment
-if "LOGLEVEL" in os.environ:
-    loglevel = os.environ["LOGLEVEL"]
-    if loglevel == "DEBUG":
-        logger.setLevel(logging.DEBUG)
-    if loglevel == "INFO":
-        logger.setLevel(logging.INFO)
-    if loglevel == "ERROR":
-        logger.setLevel(logging.ERROR)
 
 validationresult = {
     "key1": None,
@@ -75,7 +66,10 @@ def load_codes(lang, errorcode):
 
 
 def start_validation(payload):
-    logger.debug(payload)
+    logger.debug('-'*40)
+    logger.debug('BZST')
+    logger.debug('-'*40)
+    logger.debug("Starting validation with payload: %s", payload)
 
     # map requested fields to bzst request
     bzstmap = {
@@ -86,8 +80,6 @@ def start_validation(payload):
         "PLZ": payload["zip"],
         "Strasse": payload["street"],
     }
-    # check, if there is valid history of the vat
-
     try:
         resp = http.request("GET", URL, fields=bzstmap)
         rc = parse_response(resp.data)

@@ -16,24 +16,15 @@
 import json
 import datetime
 from decimal import Decimal
-import os
-import logging
 
 import validate_bzst
 import validate_vies
 import validate_hmrc
 
-logger = logging.getLogger()
+import logging_config  # Setup the logging  # noqa: F401
+import logging
 
-# get loglevel from environment
-if "LOGLEVEL" in os.environ:
-    loglevel = os.environ["LOGLEVEL"]
-    if loglevel == "DEBUG":
-        logger.setLevel(logging.DEBUG)
-    if loglevel == "INFO":
-        logger.setLevel(logging.INFO)
-    if loglevel == "ERROR":
-        logger.setLevel(logging.ERROR)
+logger = logging.getLogger(__name__)
 
 
 class fakefloat(float):
@@ -93,5 +84,7 @@ def start_workflow(payload):
         response = validate_bzst.start_validation(payload)
     else:
         response = validate_vies.start_validation(payload)
+
+    logger.debug(response)
 
     return response

@@ -29,7 +29,11 @@ import icons
 
 # import common libraries
 import webbrowser
-import json
+
+import logging_config  # Setup the logging  # noqa: F401
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 # inherit from the MainFrame created in wxFowmBuilder and create VATValidationFrame
@@ -100,30 +104,31 @@ class VATValidationFrame(gui.MainFrame):
     # load the config file
     def loadConfig(self, event):
         settings.create_config()
-        self.textCtrlConfigOwnVat.SetValue(settings.load_value_from_json_file("ownvat"))
+        try:
+            self.textCtrlConfigOwnVat.SetValue(settings.load_value_from_json_file("ownvat"))
+            self.textOwnvat.SetValue(settings.load_value_from_json_file("ownvat"))
+        except TypeError:
+            wx.MessageBox(
+                "Your own VAT is not set. Please provide your own VAT within the confguration.",
+                "Own VAT",
+                wx.OK | wx.ICON_WARNING,
+            )
         # visible values of configuration
-        self.textOwnvat.SetValue(settings.load_value_from_json_file("ownvat"))
         self.comboBoxConfigInterface.SetValue(settings.load_value_from_json_file("interface"))
         self.comboBoxConfigLanguage.SetValue(settings.load_value_from_json_file("language"))
         self.textConfigCSVdelimiter.SetValue(settings.load_value_from_json_file("delimiter"))
+        self.textCtrlConfigLogfile.SetValue(settings.load_value_from_json_file("logfilename"))
+        self.comboBoxConfigLoglevel.SetValue(settings.load_value_from_json_file("loglevel"))
 
     # save the config file
     def saveConfig(self, event):
         # open the file
-        with open("config.json", "w") as f:
-            # write the data
-            f.write(
-                json.dumps(
-                    {
-                        "ownvat": self.textCtrlConfigOwnVat.GetValue(),
-                        "interface": self.comboBoxConfigInterface.GetValue(),
-                        "language": self.comboBoxConfigLanguage.GetValue(),
-                        "delimiter": self.textConfigCSVdelimiter.GetValue(),
-                    },
-                    indent=2,
-                )
-            )
-
+        settings.save_config("ownvat", self.textCtrlConfigOwnVat.GetValue())
+        settings.save_config("interface", self.comboBoxConfigInterface.GetValue())
+        settings.save_config("language", self.comboBoxConfigLanguage.GetValue())
+        settings.save_config("delimiter", self.textConfigCSVdelimiter.GetValue())
+        settings.save_config("logfilename", self.textCtrlConfigLogfile.GetValue())
+        settings.save_config("loglevel", self.comboBoxConfigLoglevel.GetValue())
         self.textOwnvat.SetValue(settings.load_value_from_json_file("ownvat"))
 
     # put a blank string in text when 'Clear' is clicked
@@ -137,6 +142,9 @@ class VATValidationFrame(gui.MainFrame):
         self.textResultIsValid.SetValue(str(""))
         self.textResultCode.SetValue(str(""))
         self.textResultDetails.SetValue(str(""))
+
+    def openLogfile(self, event):
+        webbrowser.open_new_tab(self.textCtrlConfigLogfile.GetValue())
 
     def vatvalidationClose(self, event):
         self.Close()
