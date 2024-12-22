@@ -2,6 +2,7 @@ import unittest
 from xml.dom import minidom
 from validate_bzst import parse_response
 
+
 class TestValidateBZST(unittest.TestCase):
 
     def test_parse_response(self):
@@ -38,6 +39,7 @@ class TestValidateBZST(unittest.TestCase):
 
         # Assert the result
         self.assertEqual(result, expected_result)
+
 
 if __name__ == '__main__':
     unittest.main()
