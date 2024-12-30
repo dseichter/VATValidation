@@ -48,6 +48,8 @@ class MainFrame ( wx.Frame ):
         fgSizer2.Add( self.textOwnvat, 0, wx.ALL, 5 )
 
         self.buttonClear = wx.Button( self.panelSingle, wx.ID_ANY, _(u"Clear"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.buttonClear.SetToolTip( _(u"Clear all entries except your own VAT (if saved).") )
+
         fgSizer2.Add( self.buttonClear, 0, wx.ALIGN_CENTER, 5 )
 
         self.staticText_foreignvat = wx.StaticText( self.panelSingle, wx.ID_ANY, _(u"Foreign VAT"), wx.DefaultPosition, wx.DefaultSize, 0 )
@@ -109,6 +111,8 @@ class MainFrame ( wx.Frame ):
         fgSizer2.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 
         self.buttonValidateSingle = wx.Button( self.panelSingle, wx.ID_ANY, _(u"Validate your entries"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.buttonValidateSingle.SetToolTip( _(u"Start validating your entries.") )
+
         fgSizer2.Add( self.buttonValidateSingle, 0, wx.ALIGN_CENTER, 5 )
 
 
@@ -176,6 +180,8 @@ class MainFrame ( wx.Frame ):
         fgSizer3.Add( self.staticText_Inputfile, 0, wx.ALL, 5 )
 
         self.filepickerInput = wx.FilePickerCtrl( self.panelBatch, wx.ID_ANY, wx.EmptyString, _(u"Select a file"), _(u"*.*"), wx.DefaultPosition, wx.DefaultSize, wx.FLP_DEFAULT_STYLE )
+        self.filepickerInput.SetToolTip( _(u"Select your input file (JSON, XML, CSV) for processing.") )
+
         fgSizer3.Add( self.filepickerInput, 1, wx.ALL|wx.EXPAND, 5 )
 
         self.staticText_Outputfile = wx.StaticText( self.panelBatch, wx.ID_ANY, _(u"Output file"), wx.DefaultPosition, wx.DefaultSize, 0 )
@@ -184,12 +190,16 @@ class MainFrame ( wx.Frame ):
         fgSizer3.Add( self.staticText_Outputfile, 0, wx.ALL, 5 )
 
         self.filepickerOutput = wx.FilePickerCtrl( self.panelBatch, wx.ID_ANY, wx.EmptyString, _(u"Select a file"), _(u"*.*"), wx.DefaultPosition, wx.DefaultSize, wx.FLP_SAVE|wx.FLP_USE_TEXTCTRL )
+        self.filepickerOutput.SetToolTip( _(u"Select your output file to store the validation results to.") )
+
         fgSizer3.Add( self.filepickerOutput, 1, wx.ALL|wx.EXPAND, 5 )
 
 
         fgSizer3.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 
         self.buttonValidateBatch = wx.Button( self.panelBatch, wx.ID_ANY, _(u"Start processing file"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.buttonValidateBatch.SetToolTip( _(u"Start processing your input file. This can take a while and the UI can stop for some seconds to work.") )
+
         fgSizer3.Add( self.buttonValidateBatch, 0, wx.ALIGN_LEFT, 5 )
 
 
@@ -374,7 +384,7 @@ class MainFrame ( wx.Frame ):
 class dialogAbout ( wx.Dialog ):
 
     def __init__( self, parent ):
-        wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = _(u"About VAT Validation"), pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.DEFAULT_DIALOG_STYLE )
+        wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = _(u"About VAT Validation"), pos = wx.DefaultPosition, size = wx.Size( 240,300 ), style = wx.DEFAULT_DIALOG_STYLE )
 
         self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 
@@ -398,6 +408,7 @@ class dialogAbout ( wx.Dialog ):
 
         self.staticTextGithub.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, True, wx.EmptyString ) )
         self.staticTextGithub.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_HIGHLIGHT ) )
+        self.staticTextGithub.SetToolTip( _(u"Visit GitHub repository for further information.") )
 
         bSizer2.Add( self.staticTextGithub, 0, wx.ALL, 5 )
 
@@ -405,6 +416,7 @@ class dialogAbout ( wx.Dialog ):
         self.staticTextIcon8.Wrap( -1 )
 
         self.staticTextIcon8.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_GRAYTEXT ) )
+        self.staticTextIcon8.SetToolTip( _(u"All icons within VAT Validation are taken from Icons8") )
 
         bSizer2.Add( self.staticTextIcon8, 0, wx.ALL, 5 )
 
@@ -420,7 +432,6 @@ class dialogAbout ( wx.Dialog ):
 
         self.SetSizer( bSizer2 )
         self.Layout()
-        bSizer2.Fit( self )
 
         self.Centre( wx.BOTH )
 
