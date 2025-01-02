@@ -114,7 +114,7 @@ In case you are using CSV, you can choose the delimiter for your import and expo
 
 # Known issues
 
-At the moment there are several known issues. You will find them in the issues. If you encounter any further issue, please add an issue.
+At the moment there are no known issues.
 
 # Contributing
 

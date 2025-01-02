@@ -114,7 +114,7 @@ Falls Sie CSV verwenden, können Sie das Trennzeichen für Ihre Import- und Expo
 
 # Bekannte Probleme
 
-Zurzeit gibt es mehrere bekannte Probleme. Sie finden diese in der Liste der Probleme. Wenn Sie auf ein weiteres Problem stoßen, fügen Sie bitte ein Problem hinzu.
+Zurzeit gibt es keine bekannten Probleme.
 
 # Beitragen
 
