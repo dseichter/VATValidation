@@ -10,6 +10,8 @@
 
 Validate VAT numbers using the interfaces of BZSt, VIES and/or HMRC. Provides single or batch validation with support for CSV, XLSX and JSON.
 
+Binaries for Windows and Linux are available (see releases).
+
 ## Features
 
 * Graphical user interface
