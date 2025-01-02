@@ -27,7 +27,7 @@ If you like this software, please don't hesitate to give it a :star: or send me 
 
 ## About
 
-VAT Validation supports you in validating your vat numbers based on your master data. Whether you want to check a VAT number directly at your workplace or integrate it into your ERP/CRM applications.
+VATValidation supports you in validating your vat numbers based on your master data. Whether you want to check a VAT number directly at your workplace or integrate it into your ERP/CRM applications.
 
 ## Command Line tool
 
@@ -55,19 +55,19 @@ Only batch processing is provided.
 
 ## Graphical User Interface
 
-The VAT Validation provides a graphical user interface for single and batch validation. It can be used on every workplace and does not need to be installed or any other 3rd party components.
+The VATValidation provides a graphical user interface for single and batch validation. It can be used on every workplace and does not need to be installed or any other 3rd party components.
 
 ### Single Validation
 
 You can use the software at your workplace and check directly against the official supported interfaces of BZSt, VIES and/or HMRC.
 
-![single validation](images/single.png "VAT Validation Single Validation")
+![single validation](images/single.png "VATValidation Single Validation")
 
 ### Batch Validation
 
 Export your master data into a file (JSON, XLSX or CSV) format and check them completly. The codepage should be UTF-8.
 
-![batch validation](images/batch.png "VAT Validation Batch Processing")
+![batch validation](images/batch.png "VATValidation Batch Processing")
 
 The imported files needs to include the following fields/columns. In case of CSV and XLSX, please add the field names into the first row. Do not add more columns.
 
@@ -106,7 +106,7 @@ Depending on your imported data and used interface, some keys won't have values.
 The configuration is done really simple. Change to the configuration tab and enter your own vat. This will be used for the single validation as default VAT. 
 Next to this, you can choose your default interface. If you own a german VAT, it is recommended to use BZSt. Change the language of your output.
 
-![configuration](images/config.png "VAT Validation Configuration")
+![configuration](images/config.png "VATValidation Configuration")
 
 In case you are using CSV, you can choose the delimiter for your import and export files.
 
