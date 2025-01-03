@@ -120,6 +120,14 @@ class MainFrame ( wx.Frame ):
 
         bSizer3.Add( fgSizer2, 1, wx.EXPAND, 5 )
 
+        bSizer6 = wx.BoxSizer( wx.VERTICAL )
+
+        self.m_staticline5 = wx.StaticLine( self.panelSingle, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
+        bSizer6.Add( self.m_staticline5, 0, wx.EXPAND |wx.ALL, 5 )
+
+
+        bSizer3.Add( bSizer6, 1, wx.EXPAND, 5 )
+
         fgSizer5 = wx.FlexGridSizer( 0, 2, 0, 0 )
         fgSizer5.AddGrowableCol( 1 )
         fgSizer5.SetFlexibleDirection( wx.BOTH )
@@ -171,6 +179,8 @@ class MainFrame ( wx.Frame ):
         bSizer3.Fit( self.panelSingle )
         self.m_notebook3.AddPage( self.panelSingle, _(u"Single"), True )
         self.panelBatch = wx.Panel( self.m_notebook3, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+        bSizer9 = wx.BoxSizer( wx.VERTICAL )
+
         fgSizer3 = wx.FlexGridSizer( 0, 2, 0, 0 )
         fgSizer3.AddGrowableCol( 1 )
         fgSizer3.SetFlexibleDirection( wx.BOTH )
@@ -205,9 +215,20 @@ class MainFrame ( wx.Frame ):
         fgSizer3.Add( self.buttonValidateBatch, 0, wx.ALIGN_LEFT, 5 )
 
 
-        self.panelBatch.SetSizer( fgSizer3 )
+        bSizer9.Add( fgSizer3, 0, wx.EXPAND, 5 )
+
+        bSizer12 = wx.BoxSizer( wx.VERTICAL )
+
+        self.m_staticline10 = wx.StaticLine( self.panelBatch, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
+        bSizer12.Add( self.m_staticline10, 0, wx.EXPAND |wx.ALL, 5 )
+
+
+        bSizer9.Add( bSizer12, 1, wx.EXPAND, 5 )
+
+
+        self.panelBatch.SetSizer( bSizer9 )
         self.panelBatch.Layout()
-        fgSizer3.Fit( self.panelBatch )
+        bSizer9.Fit( self.panelBatch )
         self.m_notebook3.AddPage( self.panelBatch, _(u"Batch"), False )
         self.panelConfig = wx.Panel( self.m_notebook3, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
         fgSizer31 = wx.FlexGridSizer( 0, 3, 0, 0 )
@@ -305,11 +326,6 @@ class MainFrame ( wx.Frame ):
 
 
         bSizer2.Add( bSizer4, 1, wx.EXPAND, 5 )
-
-        bSizer5 = wx.BoxSizer( wx.VERTICAL )
-
-
-        bSizer2.Add( bSizer5, 1, wx.EXPAND, 5 )
 
 
         self.SetSizer( bSizer2 )
