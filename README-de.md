@@ -35,7 +35,7 @@ VATValidation unterstützt Sie bei der Validierung Ihrer Umsatzsteuernummern auf
 
 Wenn Sie Batch-Dateien (z.B. json, csv oder XLSX) prüfen möchten, können Sie die Versionen wie `VATValidation-cli-windows-v2024-07-08.exe` herunterladen und in vatvalidation_cli.exe umbenennen.
 
-Führen Sie das Tool einfach aus, indem Sie eine Eingabe- und eine Ausgabedatei angeben. Für weitere Informationen, führen Sie bitte
+Führen Sie das Tool einfach aus, indem Sie eine Eingabe- und eine Ausgabedatei angeben. Für weitere Informationen, führen Sie bitte folgenden Befehl aus:
 
 ``vatvalidation_cli.exe``
 
@@ -126,14 +126,14 @@ Erstellen und aktivieren Sie eine Umgebung, indem Sie den folgenden Befehl ausf�
 
 ```python -m venv .venv```
 
-```.venv/Scripts/activate``
+```.venv/Scripts/activate```
 
 Installieren Sie die erforderlichen Abhängigkeiten
 
-```pip install -r src/requirements.txt``
+```pip install -r src/requirements.txt```
 
 Wenn Sie einige Änderungen an der Benutzeroberfläche vornehmen möchten, laden Sie den neuesten wxFormBuilder von der [wxFormBuilder Homepage] (https://github.com/wxFormBuilder/wxFormBuilder) herunter und installieren Sie ihn.
 
 Sie können die VATValidation starten, indem Sie den folgenden Befehl ausführen:
 
-```python src/vatvalidation.py``
+```python src/vatvalidation.py```

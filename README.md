@@ -48,7 +48,7 @@ options:
   -h, --help       show this help message and exit
   --version        show version of and exit
   --input INPUT    Input filename for VAT numbers.
-  --output OUTPUT  Output ffilename for validation results.
+  --output OUTPUT  Output filename for validation results.
 
 For more information, visit our GitHub repository: https://github.com/dseichter/VATValidation License: GPL 3.0 - see LICENSE file at the root of the repository for details.
 ```
