@@ -1,5 +1,5 @@
 import unittest
-from xml.dom import minidom
+import defusedxml.minidom as minidom
 from validate_bzst import parse_response
 
 
