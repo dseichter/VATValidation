@@ -160,6 +160,7 @@ cython_debug/
 #.idea/
 
 # ignore auto generated files by VATValidation
+config.json
 src/config.json
 
 .vscode/

@@ -116,21 +116,29 @@ def parse_response(response_data):
     rc = {}
     for param in params:
         arrays = param.getElementsByTagName("array")
-        iskey = True
-        for array in arrays:
-            values = array.getElementsByTagName("value")
-            for value in values:
-                strings = value.getElementsByTagName("string")
-                if iskey:
-                    iskey = False
-                    for string in strings:
-                        newkey = gettext(string.childNodes)
-                else:
-                    iskey = True
-                    for string in strings:
-                        newvalue = gettext(string.childNodes)
-                        rc[newkey] = newvalue
+        parse_arrays(arrays, rc)
     return rc
+
+
+def parse_arrays(arrays, rc):
+    iskey = True
+    for array in arrays:
+        values = array.getElementsByTagName("value")
+        for value in values:
+            parse_values(value, rc, iskey)
+            iskey = not iskey
+
+
+def parse_values(value, rc, iskey):
+    strings = value.getElementsByTagName("string")
+    if iskey:
+        for string in strings:
+            newkey = gettext(string.childNodes)
+            rc[newkey] = None
+    else:
+        for string in strings:
+            newvalue = gettext(string.childNodes)
+            rc[list(rc.keys())[-1]] = newvalue
 
 
 def is_valid(error_code):
