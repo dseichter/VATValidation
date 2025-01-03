@@ -10,6 +10,8 @@
 
 Validierung von Umsatzsteuernummern über die Schnittstellen von BZSt, MIAS und/oder HMRC. Bietet Einzel- oder Batch-Validierung mit Unterstützung für CSV, XLSX und JSON.
 
+Binärdateien für Windows und Linux stehen zur Verfügung (siehe Releases).
+
 ## Merkmale
 
 * Grafische Benutzeroberfläche
@@ -27,13 +29,13 @@ Wenn Ihnen diese Software gefällt, zögern Sie bitte nicht, ihr einen :star: zu
 
 ## Über
 
-VAT Validation unterstützt Sie bei der Validierung Ihrer Umsatzsteuernummern auf der Grundlage Ihrer Stammdaten. Egal, ob Sie eine Umsatzsteuer-Identifikationsnummer direkt an Ihrem Arbeitsplatz prüfen oder in Ihre ERP/CRM-Anwendungen integrieren wollen.
+VATValidation unterstützt Sie bei der Validierung Ihrer Umsatzsteuernummern auf der Grundlage Ihrer Stammdaten. Egal, ob Sie eine Umsatzsteuer-Identifikationsnummer direkt an Ihrem Arbeitsplatz prüfen oder in Ihre ERP/CRM-Anwendungen integrieren wollen.
 
 ## Kommandozeilen-Tool
 
 Wenn Sie Batch-Dateien (z.B. json, csv oder XLSX) prüfen möchten, können Sie die Versionen wie `VATValidation-cli-windows-v2024-07-08.exe` herunterladen und in vatvalidation_cli.exe umbenennen.
 
-Führen Sie das Tool einfach aus, indem Sie eine Eingabe- und eine Ausgabedatei angeben. Für weitere Informationen, führen Sie bitte
+Führen Sie das Tool einfach aus, indem Sie eine Eingabe- und eine Ausgabedatei angeben. Für weitere Informationen, führen Sie bitte folgenden Befehl aus:
 
 ``vatvalidation_cli.exe``
 
@@ -46,7 +48,7 @@ options:
   -h, --help       show this help message and exit
   --version        show version of and exit
   --input INPUT    Input filename for VAT numbers.
-  --output OUTPUT  Output ffilename for validation results.
+  --output OUTPUT  Output filename for validation results.
 
 For more information, visit our GitHub repository: https://github.com/dseichter/VATValidation License: GPL 3.0 - see LICENSE file at the root of the repository for details.
 ```
@@ -55,19 +57,19 @@ Es wird nur die Stapelverarbeitung angeboten.
 
 ## Grafische Benutzeroberfläche
 
-VAT Validation bietet eine grafische Benutzeroberfläche für Einzel- und Stapel-Validierung. Sie kann an jedem Arbeitsplatz verwendet werden und muss nicht installiert werden, und es sind keine weiteren Komponenten von Drittanbietern erforderlich.
+VATValidation bietet eine grafische Benutzeroberfläche für Einzel- und Stapel-Validierung. Sie kann an jedem Arbeitsplatz verwendet werden und muss nicht installiert werden, und es sind keine weiteren Komponenten von Drittanbietern erforderlich.
 
 ### Einzelvalidierung
 
 Sie können die Software an Ihrem Arbeitsplatz einsetzen und direkt gegen die offiziell unterstützten Schnittstellen von BZSt, MIAS und/oder HMRC prüfen.
 
-![Einzelvalidierung](images/single.png "VAT-Validation Einzelvalidierung")
+![Einzelvalidierung](images/single.png "VATValidation Einzelvalidierung")
 
 ### Stapelverarbeitung
 
 Exportieren Sie Ihre Stammdaten in eine Datei (JSON, XLSX oder CSV) und überprüfen Sie sie vollständig. Die Codepage sollte UTF-8 sein.
 
-![Stapelverarbeitung](images/batch.png "VAT Validation Stapelverarbeitung")
+![Stapelverarbeitung](images/batch.png "VATValidation Stapelverarbeitung")
 
 Die importierten Dateien müssen die folgenden Felder/Spalten enthalten. Im Falle von CSV und XLSX fügen Sie bitte die Feldnamen in die erste Zeile ein. Fügen Sie keine weiteren Spalten hinzu.
 
@@ -112,7 +114,7 @@ Falls Sie CSV verwenden, können Sie das Trennzeichen für Ihre Import- und Expo
 
 # Bekannte Probleme
 
-Zurzeit gibt es mehrere bekannte Probleme. Sie finden diese in der Liste der Probleme. Wenn Sie auf ein weiteres Problem stoßen, fügen Sie bitte ein Problem hinzu.
+Zurzeit gibt es keine bekannten Probleme.
 
 # Beitragen
 
@@ -124,14 +126,14 @@ Erstellen und aktivieren Sie eine Umgebung, indem Sie den folgenden Befehl ausf�
 
 ```python -m venv .venv```
 
-```.venv/Scripts/activate``
+```.venv/Scripts/activate```
 
 Installieren Sie die erforderlichen Abhängigkeiten
 
-```pip install -r src/requirements.txt``
+```pip install -r src/requirements.txt```
 
 Wenn Sie einige Änderungen an der Benutzeroberfläche vornehmen möchten, laden Sie den neuesten wxFormBuilder von der [wxFormBuilder Homepage] (https://github.com/wxFormBuilder/wxFormBuilder) herunter und installieren Sie ihn.
 
 Sie können die VATValidation starten, indem Sie den folgenden Befehl ausführen:
 
-```python src/vatvalidation.py``
+```python src/vatvalidation.py```

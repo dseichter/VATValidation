@@ -34,7 +34,6 @@ class DialogAbout(gui.dialogAbout):
         # specify all the icons
         gui.dialogAbout.SetIcon(self, icons.info.GetIcon())
         self.bitmapLogo.SetBitmap(icons.tick_box.GetBitmap())
-        self.Fit()
 
     def openGithub(self, event):
         webbrowser.open_new_tab('https://github.com/dseichter/VATValidation')  # Add the URL of the GitHub repository

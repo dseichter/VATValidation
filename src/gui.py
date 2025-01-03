@@ -24,11 +24,13 @@ ID_ABOUT = 6002
 class MainFrame ( wx.Frame ):
 
     def __init__( self, parent ):
-        wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = _(u"VAT Validation"), pos = wx.DefaultPosition, size = wx.Size( 642,552 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+        wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = _(u"VATValidation"), pos = wx.DefaultPosition, size = wx.Size( 642,552 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 
         self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 
         bSizer2 = wx.BoxSizer( wx.VERTICAL )
+
+        bSizer4 = wx.BoxSizer( wx.VERTICAL )
 
         self.m_notebook3 = wx.Notebook( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
         self.panelSingle = wx.Panel( self.m_notebook3, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
@@ -48,6 +50,8 @@ class MainFrame ( wx.Frame ):
         fgSizer2.Add( self.textOwnvat, 0, wx.ALL, 5 )
 
         self.buttonClear = wx.Button( self.panelSingle, wx.ID_ANY, _(u"Clear"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.buttonClear.SetToolTip( _(u"Clear all entries except your own VAT (if saved).") )
+
         fgSizer2.Add( self.buttonClear, 0, wx.ALIGN_CENTER, 5 )
 
         self.staticText_foreignvat = wx.StaticText( self.panelSingle, wx.ID_ANY, _(u"Foreign VAT"), wx.DefaultPosition, wx.DefaultSize, 0 )
@@ -109,10 +113,20 @@ class MainFrame ( wx.Frame ):
         fgSizer2.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 
         self.buttonValidateSingle = wx.Button( self.panelSingle, wx.ID_ANY, _(u"Validate your entries"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.buttonValidateSingle.SetToolTip( _(u"Start validating your entries.") )
+
         fgSizer2.Add( self.buttonValidateSingle, 0, wx.ALIGN_CENTER, 5 )
 
 
         bSizer3.Add( fgSizer2, 1, wx.EXPAND, 5 )
+
+        bSizer6 = wx.BoxSizer( wx.VERTICAL )
+
+        self.m_staticline5 = wx.StaticLine( self.panelSingle, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
+        bSizer6.Add( self.m_staticline5, 0, wx.EXPAND |wx.ALL, 5 )
+
+
+        bSizer3.Add( bSizer6, 1, wx.EXPAND, 5 )
 
         fgSizer5 = wx.FlexGridSizer( 0, 2, 0, 0 )
         fgSizer5.AddGrowableCol( 1 )
@@ -163,8 +177,10 @@ class MainFrame ( wx.Frame ):
         self.panelSingle.SetSizer( bSizer3 )
         self.panelSingle.Layout()
         bSizer3.Fit( self.panelSingle )
-        self.m_notebook3.AddPage( self.panelSingle, _(u"Single"), False )
+        self.m_notebook3.AddPage( self.panelSingle, _(u"Single"), True )
         self.panelBatch = wx.Panel( self.m_notebook3, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+        bSizer9 = wx.BoxSizer( wx.VERTICAL )
+
         fgSizer3 = wx.FlexGridSizer( 0, 2, 0, 0 )
         fgSizer3.AddGrowableCol( 1 )
         fgSizer3.SetFlexibleDirection( wx.BOTH )
@@ -176,6 +192,8 @@ class MainFrame ( wx.Frame ):
         fgSizer3.Add( self.staticText_Inputfile, 0, wx.ALL, 5 )
 
         self.filepickerInput = wx.FilePickerCtrl( self.panelBatch, wx.ID_ANY, wx.EmptyString, _(u"Select a file"), _(u"*.*"), wx.DefaultPosition, wx.DefaultSize, wx.FLP_DEFAULT_STYLE )
+        self.filepickerInput.SetToolTip( _(u"Select your input file (JSON, XML, CSV) for processing.") )
+
         fgSizer3.Add( self.filepickerInput, 1, wx.ALL|wx.EXPAND, 5 )
 
         self.staticText_Outputfile = wx.StaticText( self.panelBatch, wx.ID_ANY, _(u"Output file"), wx.DefaultPosition, wx.DefaultSize, 0 )
@@ -184,18 +202,33 @@ class MainFrame ( wx.Frame ):
         fgSizer3.Add( self.staticText_Outputfile, 0, wx.ALL, 5 )
 
         self.filepickerOutput = wx.FilePickerCtrl( self.panelBatch, wx.ID_ANY, wx.EmptyString, _(u"Select a file"), _(u"*.*"), wx.DefaultPosition, wx.DefaultSize, wx.FLP_SAVE|wx.FLP_USE_TEXTCTRL )
+        self.filepickerOutput.SetToolTip( _(u"Select your output file to store the validation results to.") )
+
         fgSizer3.Add( self.filepickerOutput, 1, wx.ALL|wx.EXPAND, 5 )
 
 
         fgSizer3.Add( ( 0, 0), 1, wx.EXPAND, 5 )
 
         self.buttonValidateBatch = wx.Button( self.panelBatch, wx.ID_ANY, _(u"Start processing file"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.buttonValidateBatch.SetToolTip( _(u"Start processing your input file. This can take a while and the UI can stop for some seconds to work.") )
+
         fgSizer3.Add( self.buttonValidateBatch, 0, wx.ALIGN_LEFT, 5 )
 
 
-        self.panelBatch.SetSizer( fgSizer3 )
+        bSizer9.Add( fgSizer3, 0, wx.EXPAND, 5 )
+
+        bSizer12 = wx.BoxSizer( wx.VERTICAL )
+
+        self.m_staticline10 = wx.StaticLine( self.panelBatch, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
+        bSizer12.Add( self.m_staticline10, 0, wx.EXPAND |wx.ALL, 5 )
+
+
+        bSizer9.Add( bSizer12, 1, wx.EXPAND, 5 )
+
+
+        self.panelBatch.SetSizer( bSizer9 )
         self.panelBatch.Layout()
-        fgSizer3.Fit( self.panelBatch )
+        bSizer9.Fit( self.panelBatch )
         self.m_notebook3.AddPage( self.panelBatch, _(u"Batch"), False )
         self.panelConfig = wx.Panel( self.m_notebook3, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
         fgSizer31 = wx.FlexGridSizer( 0, 3, 0, 0 )
@@ -287,16 +320,20 @@ class MainFrame ( wx.Frame ):
         self.panelConfig.SetSizer( fgSizer31 )
         self.panelConfig.Layout()
         fgSizer31.Fit( self.panelConfig )
-        self.m_notebook3.AddPage( self.panelConfig, _(u"Configuration"), True )
+        self.m_notebook3.AddPage( self.panelConfig, _(u"Configuration"), False )
 
-        bSizer2.Add( self.m_notebook3, 1, wx.EXPAND |wx.ALL, 5 )
+        bSizer4.Add( self.m_notebook3, 1, wx.EXPAND |wx.ALL, 0 )
+
+
+        bSizer2.Add( bSizer4, 1, wx.EXPAND, 5 )
 
 
         self.SetSizer( bSizer2 )
         self.Layout()
+        self.m_statusBar1 = self.CreateStatusBar( 1, wx.STB_SIZEGRIP, wx.ID_ANY )
         self.mainmenu = wx.MenuBar( 0 )
         self.file = wx.Menu()
-        self.menuitemFileClose = wx.MenuItem( self.file, ID_CLOSE, _(u"Close"), _(u"Close VAT Validation"), wx.ITEM_NORMAL )
+        self.menuitemFileClose = wx.MenuItem( self.file, ID_CLOSE, _(u"Close"), _(u"Close VATValidation"), wx.ITEM_NORMAL )
         self.menuitemFileClose.SetBitmap( wx.NullBitmap )
         self.file.Append( self.menuitemFileClose )
 
@@ -309,7 +346,7 @@ class MainFrame ( wx.Frame ):
         self.menuitemHelpUpdate = wx.MenuItem( self.help, wx.ID_ANY, _(u"Check for updates"), wx.EmptyString, wx.ITEM_NORMAL )
         self.help.Append( self.menuitemHelpUpdate )
 
-        self.menuitemHelpAbout = wx.MenuItem( self.help, ID_ABOUT, _(u"About..."), _(u"About VAT Validation"), wx.ITEM_NORMAL )
+        self.menuitemHelpAbout = wx.MenuItem( self.help, ID_ABOUT, _(u"About..."), _(u"About VATValidation"), wx.ITEM_NORMAL )
         self.help.Append( self.menuitemHelpAbout )
 
         self.mainmenu.Append( self.help, _(u"Help") )
@@ -374,7 +411,7 @@ class MainFrame ( wx.Frame ):
 class dialogAbout ( wx.Dialog ):
 
     def __init__( self, parent ):
-        wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = _(u"About VAT Validation"), pos = wx.DefaultPosition, size = wx.DefaultSize, style = wx.DEFAULT_DIALOG_STYLE )
+        wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = _(u"About VATValidation"), pos = wx.DefaultPosition, size = wx.Size( 240,300 ), style = wx.DEFAULT_DIALOG_STYLE )
 
         self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 
@@ -398,6 +435,7 @@ class dialogAbout ( wx.Dialog ):
 
         self.staticTextGithub.SetFont( wx.Font( wx.NORMAL_FONT.GetPointSize(), wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, True, wx.EmptyString ) )
         self.staticTextGithub.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_HIGHLIGHT ) )
+        self.staticTextGithub.SetToolTip( _(u"Visit GitHub repository for further information.") )
 
         bSizer2.Add( self.staticTextGithub, 0, wx.ALL, 5 )
 
@@ -405,6 +443,7 @@ class dialogAbout ( wx.Dialog ):
         self.staticTextIcon8.Wrap( -1 )
 
         self.staticTextIcon8.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_GRAYTEXT ) )
+        self.staticTextIcon8.SetToolTip( _(u"All icons within VATValidation are taken from Icons8") )
 
         bSizer2.Add( self.staticTextIcon8, 0, wx.ALL, 5 )
 
@@ -420,7 +459,6 @@ class dialogAbout ( wx.Dialog ):
 
         self.SetSizer( bSizer2 )
         self.Layout()
-        bSizer2.Fit( self )
 
         self.Centre( wx.BOTH )
 
