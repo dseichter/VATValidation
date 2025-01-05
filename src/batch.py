@@ -24,12 +24,14 @@ import pandas as pd
 import logging_config  # Setup the logging  # noqa: F401
 import logging
 
+import wx
+
 logger = logging.getLogger(__name__)
 
 columns = ["key1", "key2", "ownvat", "foreignvat", "company", "street", "zip", "town"]
 
 
-def validatebatch(inputfile, outputfile="", type="vies", lang="en"):
+def validatebatch(inputfile, outputfile="", type="vies", lang="en", statusupdate=False):
     """
     Validate the batch file and write the results to the output file.
     """
@@ -43,20 +45,20 @@ def validatebatch(inputfile, outputfile="", type="vies", lang="en"):
 
     match ext:
         case "csv":
-            resultcode = processcsv(inputfile, outputfile, type, lang)
+            resultcode = processcsv(inputfile, outputfile, type, lang, statusupdate)
             return resultcode
         case "xlsx":
-            resultcode = processxlsx(inputfile, outputfile, type, lang)
+            resultcode = processxlsx(inputfile, outputfile, type, lang, statusupdate)
             return resultcode
         case "json":
-            resultcode = processjson(inputfile, outputfile, type, lang)
+            resultcode = processjson(inputfile, outputfile, type, lang, statusupdate)
             return resultcode
         case _:
             logger.error("Unsupported file format")
             return 127
 
 
-def processcsv(inputfile, outputfile, type, lang):
+def processcsv(inputfile, outputfile, type, lang, statusupdate):
     try:
         # read csv with columns
         data = pd.read_csv(
@@ -66,11 +68,15 @@ def processcsv(inputfile, outputfile, type, lang):
         )
         # create a list to store the results
         results = []
+        # write statistics
+        write_status_update(statusupdate, len(data), 0)
         # iterate over the rows
         for index, row in data.iterrows():
             # skip first line, because it contains the column names
             if index == 0:
                 continue
+            # write statistics
+            write_status_update(statusupdate, len(data), index)
             # validate the row
             message = single.validatesingle(
                 key1=row["key1"],
@@ -113,14 +119,18 @@ def processcsv(inputfile, outputfile, type, lang):
         return 99
 
 
-def processxlsx(inputfile, outputfile, type, lang):
+def processxlsx(inputfile, outputfile, type, lang, statusupdate):
     try:
         # read the input file
         data = pd.read_excel(inputfile, usecols=columns)
         # create a list to store the results
         results = []
+        # write statistics
+        write_status_update(statusupdate, len(data), 0)
         # iterate over the rows
         for index, row in data.iterrows():
+            # write statistics
+            write_status_update(statusupdate, len(data), index)
             # validate the row
             message = single.validatesingle(
                 key1=row["key1"],
@@ -156,13 +166,17 @@ def processxlsx(inputfile, outputfile, type, lang):
         return 99
 
 
-def processjson(inputfile, outputfile, type, lang):
+def processjson(inputfile, outputfile, type, lang, statusupdate):
     try:
         data = pd.read_json(inputfile)
         # create a list to store the results
         results = []
+        # write statistics
+        write_status_update(statusupdate, len(data), 0)
         # iterate over the rows
         for index, row in data.iterrows():
+            # write statistics
+            write_status_update(statusupdate, len(data), index)
             # validate the row
             message = single.validatesingle(
                 key1=row["key1"],
@@ -196,3 +210,14 @@ def processjson(inputfile, outputfile, type, lang):
     except Exception as e:
         logging.error(f"An unexpected error occurred: {e}")
         return 99
+
+
+def write_status_update(statusupdate, total, current):
+    if statusupdate:
+        with open('batchstatus.json', 'w') as f:
+            data = {
+                "total": total,
+                "current": current
+            }
+            json.dump(data, f)
+            wx.Yield()

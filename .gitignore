@@ -162,5 +162,6 @@ cython_debug/
 # ignore auto generated files by VATValidation
 config.json
 src/config.json
+src/batchstatus.json
 
 .vscode/

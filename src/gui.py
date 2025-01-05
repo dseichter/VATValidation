@@ -223,7 +223,39 @@ class MainFrame ( wx.Frame ):
         bSizer12.Add( self.m_staticline10, 0, wx.EXPAND |wx.ALL, 5 )
 
 
-        bSizer9.Add( bSizer12, 1, wx.EXPAND, 5 )
+        bSizer9.Add( bSizer12, 0, wx.EXPAND, 5 )
+
+        fgSizer51 = wx.FlexGridSizer( 0, 2, 0, 0 )
+        fgSizer51.SetFlexibleDirection( wx.BOTH )
+        fgSizer51.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
+
+        self.staticText_RecordsFound = wx.StaticText( self.panelBatch, wx.ID_ANY, _(u"Records found"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.staticText_RecordsFound.Wrap( -1 )
+
+        fgSizer51.Add( self.staticText_RecordsFound, 0, wx.ALL, 5 )
+
+        self.textRecordsFound = wx.TextCtrl( self.panelBatch, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+        fgSizer51.Add( self.textRecordsFound, 0, wx.ALL, 5 )
+
+        self.staticText_Progress = wx.StaticText( self.panelBatch, wx.ID_ANY, _(u"Progress"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.staticText_Progress.Wrap( -1 )
+
+        fgSizer51.Add( self.staticText_Progress, 0, wx.ALL, 5 )
+
+        self.progressProcessing = wx.Gauge( self.panelBatch, wx.ID_ANY, 100, wx.DefaultPosition, wx.DefaultSize, wx.GA_HORIZONTAL )
+        self.progressProcessing.SetValue( 0 )
+        fgSizer51.Add( self.progressProcessing, 0, wx.ALL, 5 )
+
+
+        fgSizer51.Add( ( 0, 0), 1, wx.EXPAND, 5 )
+
+        self.staticText_ProcessingXofY = wx.StaticText( self.panelBatch, wx.ID_ANY, _(u"0/0"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.staticText_ProcessingXofY.Wrap( -1 )
+
+        fgSizer51.Add( self.staticText_ProcessingXofY, 0, wx.ALL, 5 )
+
+
+        bSizer9.Add( fgSizer51, 1, wx.EXPAND, 5 )
 
 
         self.panelBatch.SetSizer( bSizer9 )

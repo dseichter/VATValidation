@@ -29,6 +29,11 @@ import icons
 
 # import common libraries
 import webbrowser
+import json
+import os
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
+import threading
 
 import logging_config  # Setup the logging  # noqa: F401
 import logging
@@ -100,7 +105,37 @@ class VATValidationFrame(gui.MainFrame):
         self.m_notebook3.SetPageImage(0, 0)
         self.m_notebook3.SetPageImage(1, 1)
         self.m_notebook3.SetPageImage(2, 2)
-
+        
+        # create a filesystem watcher and 
+        #self.filewatcher = wx.FileSystemWatcher()
+        self.Bind(wx.EVT_CLOSE, self.OnClose)
+        wx.CallAfter(self.addWatchdog)
+        
+    def OnClose(self, _event):
+        self.observer.stop()
+        self.observer.join()
+        #os.remove("batchstatus.json")
+        self.Destroy()
+        
+    @staticmethod
+    def OnWatchdog(self, event):
+        if event.event_type in ['modified', 'created'] and 'batchstatus.json' in event.src_path:
+            try:
+                with open("batchstatus.json", "r") as f:
+                    data = json.load(f)
+                # get the current status
+                self.textRecordsFound.SetValue(str(data["total"]))
+                self.staticText_ProcessingXofY.SetLabel(f"{data['current']}/{data['total']}")
+                self.progressProcessing.Range = data["total"]
+                self.progressProcessing.Value = data["current"]
+            except:
+                pass
+        if event.event_type in ['deleted'] and 'batchstatus.json' in event.src_path:
+            self.textRecordsFound.SetValue(str(0))
+            self.staticText_ProcessingXofY.SetLabel("0/0")
+            self.progressProcessing.Range = 0
+            self.progressProcessing.Value = 0
+        
     # load the config file
     def loadConfig(self, event):
         settings.create_config()
@@ -206,7 +241,8 @@ class VATValidationFrame(gui.MainFrame):
             inputfile=self.filepickerInput.GetPath(),
             outputfile=self.filepickerOutput.GetPath(),
             type=settings.load_value_from_json_file("interface"),
-            lang=settings.load_value_from_json_file("language")
+            lang=settings.load_value_from_json_file("language"),
+            statusupdate=True
         )
 
         if resultcode == 127:
@@ -239,6 +275,22 @@ class VATValidationFrame(gui.MainFrame):
         dlg = about_ui.DialogAbout(self)
         dlg.ShowModal()
         dlg.Destroy()
+        
+    def addWatchdog(self):
+        path = os.path.abspath(".")
+        self.observer = Observer()
+        event_handler = Handler(self)
+        self.observer.schedule(event_handler, path, recursive=True)
+        self.observer.start()        
+
+
+class Handler(FileSystemEventHandler):
+    def __init__(self, parent):
+        self.parent = parent
+
+    def on_any_event(self, event):
+        # provide the parent frame (main frame) and the event to the OnWatchdog function
+        wx.CallAfter(self.parent.OnWatchdog, self.parent, event)
 
 
 # mandatory in wx, create an app, False stands for not deteriction stdin/stdout
