@@ -195,7 +195,7 @@ class VATValidationFrame(gui.MainFrame):
             wx.MessageBox(
                 "Are you sure you want to start the batch validation?",
                 "Batch Validation",
-                wx.YES_NO | wx.ICON_QUESTION, # on Windows, no icon will be shown (feature, not a bug)
+                wx.YES_NO | wx.ICON_QUESTION,  # on Windows, no icon will be shown (feature, not a bug)
             )
             == wx.NO
         ):
