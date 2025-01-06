@@ -24,7 +24,6 @@ import pandas as pd
 import logging_config  # Setup the logging  # noqa: F401
 import logging
 
-import wx
 
 logger = logging.getLogger(__name__)
 
@@ -217,7 +216,6 @@ def write_status_update(statusupdate, total, current):
         with open('batchstatus.json', 'w') as f:
             data = {
                 "total": total,
-                "current": current
+                "current": current + 1
             }
             json.dump(data, f)
-            wx.Yield()
