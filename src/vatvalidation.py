@@ -101,7 +101,7 @@ class VATValidationFrame(gui.MainFrame):
                 with open(BATCH_STATUS_FILE, "r") as f:
                     data = json.load(f)
                 # get the current status
-                self.textRecordsFound.SetValue(str(data["total"]))
+                self.staticText_RecordsFound.SetLabel(str(data["total"]))
                 self.staticText_ProcessingXofY.SetLabel(f"{data['current']}/{data['total']}")
                 self.progressProcessing.Range = data["total"]
                 self.progressProcessing.Value = data["current"]
@@ -110,7 +110,7 @@ class VATValidationFrame(gui.MainFrame):
             except json.decoder.JSONDecodeError:
                 pass
         if event.event_type in ["deleted"] and BATCH_STATUS_FILE in event.src_path:
-            self.textRecordsFound.SetValue(str(0))
+            self.staticText_RecordsFound.SetLabel("0")
             self.staticText_ProcessingXofY.SetLabel("0/0")
             self.progressProcessing.Range = 0
             self.progressProcessing.Value = 0
@@ -224,7 +224,7 @@ class VATValidationFrame(gui.MainFrame):
                 return
 
         # set/reset everything to 0
-        self.textRecordsFound.SetValue(str(0))
+        self.staticText_RecordsFound.SetLabel("0")
         self.staticText_ProcessingXofY.SetLabel("0/0")
         self.progressProcessing.Range = 0
         self.progressProcessing.Value = 0

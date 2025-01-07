@@ -234,8 +234,10 @@ class MainFrame ( wx.Frame ):
 
         fgSizer51.Add( self.staticText_RecordsFound, 0, wx.ALL, 5 )
 
-        self.textRecordsFound = wx.TextCtrl( self.panelBatch, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-        fgSizer51.Add( self.textRecordsFound, 0, wx.ALL, 5 )
+        self.staticText_RecordsFound = wx.StaticText( self.panelBatch, wx.ID_ANY, _(u"0"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.staticText_RecordsFound.Wrap( -1 )
+
+        fgSizer51.Add( self.staticText_RecordsFound, 0, wx.ALL, 5 )
 
         self.staticText_Progress = wx.StaticText( self.panelBatch, wx.ID_ANY, _(u"Progress"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.staticText_Progress.Wrap( -1 )
