@@ -59,7 +59,7 @@ def validatebatch(inputfile, outputfile="", type="vies", lang="en", statusupdate
 
 def processcsv(inputfile, outputfile, type, lang, statusupdate):
     try:
-        
+
         # read the file and check if all rows have the same number of columns
         with open(inputfile, 'r') as f:
             first_line = f.readline().strip()
@@ -78,14 +78,14 @@ def processcsv(inputfile, outputfile, type, lang, statusupdate):
             if len(split_columns) != len(columns):
                 logger.error(f"Expected {len(columns)} columns, but found {len(split_columns)}.")
                 return 4
-        
+
         # read csv with columns
         data = pd.read_csv(
             inputfile,
             names=columns,
             delimiter=settings.load_value_from_json_file("delimiter"),
         )
-        
+
         # create a list to store the results
         results = []
         # write statistics
@@ -143,7 +143,7 @@ def processxlsx(inputfile, outputfile, type, lang, statusupdate):
     try:
         # read the input file
         data = pd.read_excel(inputfile, usecols=columns)
-        
+
         # check, if all columns are present
         for column in columns:
             if column not in data.columns:
