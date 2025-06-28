@@ -59,20 +59,41 @@ def validatebatch(inputfile, outputfile="", type="vies", lang="en", statusupdate
 
 def processcsv(inputfile, outputfile, type, lang, statusupdate):
     try:
+
+        # read the file and check if all rows have the same number of columns
+        with open(inputfile, 'r') as f:
+            first_line = f.readline().strip()
+            # check if the first line is empty
+            if not first_line:
+                logger.error("Input file is empty.")
+                return 2
+
+            delimiter = settings.load_value_from_json_file("delimiter")
+            # check if the first line ends with the delimiter
+            if first_line.endswith(delimiter):
+                logger.error("First line ends with the delimiter.")
+                return 5
+
+            split_columns = first_line.split(delimiter)
+            if len(split_columns) != len(columns):
+                logger.error(f"Expected {len(columns)} columns, but found {len(split_columns)}.")
+                return 4
+
         # read csv with columns
         data = pd.read_csv(
             inputfile,
             names=columns,
             delimiter=settings.load_value_from_json_file("delimiter"),
         )
+
         # create a list to store the results
         results = []
         # write statistics
         write_status_update(statusupdate, len(data), 0)
         # iterate over the rows
         for index, row in data.iterrows():
-            # skip first line, because it contains the column names
-            if index == 0:
+            # skip first line only if it contains the column names
+            if index == 0 and all(str(row[col]).strip() == col for col in columns):
                 continue
             # write statistics
             write_status_update(statusupdate, len(data), index)
@@ -122,6 +143,12 @@ def processxlsx(inputfile, outputfile, type, lang, statusupdate):
     try:
         # read the input file
         data = pd.read_excel(inputfile, usecols=columns)
+
+        # check, if all columns are present
+        for column in columns:
+            if column not in data.columns:
+                logger.error(f"Missing column: {column}")
+                return 4
         # create a list to store the results
         results = []
         # write statistics
