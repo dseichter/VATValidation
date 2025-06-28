@@ -33,7 +33,7 @@ VATValidation supports you in validating your vat numbers based on your master d
 
 ## Command Line tool
 
-If you want to check batch files (e.g. json, csv or XLSX) you can download the releases like `VATValidation-cli-windows-v2024-07-08.exe` and rename it to vatvalidation_cli.exe.
+If you want to check batch files (e.g. json, csv or XLSX) you can download the latest releases like `VATValidation-cli-windows-...exe` and rename it to vatvalidation_cli.exe.
 
 Just run the tool and by providing an input and an output file. For further information, please run
 

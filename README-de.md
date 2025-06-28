@@ -33,7 +33,7 @@ VATValidation unterstützt Sie bei der Validierung Ihrer Umsatzsteuernummern auf
 
 ## Kommandozeilen-Tool
 
-Wenn Sie Batch-Dateien (z.B. json, csv oder XLSX) prüfen möchten, können Sie die Versionen wie `VATValidation-cli-windows-v2024-07-08.exe` herunterladen und in vatvalidation_cli.exe umbenennen.
+Wenn Sie Batch-Dateien (z.B. json, csv oder XLSX) prüfen möchten, können Sie die neuste Versionen bspw. `VATValidation-cli-windows-...exe` herunterladen und in vatvalidation_cli.exe umbenennen.
 
 Führen Sie das Tool einfach aus, indem Sie eine Eingabe- und eine Ausgabedatei angeben. Für weitere Informationen, führen Sie bitte folgenden Befehl aus:
 
