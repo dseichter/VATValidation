@@ -92,8 +92,8 @@ def processcsv(inputfile, outputfile, type, lang, statusupdate):
         write_status_update(statusupdate, len(data), 0)
         # iterate over the rows
         for index, row in data.iterrows():
-            # skip first line, because it contains the column names
-            if index == 0:
+            # skip first line only if it contains the column names
+            if index == 0 and all(str(row[col]).strip() == col for col in columns):
                 continue
             # write statistics
             write_status_update(statusupdate, len(data), index)
