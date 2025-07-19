@@ -1,8 +1,5 @@
 # VATValidation
 
-[![en](https://img.shields.io/badge/lang-en-blue.svg)](https://github.com/dseichter/VATValidation/blob/main/README.md)
-[![de](https://img.shields.io/badge/lang-de-blue.svg)](https://github.com/dseichter/VATValidation/blob/main/README-de.md)
-
 ![pep8](https://github.com/dseichter/VATValidation/actions/workflows/pep8.yml/badge.svg)
 ![bandit](https://github.com/dseichter/VATValidation/actions/workflows/bandit.yml/badge.svg)
 ![trivy](https://github.com/dseichter/VATValidation/actions/workflows/trivy.yml/badge.svg)
