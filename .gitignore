@@ -137,6 +137,9 @@ venv.bak/
 
 # mkdocs documentation
 /site
+vatvalidation-docs/site/
+vatvalidation-docs/.cache/
+vatvalidation-docs/.temp/
 
 # mypy
 .mypy_cache/
@@ -151,13 +154,6 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
-
-# PyCharm
-#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
-#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
-#  and can be added to the global gitignore or merged into this file.  For a more nuclear
-#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-#.idea/
 
 # ignore auto generated files by VATValidation
 config.json

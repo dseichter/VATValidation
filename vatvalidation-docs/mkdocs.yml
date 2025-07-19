@@ -1,0 +1,27 @@
+site_name: VATValidation
+repo_url: https://github.com/dseichter/VATValidation
+theme:
+  name: material
+  logo: assets/Tick_Box.png
+  palette:
+    - scheme: slate
+      primary: cyan
+      accent: green
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+      default: true
+    - scheme: default
+      primary: cyan
+      accent: green
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode  
+
+nav:
+  - Home: index.md
+  - Command Line: commandline.md
+  - Configuration: configuration.md
+  - Graphical User Interface: gui.md
+  - Development: development.md
+  - About: about.md
