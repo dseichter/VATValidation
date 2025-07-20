@@ -1,4 +1,5 @@
 site_name: VATValidation
+site_url: https://dseichter.github.io/VATValidation/
 repo_url: https://github.com/dseichter/VATValidation
 theme:
   name: material
