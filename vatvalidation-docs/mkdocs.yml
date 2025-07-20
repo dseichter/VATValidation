@@ -26,7 +26,6 @@ plugins:
           name: English
           build: true
         - locale: de
-          default: true
           name: Deutsch
           build: true 
           nav_translations:
