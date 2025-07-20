@@ -4,6 +4,7 @@ repo_url: https://github.com/dseichter/VATValidation
 theme:
   name: material
   logo: assets/Tick_Box.png
+  favicon: assets/Tick_Box.png
   palette:
     - scheme: slate
       primary: cyan
