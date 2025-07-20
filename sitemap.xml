@@ -1,87 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <url>
-        <loc>None./</loc>
+        <loc>https://dseichter.github.io/VATValidation/</loc>
         <lastmod>2025-07-20</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="None"/>
-        <xhtml:link rel="alternate" hreflang="de" href="Nonede/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/"/>
     </url>
     <url>
-        <loc>Noneabout/</loc>
+        <loc>https://dseichter.github.io/VATValidation/about/</loc>
         <lastmod>2025-07-20</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="Noneabout/"/>
-        <xhtml:link rel="alternate" hreflang="de" href="Nonede/about/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/about/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/about/"/>
     </url>
     <url>
-        <loc>Nonecommandline/</loc>
+        <loc>https://dseichter.github.io/VATValidation/commandline/</loc>
         <lastmod>2025-07-20</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="Nonecommandline/"/>
-        <xhtml:link rel="alternate" hreflang="de" href="Nonede/commandline/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/commandline/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/commandline/"/>
     </url>
     <url>
-        <loc>Noneconfiguration/</loc>
+        <loc>https://dseichter.github.io/VATValidation/configuration/</loc>
         <lastmod>2025-07-20</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="Noneconfiguration/"/>
-        <xhtml:link rel="alternate" hreflang="de" href="Nonede/configuration/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/configuration/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/configuration/"/>
     </url>
     <url>
-        <loc>Nonedevelopment/</loc>
+        <loc>https://dseichter.github.io/VATValidation/development/</loc>
         <lastmod>2025-07-20</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="Nonedevelopment/"/>
-        <xhtml:link rel="alternate" hreflang="de" href="Nonede/development/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/development/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/development/"/>
     </url>
     <url>
-        <loc>Nonegui/</loc>
+        <loc>https://dseichter.github.io/VATValidation/gui/</loc>
         <lastmod>2025-07-20</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="en" href="Nonegui/"/>
-        <xhtml:link rel="alternate" hreflang="de" href="Nonede/gui/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/gui/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/gui/"/>
     </url>
     <url>
-        <loc>Nonede/</loc>
+        <loc>https://dseichter.github.io/VATValidation/de/</loc>
         <lastmod>2025-07-20</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="de" href="Nonede/"/>
-        <xhtml:link rel="alternate" hreflang="en" href="None"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/"/>
     </url>
     <url>
-        <loc>Nonede/about/</loc>
+        <loc>https://dseichter.github.io/VATValidation/de/about/</loc>
         <lastmod>2025-07-20</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="de" href="Nonede/about/"/>
-        <xhtml:link rel="alternate" hreflang="en" href="Noneabout/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/about/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/about/"/>
     </url>
     <url>
-        <loc>Nonede/commandline/</loc>
+        <loc>https://dseichter.github.io/VATValidation/de/commandline/</loc>
         <lastmod>2025-07-20</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="de" href="Nonede/commandline/"/>
-        <xhtml:link rel="alternate" hreflang="en" href="Nonecommandline/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/commandline/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/commandline/"/>
     </url>
     <url>
-        <loc>Nonede/configuration/</loc>
+        <loc>https://dseichter.github.io/VATValidation/de/configuration/</loc>
         <lastmod>2025-07-20</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="de" href="Nonede/configuration/"/>
-        <xhtml:link rel="alternate" hreflang="en" href="Noneconfiguration/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/configuration/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/configuration/"/>
     </url>
     <url>
-        <loc>Nonede/development/</loc>
+        <loc>https://dseichter.github.io/VATValidation/de/development/</loc>
         <lastmod>2025-07-20</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="de" href="Nonede/development/"/>
-        <xhtml:link rel="alternate" hreflang="en" href="Nonedevelopment/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/development/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/development/"/>
     </url>
     <url>
-        <loc>Nonede/gui/</loc>
+        <loc>https://dseichter.github.io/VATValidation/de/gui/</loc>
         <lastmod>2025-07-20</lastmod>
         <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="de" href="Nonede/gui/"/>
-        <xhtml:link rel="alternate" hreflang="en" href="Nonegui/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/gui/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/gui/"/>
     </url>
 </urlset>
