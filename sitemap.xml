@@ -1,3 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <url>
+        <loc>None./</loc>
+        <lastmod>2025-07-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="None"/>
+        <xhtml:link rel="alternate" hreflang="de" href="Nonede/"/>
+    </url>
+    <url>
+        <loc>Noneabout/</loc>
+        <lastmod>2025-07-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneabout/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="Nonede/about/"/>
+    </url>
+    <url>
+        <loc>Nonecommandline/</loc>
+        <lastmod>2025-07-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Nonecommandline/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="Nonede/commandline/"/>
+    </url>
+    <url>
+        <loc>Noneconfiguration/</loc>
+        <lastmod>2025-07-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneconfiguration/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="Nonede/configuration/"/>
+    </url>
+    <url>
+        <loc>Nonedevelopment/</loc>
+        <lastmod>2025-07-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Nonedevelopment/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="Nonede/development/"/>
+    </url>
+    <url>
+        <loc>Nonegui/</loc>
+        <lastmod>2025-07-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="Nonegui/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="Nonede/gui/"/>
+    </url>
+    <url>
+        <loc>Nonede/</loc>
+        <lastmod>2025-07-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="Nonede/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="None"/>
+    </url>
+    <url>
+        <loc>Nonede/about/</loc>
+        <lastmod>2025-07-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="Nonede/about/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneabout/"/>
+    </url>
+    <url>
+        <loc>Nonede/commandline/</loc>
+        <lastmod>2025-07-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="Nonede/commandline/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Nonecommandline/"/>
+    </url>
+    <url>
+        <loc>Nonede/configuration/</loc>
+        <lastmod>2025-07-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="Nonede/configuration/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Noneconfiguration/"/>
+    </url>
+    <url>
+        <loc>Nonede/development/</loc>
+        <lastmod>2025-07-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="Nonede/development/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Nonedevelopment/"/>
+    </url>
+    <url>
+        <loc>Nonede/gui/</loc>
+        <lastmod>2025-07-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="Nonede/gui/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="Nonegui/"/>
+    </url>
 </urlset>
