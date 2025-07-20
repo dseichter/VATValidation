@@ -6,7 +6,7 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dseichter_VATValidation&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=dseichter_VATValidation)
 
 <p align="center">
-  <img src="vatvalidation-docs/assets/Tick_Box.png" alt="VATValidation Logo" width="120"/>
+  <img src="vatvalidation-docs/docs/assets/Tick_Box.png" alt="VATValidation Logo" width="120"/>
 </p>
 
 <p align="center">
