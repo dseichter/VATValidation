@@ -23,7 +23,3 @@ Binaries for Windows and Linux are available (see releases).
 This is the successor of my VAT-Validation. Now released as Open Source.
 
 If you like this software, please don't hesitate to give it a :star: or send me a :moneybag: donation in the amount you think the software is worth.
-
-## About
-
-VATValidation supports you in validating your vat numbers based on your master data. Whether you want to check a VAT number directly at your workplace or integrate it into your ERP/CRM applications.

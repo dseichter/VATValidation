@@ -18,6 +18,25 @@ theme:
         icon: material/weather-night
         name: Switch to dark mode  
 
+plugins:
+  - i18n:
+      languages:
+        - locale: en
+          default: true
+          name: English
+          build: true
+        - locale: de
+          default: true
+          name: Deutsch
+          build: true 
+          nav_translations:
+            Home: Startseite
+            Command Line: Kommandozeile
+            Configuration: Konfiguration
+            Graphical User Interface: Grafische Benutzeroberfläche
+            Development: Entwicklung
+            About: Über         
+
 nav:
   - Home: index.md
   - Command Line: commandline.md
