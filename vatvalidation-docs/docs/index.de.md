@@ -11,14 +11,14 @@ Binärdateien für Windows und Linux stehen zur Verfügung (siehe Releases).
 
 ## Merkmale
 
-* Grafische Benutzeroberfläche
-* Einfache Validierung
-* Stapelverarbeitung von CSV, JSON oder XLSX
-* Validierung mittels BZSt (konfigurierbar, kann nur verwendet werden, wenn Ihre Umsatzsteuer mit `DE` beginnt)
-* Validierung über VIES (konfigurierbar)
-* Validierung mit HMRC (wenn Sie eine mit „UK“ beginnende Mehrwertsteuer validieren möchten)
-* Batch-Verarbeitung kann über die CLI-Schnittstelle ausgeführt werden (siehe Releases)
-* **keine** Abhängigkeiten erforderlich
+- 🖥️ Grafische Benutzeroberfläche
+- ✅ Einfache Validierung
+- 📦 Stapelverarbeitung von CSV, JSON oder XLSX
+- 🇩🇪 Validierung mittels BZSt (konfigurierbar, kann nur verwendet werden, wenn Ihre Umsatzsteuer mit `DE` beginnt)
+- 🇪🇺 Validierung über VIES (konfigurierbar)
+- 🇬🇧 Validierung mit HMRC (wenn Sie eine mit „UK“ beginnende Mehrwertsteuer validieren möchten)
+- 🛠️ Batch-Verarbeitung kann über die CLI-Schnittstelle ausgeführt werden (siehe Releases)
+- 🔒**keine** Abhängigkeiten erforderlich
 
 Dies ist der Nachfolger meiner VAT-Validation. Jetzt als Open Source veröffentlicht.
 

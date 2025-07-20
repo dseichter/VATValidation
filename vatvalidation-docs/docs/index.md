@@ -11,14 +11,14 @@ Binaries for Windows and Linux are available (see releases).
 
 ## Features
 
-* Graphical user interface
-* Single validation
-* Batch processing of CSV, JSON or XLSX
-* Validation using BZSt (configurable, can only be used if your VAT starts with `DE`)
-* Validation using VIES (configurable)
-* Validation using HMRC (if you want to validate a vat starting with `UK`)
-* Batch processing can be run using CLI interface (see releases)
-* **NO** dependencies needed
+- 🖥️ Graphical user interface
+- ✅ Single VAT number validation
+- 📦 Batch processing of CSV, JSON, or XLSX
+- 🇩🇪 Validation using BZSt (best, if you own a German VAT number)
+- 🇪🇺 Validation using VIES (EU VAT numbers)
+- 🇬🇧 Validation using HMRC (UK VAT numbers)
+- 🛠️ CLI batch processing (see releases)
+- 🔒 **NO** external dependencies required
 
 This is the successor of my VAT-Validation. Now released as Open Source.
 

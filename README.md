@@ -27,9 +27,9 @@ Binaries for Windows and Linux are available in the <a href="https://github.com/
 - 🖥️ Graphical user interface
 - ✅ Single VAT number validation
 - 📦 Batch processing of CSV, JSON, or XLSX
-- 🇩🇪 Validation using BZSt (for German VAT numbers)
+- 🇩🇪 Validation using BZSt (best, if you own a German VAT number)
 - 🇪🇺 Validation using VIES (EU VAT numbers)
-- 🇬🇧 Validation using HMRC (UK VAT numbers)
+- 🇬🇧 Validation using HMRC (check UK VAT numbers)
 - 🛠️ CLI batch processing (see releases)
 - 🔒 **NO** external dependencies required
 
