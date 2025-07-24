@@ -26,4 +26,11 @@ jobs:
 
     - name: Run tests
       run: |
-        python -m unittest discover . -v
+        python -m unittest discover . -v | tee unittest_output.log
+
+    - name: Add test summary to workflow
+      run: |
+        echo "### 🧪 Unit Test Results" >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
+        head -n 50 unittest_output.log >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
