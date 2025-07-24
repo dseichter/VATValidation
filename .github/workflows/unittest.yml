@@ -26,7 +26,7 @@ jobs:
 
     - name: Run tests
       run: |
-        python -m unittest discover . -v > unittest_output.log
+        python -m unittest discover . -v 2>&1 | tee unittest_output.log
 
     - name: Add test summary to workflow
       run: |
