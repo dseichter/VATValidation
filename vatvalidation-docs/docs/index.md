@@ -7,7 +7,7 @@
 
 Validate VAT numbers using the interfaces of BZSt, VIES and/or HMRC. Provides single or batch validation with support for CSV, XLSX and JSON.
 
-Binaries for Windows and Linux are available (see releases).
+Binaries for Windows and Linux are available (see [releases](https://github.com/dseichter/VATValidation/releases)).
 
 ## Features
 
@@ -15,9 +15,9 @@ Binaries for Windows and Linux are available (see releases).
 - ✅ Single VAT number validation
 - 📦 Batch processing of CSV, JSON, or XLSX
 - 🇩🇪 Validation using BZSt (best, if you own a German VAT number)
-- 🇪🇺 Validation using VIES (EU VAT numbers)
-- 🇬🇧 Validation using HMRC (UK VAT numbers)
-- 🛠️ CLI batch processing (see releases)
+- 🇪🇺 Validation using VIES
+- 🇬🇧 Validation using HMRC (including VAT IDs beginning with `UK`)
+- 🛠️ CLI batch processing (see [commandine](commandline))
 - 🔒 **NO** external dependencies required
 
 This is the successor of my VAT-Validation. Now released as Open Source.

@@ -7,17 +7,17 @@
 
 Validierung von Umsatzsteuernummern über die Schnittstellen von BZSt, MIAS und/oder HMRC. Bietet Einzel- oder Batch-Validierung mit Unterstützung für CSV, XLSX und JSON.
 
-Binärdateien für Windows und Linux stehen zur Verfügung (siehe Releases).
+Binärdateien für Windows und Linux stehen zur Verfügung (siehe [Releases](https://github.com/dseichter/VATValidation/releases)).
 
 ## Merkmale
 
 - 🖥️ Grafische Benutzeroberfläche
 - ✅ Einfache Validierung
 - 📦 Stapelverarbeitung von CSV, JSON oder XLSX
-- 🇩🇪 Validierung mittels BZSt (konfigurierbar, kann nur verwendet werden, wenn Ihre Umsatzsteuer mit `DE` beginnt)
-- 🇪🇺 Validierung über VIES (konfigurierbar)
-- 🇬🇧 Validierung mit HMRC (wenn Sie eine mit „UK“ beginnende Mehrwertsteuer validieren möchten)
-- 🛠️ Batch-Verarbeitung kann über die CLI-Schnittstelle ausgeführt werden (siehe Releases)
+- 🇩🇪 Validierung mittels BZSt (empfohlen, wenn Sie eine dt. USt-Id besitzen)
+- 🇪🇺 Validierung über VIES
+- 🇬🇧 Validierung mit HMRC (u.a. für mit `UK` beginnende USt-Id)
+- 🛠️ CLI Batch-Verarbeitung ((siehe [Kommandozeile](commandline)))
 - 🔒**keine** Abhängigkeiten erforderlich
 
 Dies ist der Nachfolger meiner VAT-Validation. Jetzt als Open Source veröffentlicht.
