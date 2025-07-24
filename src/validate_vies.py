@@ -168,7 +168,7 @@ def start_validation(payload):
         logger.debug(resp.data)
         result = parse_vies_response(resp.data)
         logger.debug(result)
-        
+
         # bring result in right format
         validationresult = {
             "key1": payload["key1"],
