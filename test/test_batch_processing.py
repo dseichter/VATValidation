@@ -4,6 +4,7 @@ import tempfile
 import os
 import batch
 
+
 class TestValidateBatch(unittest.TestCase):
     @patch('batch.processcsv', return_value=0)
     @patch('batch.processxlsx', return_value=0)
@@ -48,6 +49,7 @@ class TestValidateBatch(unittest.TestCase):
             result = batch.validatebatch(tmp.name)
             self.assertEqual(result, 127)
         os.remove(tmp.name)
+
 
 if __name__ == '__main__':
     unittest.main()

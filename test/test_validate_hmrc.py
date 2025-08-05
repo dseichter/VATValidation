@@ -2,6 +2,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 import validate_hmrc
 
+
 class TestValidateHMRC(unittest.TestCase):
     @patch('validate_hmrc.http')
     def test_start_validation_success(self, mock_http):
@@ -51,6 +52,7 @@ class TestValidateHMRC(unittest.TestCase):
         self.assertEqual(result["errorcode"], "NOT_FOUND")
         self.assertIn("not found", result["errorcode_description"].lower())
         self.assertEqual(result["type"], "HMRC")
+
 
 if __name__ == '__main__':
     unittest.main()

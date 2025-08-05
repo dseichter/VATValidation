@@ -2,9 +2,10 @@ import unittest
 import os
 import json
 import sys
+import settings
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../src'))
-import settings
+
 
 class TestConfigJson(unittest.TestCase):
     def setUp(self):
@@ -37,6 +38,7 @@ class TestConfigJson(unittest.TestCase):
             data = json.load(f)
         for key in required_keys:
             self.assertIn(key, data, f"Missing required key: {key}")
+
 
 if __name__ == '__main__':
     unittest.main()
