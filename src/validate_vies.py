@@ -79,6 +79,48 @@ def load_codes(lang, errorcode):
     return ""
 
 
+def parse_vies_response(xml_data):
+    dom = minidom.parseString(xml_data)
+    node = dom.documentElement
+    result = {}
+    try:
+        result["traderName"] = (
+            node.getElementsByTagName("ns2:traderName")[0].childNodes[0].nodeValue
+        )
+    except Exception:
+        result["traderName"] = None
+    try:
+        result["traderAddress"] = (
+            node.getElementsByTagName("ns2:traderAddress")[0]
+            .childNodes[0]
+            .nodeValue
+        )
+    except Exception:
+        result["traderAddress"] = None
+    try:
+        result["valid"] = (
+            node.getElementsByTagName("ns2:valid")[0].childNodes[0].nodeValue
+        )
+    except Exception:
+        result["valid"] = None
+    try:
+        result["requestDate"] = datetime.datetime.now(
+            datetime.timezone.utc
+        ).strftime("%Y-%m-%dT%H:%M:%S")
+    except Exception:
+        result["requestDate"] = None
+    # in case of faultcode
+    try:
+        result["errorcode"] = ""
+        if node.getElementsByTagName("faultstring"):
+            result["errorcode"] = (
+                node.getElementsByTagName("faultstring")[0].childNodes[0].nodeValue
+            )
+    except Exception:
+        result["errorcode"] = "INVALID_INPUT"
+    return result
+
+
 def start_validation(payload):
     logger.debug('-'*40)
     logger.debug('VIES')
@@ -123,48 +165,10 @@ def start_validation(payload):
         #     <faultcode>env:Server</faultcode>
         #     <faultstring>MS_UNAVAILABLE</faultstring>
         # </env:Fault></env:Body></env:Envelope>
-        dom = minidom.parseString(resp.data)
-
         logger.debug(resp.data)
-        node = dom.documentElement
-        result = {}
-        try:
-            result["traderName"] = (
-                node.getElementsByTagName("ns2:traderName")[0].childNodes[0].nodeValue
-            )
-        except Exception:
-            result["traderName"] = None
-        try:
-            result["traderAddress"] = (
-                node.getElementsByTagName("ns2:traderAddress")[0]
-                .childNodes[0]
-                .nodeValue
-            )
-        except Exception:
-            result["traderAddress"] = None
-        try:
-            result["valid"] = (
-                node.getElementsByTagName("ns2:valid")[0].childNodes[0].nodeValue
-            )
-        except Exception:
-            result["valid"] = None
-        try:
-            result["requestDate"] = datetime.datetime.now(
-                datetime.timezone.utc
-            ).strftime("%Y-%m-%dT%H:%M:%S")
-        except Exception:
-            result["requestDate"] = None
-        # in case of faultcode
-        try:
-            result["errorcode"] = ""
-            if node.getElementsByTagName("faultstring"):
-                result["errorcode"] = (
-                    node.getElementsByTagName("faultstring")[0].childNodes[0].nodeValue
-                )
-        except Exception:
-            result["errorcode"] = "INVALID_INPUT"
-
+        result = parse_vies_response(resp.data)
         logger.debug(result)
+
         # bring result in right format
         validationresult = {
             "key1": payload["key1"],
