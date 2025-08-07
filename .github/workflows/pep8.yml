@@ -1,11 +1,20 @@
 name: 'Python PEP8 Check'
+
 on:
   push:
     branches:
-      - '*'
+      - main
+      - dseichter/*
+    paths-ignore:
+      - 'vatvalidation-docs/**'
+      - '.github/workflows/gh-page.yml'
   pull_request:
     branches:
       - '*'
+    paths-ignore:
+      - 'vatvalidation-docs/**'
+      - '.github/workflows/gh-page.yml'
+
 
 jobs:
   pep8:

@@ -2,8 +2,18 @@ name: Run Unit Tests
 
 on:
   push:
-
+    branches:
+      - main
+      - dseichter/*
+    paths-ignore:
+      - 'vatvalidation-docs/**'
+      - '.github/workflows/gh-page.yml'
   pull_request:
+    branches:
+      - '*'
+    paths-ignore:
+      - 'vatvalidation-docs/**'
+      - '.github/workflows/gh-page.yml'
    
 
 jobs:

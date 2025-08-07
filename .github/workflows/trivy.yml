@@ -1,13 +1,24 @@
 # https://github.com/aquasecurity/trivy-action?tab=readme-ov-file#using-trivy-to-scan-your-git-repo
 name: Trivy
+
 on:
   push:
     branches:
       - main
+      - dseichter/*
+    paths-ignore:
+      - 'vatvalidation-docs/**'
+      - '.github/workflows/gh-page.yml'
   pull_request:
+    branches:
+      - '*'
+    paths-ignore:
+      - 'vatvalidation-docs/**'
+      - '.github/workflows/gh-page.yml'
 
   workflow_dispatch:
  
+
 jobs:
   build:
     name: Trivy
