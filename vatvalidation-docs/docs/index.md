@@ -17,7 +17,7 @@ Binaries for Windows and Linux are available (see [releases](https://github.com/
 - 🇩🇪 Validation using BZSt (best, if you own a German VAT number)
 - 🇪🇺 Validation using VIES
 - 🇬🇧 Validation using HMRC (including VAT IDs beginning with `UK`)
-- 🛠️ CLI batch processing (see [commandine](commandline))
+- 🛠️ CLI batch processing (see [commandine](commandline.md))
 - 🔒 **NO** external dependencies required
 
 This is the successor of my VAT-Validation. Now released as Open Source.

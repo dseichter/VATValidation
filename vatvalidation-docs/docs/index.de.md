@@ -17,7 +17,7 @@ Binärdateien für Windows und Linux stehen zur Verfügung (siehe [Releases](htt
 - 🇩🇪 Validierung mittels BZSt (empfohlen, wenn Sie eine dt. USt-Id besitzen)
 - 🇪🇺 Validierung über VIES
 - 🇬🇧 Validierung mit HMRC (u.a. für mit `UK` beginnende USt-Id)
-- 🛠️ CLI Batch-Verarbeitung ((siehe [Kommandozeile](commandline)))
+- 🛠️ CLI Batch-Verarbeitung ((siehe [Kommandozeile](commandline.md)))
 - 🔒**keine** Abhängigkeiten erforderlich
 
 Dies ist der Nachfolger meiner VAT-Validation. Jetzt als Open Source veröffentlicht.

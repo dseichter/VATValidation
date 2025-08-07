@@ -9,6 +9,8 @@ theme:
   name: material
   logo: assets/Tick_Box.png
   favicon: assets/Tick_Box.png
+  icon:
+    alternate: fontawesome/solid/globe
   palette:
     - scheme: slate
       primary: cyan
@@ -40,7 +42,12 @@ plugins:
             Configuration: Konfiguration
             Graphical User Interface: Grafische Benutzeroberfläche
             Development: Entwicklung
-            About: Über         
+            About: Über
+  - search:
+      lang:
+        - en
+        - de
+ 
 
 nav:
   - Home: index.md
