@@ -3668,7 +3668,7 @@
             <event name="OnMenuSelection">vatvalidationClose</event>
           </object>
         </object>
-        <object class="wxMenu" expanded="false">
+        <object class="wxMenu" expanded="true">
           <property name="label">Help</property>
           <property name="name">help</property>
           <property name="permission">protected</property>
@@ -3684,7 +3684,21 @@
             <property name="permission">none</property>
             <property name="shortcut"></property>
             <property name="unchecked_bitmap"></property>
-            <event name="OnMenuSelection">vatvalidationGitHub</event>
+            <event name="OnMenuSelection">openGitHubRepo</event>
+          </object>
+          <object class="wxMenuItem" expanded="true">
+            <property name="bitmap"></property>
+            <property name="checked">0</property>
+            <property name="enabled">1</property>
+            <property name="help">Open website for further information.</property>
+            <property name="id">wxID_ANY</property>
+            <property name="kind">wxITEM_NORMAL</property>
+            <property name="label">Open Website</property>
+            <property name="name">menuitemHelpWebsite</property>
+            <property name="permission">none</property>
+            <property name="shortcut"></property>
+            <property name="unchecked_bitmap"></property>
+            <event name="OnMenuSelection">openWebsite</event>
           </object>
           <object class="wxMenuItem" expanded="false">
             <property name="bitmap"></property>

@@ -377,6 +377,9 @@ class MainFrame ( wx.Frame ):
         self.menuitemHelpSupport = wx.MenuItem( self.help, ID_GITHUB, _(u"Support..."), _(u"Go to GitHub repository."), wx.ITEM_NORMAL )
         self.help.Append( self.menuitemHelpSupport )
 
+        self.menuitemHelpWebsite = wx.MenuItem( self.help, wx.ID_ANY, _(u"Open Website"), _(u"Open website for further information."), wx.ITEM_NORMAL )
+        self.help.Append( self.menuitemHelpWebsite )
+
         self.menuitemHelpUpdate = wx.MenuItem( self.help, wx.ID_ANY, _(u"Check for updates"), _(u"Check, if there is an update available."), wx.ITEM_NORMAL )
         self.help.Append( self.menuitemHelpUpdate )
 
@@ -398,7 +401,8 @@ class MainFrame ( wx.Frame ):
         self.buttonConfigLogfile.Bind( wx.EVT_BUTTON, self.openLogfile )
         self.buttonSaveConfig.Bind( wx.EVT_BUTTON, self.saveConfig )
         self.Bind( wx.EVT_MENU, self.vatvalidationClose, id = self.menuitemFileClose.GetId() )
-        self.Bind( wx.EVT_MENU, self.vatvalidationGitHub, id = self.menuitemHelpSupport.GetId() )
+        self.Bind( wx.EVT_MENU, self.openGitHubRepo, id = self.menuitemHelpSupport.GetId() )
+        self.Bind( wx.EVT_MENU, self.openWebsite, id = self.menuitemHelpWebsite.GetId() )
         self.Bind( wx.EVT_MENU, self.checkForUpdates, id = self.menuitemHelpUpdate.GetId() )
         self.Bind( wx.EVT_MENU, self.vatvalidationAbout, id = self.menuitemHelpAbout.GetId() )
 
@@ -428,7 +432,10 @@ class MainFrame ( wx.Frame ):
     def vatvalidationClose( self, event ):
         event.Skip()
 
-    def vatvalidationGitHub( self, event ):
+    def openGitHubRepo( self, event ):
+        event.Skip()
+
+    def openWebsite( self, event ):
         event.Skip()
 
     def checkForUpdates( self, event ):
