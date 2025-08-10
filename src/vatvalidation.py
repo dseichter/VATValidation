@@ -127,6 +127,12 @@ class VATValidationFrame(gui.MainFrame):
                 "Own VAT",
                 wx.OK | wx.ICON_WARNING,
             )
+        if settings.load_value_from_json_file("ownvat") == "":
+            wx.MessageBox(
+                "Your own VAT is not set. Please provide your own VAT within the confguration.",
+                "Own VAT",
+                wx.OK | wx.ICON_WARNING,
+            )
         # visible values of configuration
         self.comboBoxConfigInterface.SetValue(settings.load_value_from_json_file("interface"))
         self.comboBoxConfigLanguage.SetValue(settings.load_value_from_json_file("language"))
@@ -148,6 +154,7 @@ class VATValidationFrame(gui.MainFrame):
     # put a blank string in text when 'Clear' is clicked
     def clearFields(self, event):
         self.textCtrlConfigOwnVat.SetValue(settings.load_value_from_json_file("ownvat"))
+        self.textOwnvat.SetValue(settings.load_value_from_json_file("ownvat"))
         self.textForeignvat.SetValue(str(""))
         self.textCompany.SetValue(str(""))
         self.textStreet.SetValue(str(""))

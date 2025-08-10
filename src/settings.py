@@ -25,7 +25,7 @@ def load_value_from_json_file(key):
         data = json.load(f)
 
     if key not in data:
-        return None
+        return ""
 
     return data[key]
 
