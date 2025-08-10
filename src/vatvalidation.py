@@ -162,6 +162,7 @@ class VATValidationFrame(gui.MainFrame):
         self.textStreet.SetValue(str(""))
         self.textZip.SetValue(str(""))
         self.textTown.SetValue(str(""))
+        self.m_staticText_ValidationResult.SetLabel("Validation Result")
         self.textResultIsValid.SetValue(str(""))
         self.textResultCode.SetValue(str(""))
         self.textResultDetails.SetValue(str(""))
@@ -191,6 +192,7 @@ class VATValidationFrame(gui.MainFrame):
         self.textResultIsValid.SetValue("Yes" if message["valid"] else "No")
         self.textResultCode.SetValue(message["errorcode"])
         self.textResultDetails.SetValue(message.get("errorcode_description", ""))
+        self.m_staticText_ValidationResult.SetLabel(f"Validation Result: (Interface: {message["type"]})")
 
         # In case of empty errorcode_description, load the company, address town, zip and street into textResultDetails
         if message.get("errorcode_description", "") == "":
