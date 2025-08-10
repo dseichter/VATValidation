@@ -94,6 +94,9 @@ jobs:
           - name: 'Checkout'
             uses: actions/checkout@v4
 
+          - name: Update system packages
+            run: sudo apt-get update
+
           - name: Install dependencies
             run: sudo apt-get install build-essential libgtk-3-dev
 
@@ -125,6 +128,9 @@ jobs:
 
         - name: 'Checkout'
           uses: actions/checkout@v4
+
+        - name: Update system packages
+          run: sudo apt-get update          
 
         - name: Install dependencies
           run: sudo apt-get install build-essential libgtk-3-dev
