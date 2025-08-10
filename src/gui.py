@@ -374,10 +374,10 @@ class MainFrame ( wx.Frame ):
         self.mainmenu.Append( self.file, _(u"File") )
 
         self.help = wx.Menu()
-        self.menuitemHelpSupport = wx.MenuItem( self.help, ID_GITHUB, _(u"Support..."), _(u"Go to GitHub Repository"), wx.ITEM_NORMAL )
+        self.menuitemHelpSupport = wx.MenuItem( self.help, ID_GITHUB, _(u"Support..."), _(u"Go to GitHub repository."), wx.ITEM_NORMAL )
         self.help.Append( self.menuitemHelpSupport )
 
-        self.menuitemHelpUpdate = wx.MenuItem( self.help, wx.ID_ANY, _(u"Check for updates"), wx.EmptyString, wx.ITEM_NORMAL )
+        self.menuitemHelpUpdate = wx.MenuItem( self.help, wx.ID_ANY, _(u"Check for updates"), _(u"Check, if there is an update available."), wx.ITEM_NORMAL )
         self.help.Append( self.menuitemHelpUpdate )
 
         self.menuitemHelpAbout = wx.MenuItem( self.help, ID_ABOUT, _(u"About..."), _(u"About VATValidation"), wx.ITEM_NORMAL )

@@ -3676,7 +3676,7 @@
             <property name="bitmap"></property>
             <property name="checked">0</property>
             <property name="enabled">1</property>
-            <property name="help">Go to GitHub Repository</property>
+            <property name="help">Go to GitHub repository.</property>
             <property name="id">ID_GITHUB</property>
             <property name="kind">wxITEM_NORMAL</property>
             <property name="label">Support...</property>
@@ -3690,7 +3690,7 @@
             <property name="bitmap"></property>
             <property name="checked">0</property>
             <property name="enabled">1</property>
-            <property name="help"></property>
+            <property name="help">Check, if there is an update available.</property>
             <property name="id">wxID_ANY</property>
             <property name="kind">wxITEM_NORMAL</property>
             <property name="label">Check for updates</property>
