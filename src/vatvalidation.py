@@ -152,6 +152,11 @@ class VATValidationFrame(gui.MainFrame):
         settings.save_config("logfilename", self.textCtrlConfigLogfile.GetValue())
         settings.save_config("loglevel", self.comboBoxConfigLoglevel.GetValue())
         self.textOwnvat.SetValue(settings.load_value_from_json_file("ownvat"))
+        wx.MessageBox(
+            "Your changes of your configuration have been saved.",
+            "Configuration saved",
+            wx.OK | wx.ICON_INFORMATION,
+        )
 
     # put a blank string in text when 'Clear' is clicked
     def clearFields(self, event):
