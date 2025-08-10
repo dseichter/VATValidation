@@ -56,13 +56,15 @@ class VATValidationFrame(gui.MainFrame):
         # specify all the icons
         gui.MainFrame.SetIcon(self, icons.tick_box.GetIcon())
         self.menuitemFileClose.SetBitmap(icons.cancel.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
+
         self.menuitemHelpSupport.SetBitmap(icons.get_help.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
+        self.menuitemHelpWebsite.SetBitmap(icons.website.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
         self.menuitemHelpUpdate.SetBitmap(icons.restart.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
         self.menuitemHelpAbout.SetBitmap(icons.info.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
-        self.buttonValidateSingle.SetBitmap(icons.fry.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
+        self.buttonValidateSingle.SetBitmap(icons.search.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
         self.buttonValidateSingle.SetSize(self.buttonValidateSingle.GetBestSize())
 
-        self.buttonValidateBatch.SetBitmap(icons.fry.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
+        self.buttonValidateBatch.SetBitmap(icons.search.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
         self.buttonValidateBatch.SetSize(self.buttonValidateBatch.GetBestSize())
 
         self.buttonClear.SetBitmap(icons.broom.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
@@ -127,6 +129,12 @@ class VATValidationFrame(gui.MainFrame):
                 "Own VAT",
                 wx.OK | wx.ICON_WARNING,
             )
+        if settings.load_value_from_json_file("ownvat") == "":
+            wx.MessageBox(
+                "Your own VAT is not set. Please provide your own VAT within the confguration.",
+                "Own VAT",
+                wx.OK | wx.ICON_WARNING,
+            )
         # visible values of configuration
         self.comboBoxConfigInterface.SetValue(settings.load_value_from_json_file("interface"))
         self.comboBoxConfigLanguage.SetValue(settings.load_value_from_json_file("language"))
@@ -148,6 +156,7 @@ class VATValidationFrame(gui.MainFrame):
     # put a blank string in text when 'Clear' is clicked
     def clearFields(self, event):
         self.textCtrlConfigOwnVat.SetValue(settings.load_value_from_json_file("ownvat"))
+        self.textOwnvat.SetValue(settings.load_value_from_json_file("ownvat"))
         self.textForeignvat.SetValue(str(""))
         self.textCompany.SetValue(str(""))
         self.textStreet.SetValue(str(""))
@@ -162,9 +171,6 @@ class VATValidationFrame(gui.MainFrame):
 
     def vatvalidationClose(self, event):
         self.Close()
-
-    def vatvalidationGitHub(self, event):
-        webbrowser.open_new_tab("https://github.com/dseichter/VATValidation")
 
     def validateSingle(self, event):
         wx.MessageBox(
@@ -239,6 +245,12 @@ class VATValidationFrame(gui.MainFrame):
 
         # if done, show a message box
         wx.MessageBox("Batch validation done.", "Batch Validation", wx.OK | wx.ICON_INFORMATION)
+
+    def openGitHubRepo(self, event):
+        webbrowser.open_new_tab("https://github.com/dseichter/VATValidation")
+
+    def openWebsite(self, event):
+        webbrowser.open_new_tab("https://dseichter.github.io/VATValidation/")
 
     def checkForUpdates(self, event):
         if helper.check_for_new_release():

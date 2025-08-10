@@ -192,7 +192,7 @@ class MainFrame ( wx.Frame ):
         fgSizer3.Add( self.staticText_Inputfile, 0, wx.ALL, 5 )
 
         self.filepickerInput = wx.FilePickerCtrl( self.panelBatch, wx.ID_ANY, wx.EmptyString, _(u"Select a file"), _(u"*.*"), wx.DefaultPosition, wx.DefaultSize, wx.FLP_DEFAULT_STYLE )
-        self.filepickerInput.SetToolTip( _(u"Select your input file (JSON, XML, CSV) for processing.") )
+        self.filepickerInput.SetToolTip( _(u"Select your input file (JSON, XSLX, CSV) for processing.") )
 
         fgSizer3.Add( self.filepickerInput, 1, wx.ALL|wx.EXPAND, 5 )
 
@@ -374,10 +374,13 @@ class MainFrame ( wx.Frame ):
         self.mainmenu.Append( self.file, _(u"File") )
 
         self.help = wx.Menu()
-        self.menuitemHelpSupport = wx.MenuItem( self.help, ID_GITHUB, _(u"Support..."), _(u"Go to GitHub Repository"), wx.ITEM_NORMAL )
+        self.menuitemHelpSupport = wx.MenuItem( self.help, ID_GITHUB, _(u"Support..."), _(u"Go to GitHub repository."), wx.ITEM_NORMAL )
         self.help.Append( self.menuitemHelpSupport )
 
-        self.menuitemHelpUpdate = wx.MenuItem( self.help, wx.ID_ANY, _(u"Check for updates"), wx.EmptyString, wx.ITEM_NORMAL )
+        self.menuitemHelpWebsite = wx.MenuItem( self.help, wx.ID_ANY, _(u"Open Website"), _(u"Open website for further information."), wx.ITEM_NORMAL )
+        self.help.Append( self.menuitemHelpWebsite )
+
+        self.menuitemHelpUpdate = wx.MenuItem( self.help, wx.ID_ANY, _(u"Check for updates"), _(u"Check, if there is an update available."), wx.ITEM_NORMAL )
         self.help.Append( self.menuitemHelpUpdate )
 
         self.menuitemHelpAbout = wx.MenuItem( self.help, ID_ABOUT, _(u"About..."), _(u"About VATValidation"), wx.ITEM_NORMAL )
@@ -398,7 +401,8 @@ class MainFrame ( wx.Frame ):
         self.buttonConfigLogfile.Bind( wx.EVT_BUTTON, self.openLogfile )
         self.buttonSaveConfig.Bind( wx.EVT_BUTTON, self.saveConfig )
         self.Bind( wx.EVT_MENU, self.vatvalidationClose, id = self.menuitemFileClose.GetId() )
-        self.Bind( wx.EVT_MENU, self.vatvalidationGitHub, id = self.menuitemHelpSupport.GetId() )
+        self.Bind( wx.EVT_MENU, self.openGitHubRepo, id = self.menuitemHelpSupport.GetId() )
+        self.Bind( wx.EVT_MENU, self.openWebsite, id = self.menuitemHelpWebsite.GetId() )
         self.Bind( wx.EVT_MENU, self.checkForUpdates, id = self.menuitemHelpUpdate.GetId() )
         self.Bind( wx.EVT_MENU, self.vatvalidationAbout, id = self.menuitemHelpAbout.GetId() )
 
@@ -428,7 +432,10 @@ class MainFrame ( wx.Frame ):
     def vatvalidationClose( self, event ):
         event.Skip()
 
-    def vatvalidationGitHub( self, event ):
+    def openGitHubRepo( self, event ):
+        event.Skip()
+
+    def openWebsite( self, event ):
         event.Skip()
 
     def checkForUpdates( self, event ):
