@@ -78,7 +78,7 @@ jobs:
     needs: [build-windows-binary-cli]
     steps:
 
-        - uses: actions/download-artifact@v4
+        - uses: actions/download-artifact@v5
           with:
             name: VATValidation-cli-windows-${{ github.ref_name }}.exe
 
@@ -165,7 +165,7 @@ jobs:
     needs: [build-linux-binary-cli]
     steps:
 
-        - uses: actions/download-artifact@v4
+        - uses: actions/download-artifact@v5
           with:
             name: VATValidation-cli-linux-${{ github.ref_name }}
 
@@ -178,19 +178,19 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build-windows-binary, build-linux-binary, test-cli-windows, test-cli-linux]
     steps:
-        - uses: actions/download-artifact@v4
+        - uses: actions/download-artifact@v5
           with:
             name: VATValidation-linux-${{ github.ref_name }}
 
-        - uses: actions/download-artifact@v4
+        - uses: actions/download-artifact@v5
           with:
             name: VATValidation-cli-linux-${{ github.ref_name }}            
 
-        - uses: actions/download-artifact@v4
+        - uses: actions/download-artifact@v5
           with:
             name: VATValidation-windows-${{ github.ref_name }}.exe
 
-        - uses: actions/download-artifact@v4
+        - uses: actions/download-artifact@v5
           with:
             name: VATValidation-cli-windows-${{ github.ref_name }}.exe            
 
