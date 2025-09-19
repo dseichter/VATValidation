@@ -452,7 +452,7 @@ class MainFrame ( wx.Frame ):
 class dialogAbout ( wx.Dialog ):
 
     def __init__( self, parent ):
-        wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = _(u"About VATValidation"), pos = wx.DefaultPosition, size = wx.Size( 240,300 ), style = wx.DEFAULT_DIALOG_STYLE )
+        wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = _(u"About VATValidation"), pos = wx.DefaultPosition, size = wx.Size( 240,200 ), style = wx.DEFAULT_DIALOG_STYLE )
 
         self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 
@@ -480,14 +480,6 @@ class dialogAbout ( wx.Dialog ):
 
         bSizer2.Add( self.staticTextGithub, 0, wx.ALL, 5 )
 
-        self.staticTextIcon8 = wx.StaticText( self, wx.ID_ANY, _(u"Icons by Icons8.com"), wx.DefaultPosition, wx.DefaultSize, 0 )
-        self.staticTextIcon8.Wrap( -1 )
-
-        self.staticTextIcon8.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_GRAYTEXT ) )
-        self.staticTextIcon8.SetToolTip( _(u"All icons within VATValidation are taken from Icons8") )
-
-        bSizer2.Add( self.staticTextIcon8, 0, wx.ALL, 5 )
-
         m_sdbSizer2 = wx.StdDialogButtonSizer()
         self.m_sdbSizer2OK = wx.Button( self, wx.ID_OK )
         m_sdbSizer2.AddButton( self.m_sdbSizer2OK )
@@ -497,7 +489,6 @@ class dialogAbout ( wx.Dialog ):
 
         bSizer2.Add( m_sdbSizer2, 1, wx.EXPAND, 5 )
 
-
         self.SetSizer( bSizer2 )
         self.Layout()
 
@@ -505,7 +496,6 @@ class dialogAbout ( wx.Dialog ):
 
         # Connect Events
         self.staticTextGithub.Bind( wx.EVT_LEFT_DOWN, self.openGithub )
-        self.staticTextIcon8.Bind( wx.EVT_LEFT_DOWN, self.openIcons8 )
 
     def __del__( self ):
         pass
@@ -514,8 +504,3 @@ class dialogAbout ( wx.Dialog ):
     # Virtual event handlers, override them in your derived class
     def openGithub( self, event ):
         event.Skip()
-
-    def openIcons8( self, event ):
-        event.Skip()
-
-

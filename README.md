@@ -52,3 +52,8 @@ please visit the [project documentation](https://dseichter.github.io/VATValidati
 ## 📄 License
 
 GPL 3.0 — see [LICENSE](LICENSE) file at the root of the repository for details.
+
+## Icons
+
+VATValidation uses [Google Material Symbols](https://fonts.google.com/icons) within its code for UI icons.  
+Material Symbols are licensed under the [Apache License 2.0](https://github.com/google/material-design-icons/blob/master/LICENSE) and are free for use in open source projects.

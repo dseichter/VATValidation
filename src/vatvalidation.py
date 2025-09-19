@@ -54,29 +54,35 @@ class VATValidationFrame(gui.MainFrame):
         self.SetTitle(helper.NAME + " " + helper.VERSION)
 
         # specify all the icons
-        gui.MainFrame.SetIcon(self, icons.tick_box.GetIcon())
-        self.menuitemFileClose.SetBitmap(icons.cancel.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
+        gui.MainFrame.SetIcon(self, icons.select_check_box_24dp_097e23_fill1_wght400_grad0_opsz24.GetIcon())
+        self.menuitemFileClose.SetBitmap(icons.exit_to_app_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
 
-        self.menuitemHelpSupport.SetBitmap(icons.get_help.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
-        self.menuitemHelpWebsite.SetBitmap(icons.website.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
-        self.menuitemHelpUpdate.SetBitmap(icons.restart.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
-        self.menuitemHelpAbout.SetBitmap(icons.info.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
-        self.buttonValidateSingle.SetBitmap(icons.search.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
+        self.menuitemHelpSupport.SetBitmap(icons.contact_support_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
+        self.menuitemHelpWebsite.SetBitmap(icons.globe_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
+        self.menuitemHelpUpdate.SetBitmap(icons.restart_alt_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
+        self.menuitemHelpAbout.SetBitmap(icons.info_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
+        self.buttonValidateSingle.SetBitmap(icons.playlist_add_check_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
         self.buttonValidateSingle.SetSize(self.buttonValidateSingle.GetBestSize())
 
-        self.buttonValidateBatch.SetBitmap(icons.search.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
+        self.buttonValidateBatch.SetBitmap(icons.playlist_add_check_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
         self.buttonValidateBatch.SetSize(self.buttonValidateBatch.GetBestSize())
 
-        self.buttonClear.SetBitmap(icons.broom.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
+        self.buttonClear.SetBitmap(icons.restart_alt_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
         self.buttonClear.SetSize(self.buttonClear.GetBestSize())
+        
+        self.buttonSaveConfig.SetBitmap(icons.save_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
+        self.buttonSaveConfig.SetSize(self.buttonSaveConfig.GetBestSize())
+        
+        self.buttonConfigLogfile.SetBitmap(icons.overview_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
+        self.buttonConfigLogfile.SetSize(self.buttonConfigLogfile.GetBestSize())
 
         self.m_notebook3.SetSelection(0)
         # create image list
-        self.imageList = wx.ImageList(16, 16)
+        self.imageList = wx.ImageList(24, 24)
         # add the icons
-        self.imageList.Add(icons.document.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
-        self.imageList.Add(icons.microsoft_excel.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
-        self.imageList.Add(icons.settings.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
+        self.imageList.Add(icons.task_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
+        self.imageList.Add(icons.playlist_add_check_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
+        self.imageList.Add(icons.settings_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
         # set the image list
         self.m_notebook3.AssignImageList(self.imageList)
         # set the icons

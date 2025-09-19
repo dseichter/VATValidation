@@ -32,11 +32,8 @@ class DialogAbout(gui.dialogAbout):
         self.staticTextLicence.SetLabelText(self.staticTextLicence.GetLabelText() + ' ' + helper.LICENCE)
 
         # specify all the icons
-        gui.dialogAbout.SetIcon(self, icons.info.GetIcon())
-        self.bitmapLogo.SetBitmap(icons.tick_box.GetBitmap())
+        gui.dialogAbout.SetIcon(self, icons.select_check_box_24dp_097e23_fill1_wght400_grad0_opsz24.GetIcon())
+        self.bitmapLogo.SetBitmap(icons.select_check_box_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
 
     def openGithub(self, event):
         webbrowser.open_new_tab('https://github.com/dseichter/VATValidation')  # Add the URL of the GitHub repository
-
-    def openIcons8(self, event):
-        webbrowser.open_new_tab('https://icons8.com/')

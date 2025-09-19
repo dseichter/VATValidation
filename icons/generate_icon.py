@@ -16,6 +16,8 @@
 import wx.tools.img2py as img2py
 import os
 
+from PIL import Image
+
 # Iterate through all the png files in the icons directory
 # and generate the icon file
 # The icon file is generated in the src directory to be used in the application
@@ -26,3 +28,9 @@ for root, dirs, files in os.walk('.'):
             # Generate the icon file
             img2py.img2py(os.path.join(root, file), '../src/icons.py', append=append, imgName=file[:-4].lower(), icon=True, catalog=True, compressed=True)
             append = True
+
+# Open the PNG file
+img = Image.open("select_check_box_48dp_097E23_FILL1_wght400_GRAD0_opsz48.png")
+
+# Save as ICO (you can specify multiple sizes)
+img.save("vatvalidation.ico", format="ICO", sizes=[(16,16), (32,32), (48,48), (64,64), (128,128), (256,256)])
