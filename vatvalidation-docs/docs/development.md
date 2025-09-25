@@ -1,17 +1,21 @@
 # Start development
 
+## Start development
+
+I am using pyenv on my computers and virtual machines.
+
 Create and activate an environment by running the following command:
 
-```python -m venv .venv```
+```pyenv virtualenv 3.13.7 vatvalidation-venv```
 
-```.venv/Scripts/activate```
+```pyenv activate vatvalidation-venv```
 
 Install the required dependencies
 
 ```pip install -r src/requirements.txt```
-
-If you want to do some UI changes, download and install the latest wxFormBuilder from the [wxFormBuilder Homepage](https://github.com/wxFormBuilder/wxFormBuilder).
+```pip install -r icons/requirements.txt```
+```pip install -r vatvalidation-docs/requirements.txt```
 
 You can start the VATValidation by running the following command:
 
-```python src/vatvalidation.py```
+```cd src && python vatvalidation.py```

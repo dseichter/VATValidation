@@ -3654,7 +3654,7 @@
           <property name="name">file</property>
           <property name="permission">protected</property>
           <object class="wxMenuItem" expanded="false">
-            <property name="bitmap">Load From File; </property>
+            <property name="bitmap"></property>
             <property name="checked">0</property>
             <property name="enabled">1</property>
             <property name="help">Close VATValidation</property>

@@ -2,16 +2,18 @@
 
 Erstellen und aktivieren Sie eine Umgebung, indem Sie den folgenden Befehl ausführen:
 
-```python -m venv .venv```
+```pyenv virtualenv 3.13.7 vatvalidation-venv```
 
-```.venv/Scripts/activate```
+```pyenv activate vatvalidation-venv```
 
 Installieren Sie die erforderlichen Abhängigkeiten
 
 ```pip install -r src/requirements.txt```
+```pip install -r icons/requirements.txt```
+```pip install -r vatvalidation-docs/requirements.txt```
 
 Wenn Sie einige Änderungen an der Benutzeroberfläche vornehmen möchten, laden Sie den neuesten wxFormBuilder von der [wxFormBuilder Homepage] (https://github.com/wxFormBuilder/wxFormBuilder) herunter und installieren Sie ihn.
 
 Sie können die VATValidation starten, indem Sie den folgenden Befehl ausführen:
 
-```python src/vatvalidation.py```
+```cd src && python vatvalidation.py```
