@@ -1,4 +1,4 @@
-# Copyright (c) 2024 Daniel Seichter
+# Copyright (c) 2024-2025 Daniel Seichter
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,9 +16,7 @@
 import gui_about
 
 # import VATValidation specific libraries
-import helper
 import webbrowser
-import icons
 
 
 class DialogAbout(gui_about.dialogAbout):
@@ -27,8 +25,5 @@ class DialogAbout(gui_about.dialogAbout):
         # initialize parent class
         gui_about.dialogAbout.__init__(self, parent)
 
-
     def openGithub(self, event):
-        webbrowser.open_new_tab(
-            "https://github.com/dseichter/VATValidation"
-        )  # Add the URL of the GitHub repository
+        webbrowser.open_new_tab("https://github.com/dseichter/VATValidation")
