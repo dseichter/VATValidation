@@ -61,18 +61,13 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
 
     @staticmethod
     def OnWatchdog(self, event):
-        if (
-            event.event_type in ["modified", "created"]
-            and BATCH_STATUS_FILE in event.src_path
-        ):
+        if event.event_type in ["modified", "created"] and BATCH_STATUS_FILE in event.src_path:
             try:
                 with open(BATCH_STATUS_FILE, "r") as f:
                     data = json.load(f)
                 # get the current status
                 self.staticText_RecordsFound.SetLabel(str(data["total"]))
-                self.staticText_ProcessingXofY.SetLabel(
-                    f"{data['current']}/{data['total']}"
-                )
+                self.staticText_ProcessingXofY.SetLabel(f"{data['current']}/{data['total']}")
                 self.progressProcessing.Range = data["total"]
                 self.progressProcessing.Value = data["current"]
             except FileNotFoundError:
@@ -89,9 +84,7 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
     def loadConfig(self, event):
         settings.create_config()
         try:
-            self.textCtrlConfigOwnVat.SetValue(
-                settings.load_value_from_json_file("ownvat")
-            )
+            self.textCtrlConfigOwnVat.SetValue(settings.load_value_from_json_file("ownvat"))
             self.textOwnvat.SetValue(settings.load_value_from_json_file("ownvat"))
         except TypeError:
             wx.MessageBox(
@@ -106,21 +99,11 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
                 wx.OK | wx.ICON_WARNING,
             )
         # visible values of configuration
-        self.comboBoxConfigInterface.SetValue(
-            settings.load_value_from_json_file("interface")
-        )
-        self.comboBoxConfigLanguage.SetValue(
-            settings.load_value_from_json_file("language")
-        )
-        self.textConfigCSVdelimiter.SetValue(
-            settings.load_value_from_json_file("delimiter")
-        )
-        self.textCtrlConfigLogfile.SetValue(
-            settings.load_value_from_json_file("logfilename")
-        )
-        self.comboBoxConfigLoglevel.SetValue(
-            settings.load_value_from_json_file("loglevel")
-        )
+        self.comboBoxConfigInterface.SetValue(settings.load_value_from_json_file("interface"))
+        self.comboBoxConfigLanguage.SetValue(settings.load_value_from_json_file("language"))
+        self.textConfigCSVdelimiter.SetValue(settings.load_value_from_json_file("delimiter"))
+        self.textCtrlConfigLogfile.SetValue(settings.load_value_from_json_file("logfilename"))
+        self.comboBoxConfigLoglevel.SetValue(settings.load_value_from_json_file("loglevel"))
 
     # save the config file
     def saveConfig(self, event):
@@ -177,39 +160,30 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
         self.textResultIsValid.SetValue("Yes" if message["valid"] else "No")
         self.textResultCode.SetValue(message["errorcode"])
         self.textResultDetails.SetValue(message.get("errorcode_description", ""))
-        self.m_staticText_ValidationResult.SetLabel(
-            f"Validation Result: (Interface: {message['type']})"
-        )
+        self.m_staticText_ValidationResult.SetLabel(f"Validation Result: (Interface: {message['type']})")
 
         # In case of empty errorcode_description, load the company, address town, zip and street into textResultDetails
         if message.get("errorcode_description", "") == "":
-            self.textResultDetails.SetValue(
-                f"Company: {message['company']}\nAddress: {message['address']}\nTown: {message['town']}\nZip: {message['zip']}\nStreet: {message['street']}"
-            )
+            self.textResultDetails.SetValue(f"Company: {message['company']}\nAddress: {message['address']}\nTown: {message['town']}\nZip: {message['zip']}\nStreet: {message['street']}")
 
     def validateBatch(self, event):
         if (
             wx.MessageBox(
                 "Are you sure you want to start the batch validation?",
                 "Batch Validation",
-                wx.YES_NO
-                | wx.ICON_QUESTION,  # on Windows, no icon will be shown (feature, not a bug)
+                wx.YES_NO | wx.ICON_QUESTION,  # on Windows, no icon will be shown (feature, not a bug)
             )
             == wx.NO
         ):
             return
 
         if self.filepickerOutput.GetPath() == "":
-            wx.MessageBox(
-                "Please select an output file.", "No output file", wx.OK | wx.ICON_ERROR
-            )
+            wx.MessageBox("Please select an output file.", "No output file", wx.OK | wx.ICON_ERROR)
             return
 
         # check if given file exists
         if not self.filepickerInput.GetPath():
-            wx.MessageBox(
-                "Please select an input file.", "No input file", wx.OK | wx.ICON_ERROR
-            )
+            wx.MessageBox("Please select an input file.", "No input file", wx.OK | wx.ICON_ERROR)
             return
 
         # check if given format is supported
@@ -257,9 +231,7 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
             wx.MilliSleep(100)
 
         # if done, show a message box
-        wx.MessageBox(
-            "Batch validation done.", "Batch Validation", wx.OK | wx.ICON_INFORMATION
-        )
+        wx.MessageBox("Batch validation done.", "Batch Validation", wx.OK | wx.ICON_INFORMATION)
 
     def openGitHubRepo(self, event):
         webbrowser.open_new_tab("https://github.com/dseichter/VATValidation")
@@ -277,9 +249,7 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
             if result == wx.YES:
                 webbrowser.open_new_tab(helper.RELEASES)
         else:
-            wx.MessageBox(
-                "No new release available.", "No update", wx.OK | wx.ICON_INFORMATION
-            )
+            wx.MessageBox("No new release available.", "No update", wx.OK | wx.ICON_INFORMATION)
 
     def vatvalidationAbout(self, event):
         # open the about dialog

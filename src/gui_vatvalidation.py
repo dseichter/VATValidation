@@ -30,18 +30,13 @@ class MainFrame(wx.Frame):
             self,
             parent,
             id=wx.ID_ANY,
-            title="VATValidation",
+            title=helper.NAME + " " + helper.VERSION,
             pos=wx.DefaultPosition,
             size=wx.Size(642, 552),
             style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL,
         )
 
-        self.SetIcon(
-            icons.select_check_box_24dp_097e23_fill1_wght400_grad0_opsz24.GetIcon()
-        )
-
-        # add the version to the label
-        self.SetTitle(helper.NAME + " " + helper.VERSION)
+        self.SetIcon(icons.select_check_box_24dp_097e23_fill1_wght400_grad0_opsz24.GetIcon())
 
         self.SetSizeHints(wx.DefaultSize, wx.DefaultSize)
 
@@ -50,7 +45,8 @@ class MainFrame(wx.Frame):
         bSizer4 = wx.BoxSizer(wx.VERTICAL)
 
         self.m_notebook3 = wx.Notebook(
-            self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0
+            self,
+            wx.ID_ANY,
         )
 
         self.panelSingle = wx.Panel(
@@ -71,9 +67,6 @@ class MainFrame(wx.Frame):
             self.panelSingle,
             wx.ID_ANY,
             "Own VAT",
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         self.staticText_ownvat.Wrap(-1)
 
@@ -83,9 +76,6 @@ class MainFrame(wx.Frame):
             self.panelSingle,
             wx.ID_ANY,
             wx.EmptyString,
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         fgSizer2.Add(self.textOwnvat, 0, wx.ALL, 5)
 
@@ -93,13 +83,8 @@ class MainFrame(wx.Frame):
             self.panelSingle,
             wx.ID_ANY,
             "Clear",
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
-        self.buttonClear.SetBitmap(
-            icons.restart_alt_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap()
-        )
+        self.buttonClear.SetBitmap(icons.restart_alt_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
         self.buttonClear.SetToolTip("Clear all entries except your own VAT (if saved).")
 
         fgSizer2.Add(self.buttonClear, 0, wx.ALIGN_CENTER, 5)
@@ -108,9 +93,6 @@ class MainFrame(wx.Frame):
             self.panelSingle,
             wx.ID_ANY,
             "Foreign VAT",
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         self.staticText_foreignvat.Wrap(-1)
 
@@ -120,9 +102,6 @@ class MainFrame(wx.Frame):
             self.panelSingle,
             wx.ID_ANY,
             wx.EmptyString,
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         fgSizer2.Add(self.textForeignvat, 0, wx.ALL, 5)
 
@@ -132,9 +111,6 @@ class MainFrame(wx.Frame):
             self.panelSingle,
             wx.ID_ANY,
             "Company",
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         self.staticText_company.Wrap(-1)
 
@@ -144,9 +120,6 @@ class MainFrame(wx.Frame):
             self.panelSingle,
             wx.ID_ANY,
             wx.EmptyString,
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         fgSizer2.Add(self.textCompany, 1, wx.ALL | wx.EXPAND, 5)
 
@@ -156,9 +129,6 @@ class MainFrame(wx.Frame):
             self.panelSingle,
             wx.ID_ANY,
             "Street",
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         self.staticText_street.Wrap(-1)
 
@@ -168,16 +138,15 @@ class MainFrame(wx.Frame):
             self.panelSingle,
             wx.ID_ANY,
             wx.EmptyString,
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         fgSizer2.Add(self.textStreet, 0, wx.ALL | wx.EXPAND, 5)
 
         fgSizer2.Add((0, 0), 1, wx.EXPAND, 5)
 
         self.staticText_zip = wx.StaticText(
-            self.panelSingle, wx.ID_ANY, "ZIP", wx.DefaultPosition, wx.DefaultSize, 0
+            self.panelSingle,
+            wx.ID_ANY,
+            "ZIP",
         )
         self.staticText_zip.Wrap(-1)
 
@@ -187,9 +156,6 @@ class MainFrame(wx.Frame):
             self.panelSingle,
             wx.ID_ANY,
             wx.EmptyString,
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         fgSizer2.Add(self.textZip, 0, wx.ALL, 5)
 
@@ -199,9 +165,6 @@ class MainFrame(wx.Frame):
             self.panelSingle,
             wx.ID_ANY,
             "Town",
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         self.staticText_town.Wrap(-1)
 
@@ -211,9 +174,6 @@ class MainFrame(wx.Frame):
             self.panelSingle,
             wx.ID_ANY,
             wx.EmptyString,
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         fgSizer2.Add(self.textTown, 0, wx.ALL | wx.EXPAND, 5)
 
@@ -225,13 +185,8 @@ class MainFrame(wx.Frame):
             self.panelSingle,
             wx.ID_ANY,
             "Validate your entries",
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
-        self.buttonValidateSingle.SetBitmap(
-            icons.playlist_add_check_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap()
-        )
+        self.buttonValidateSingle.SetBitmap(icons.playlist_add_check_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
         self.buttonValidateSingle.SetToolTip("Start validating your entries.")
 
         fgSizer2.Add(self.buttonValidateSingle, 0, wx.ALIGN_CENTER, 5)
@@ -262,9 +217,6 @@ class MainFrame(wx.Frame):
             self.panelSingle,
             wx.ID_ANY,
             "Validation Result",
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         self.m_staticText_ValidationResult.Wrap(-1)
 
@@ -285,9 +237,6 @@ class MainFrame(wx.Frame):
             self.panelSingle,
             wx.ID_ANY,
             "Result",
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         self.staticText_result.Wrap(-1)
 
@@ -297,9 +246,6 @@ class MainFrame(wx.Frame):
             self.panelSingle,
             wx.ID_ANY,
             wx.EmptyString,
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         fgSizer5.Add(self.textResultCode, 0, wx.ALL, 5)
 
@@ -307,9 +253,6 @@ class MainFrame(wx.Frame):
             self.panelSingle,
             wx.ID_ANY,
             "Valid",
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         self.staticText_isvalid.Wrap(-1)
 
@@ -319,9 +262,6 @@ class MainFrame(wx.Frame):
             self.panelSingle,
             wx.ID_ANY,
             wx.EmptyString,
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         fgSizer5.Add(self.textResultIsValid, 0, wx.ALL, 5)
 
@@ -329,9 +269,6 @@ class MainFrame(wx.Frame):
             self.panelSingle,
             wx.ID_ANY,
             "Details",
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         self.staticText_details.Wrap(-1)
 
@@ -379,13 +316,11 @@ class MainFrame(wx.Frame):
         fgSizer3.SetFlexibleDirection(wx.BOTH)
         fgSizer3.SetNonFlexibleGrowMode(wx.FLEX_GROWMODE_SPECIFIED)
 
+        # INPUT FILE
         self.staticText_Inputfile = wx.StaticText(
             self.panelBatch,
             wx.ID_ANY,
             "Input file",
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         self.staticText_Inputfile.Wrap(-1)
 
@@ -396,24 +331,20 @@ class MainFrame(wx.Frame):
             wx.ID_ANY,
             wx.EmptyString,
             "Select a file",
-            "*.*",
+            "CSV files (*.csv)|*.csv|Excel files (*.xlsx)|*.xlsx|JSON files (*.json)|*.json|All files (*.*)|*.*",
             wx.DefaultPosition,
             wx.DefaultSize,
-            wx.FLP_DEFAULT_STYLE,
+            wx.FLP_USE_TEXTCTRL | wx.FLP_OPEN | wx.FLP_FILE_MUST_EXIST | wx.FLP_SMALL,
         )
-        self.filepickerInput.SetToolTip(
-            "Select your input file (JSON, XSLX, CSV) for processing."
-        )
+        self.filepickerInput.SetToolTip("Select your input file (JSON, XSLX, CSV) for processing.")
 
         fgSizer3.Add(self.filepickerInput, 1, wx.ALL | wx.EXPAND, 5)
 
+        # OUTPUT FILE
         self.staticText_Outputfile = wx.StaticText(
             self.panelBatch,
             wx.ID_ANY,
             "Output file",
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         self.staticText_Outputfile.Wrap(-1)
 
@@ -424,14 +355,13 @@ class MainFrame(wx.Frame):
             wx.ID_ANY,
             wx.EmptyString,
             "Select a file",
-            "*.*",
+            "CSV files (*.csv)|*.csv|Excel files (*.xlsx)|*.xlsx|JSON files (*.json)|*.json|All files (*.*)|*.*",
             wx.DefaultPosition,
             wx.DefaultSize,
-            wx.FLP_SAVE | wx.FLP_USE_TEXTCTRL,
+            wx.FLP_USE_TEXTCTRL | wx.FLP_SAVE | wx.FLP_OVERWRITE_PROMPT | wx.FLP_SMALL,
         )
-        self.filepickerOutput.SetToolTip(
-            "Select your output file to store the validation results to."
-        )
+
+        self.filepickerOutput.SetToolTip("Select your output file to store the validation results to.")
 
         fgSizer3.Add(self.filepickerOutput, 1, wx.ALL | wx.EXPAND, 5)
 
@@ -441,16 +371,9 @@ class MainFrame(wx.Frame):
             self.panelBatch,
             wx.ID_ANY,
             "Start processing file",
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
-        self.buttonValidateBatch.SetBitmap(
-            icons.playlist_add_check_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap()
-        )
-        self.buttonValidateBatch.SetToolTip(
-            "Start processing your input file. This can take a while and the UI can stop for some seconds to work."
-        )
+        self.buttonValidateBatch.SetBitmap(icons.playlist_add_check_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
+        self.buttonValidateBatch.SetToolTip("Start processing your input file. This can take a while and the UI can stop for some seconds to work.")
 
         fgSizer3.Add(self.buttonValidateBatch, 0, wx.ALIGN_LEFT, 5)
 
@@ -477,16 +400,15 @@ class MainFrame(wx.Frame):
             self.panelBatch,
             wx.ID_ANY,
             "Records found",
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         self.staticText_RecordsFound.Wrap(-1)
 
         fgSizer51.Add(self.staticText_RecordsFound, 0, wx.ALL, 5)
 
         self.staticText_RecordsFound = wx.StaticText(
-            self.panelBatch, wx.ID_ANY, "0", wx.DefaultPosition, wx.DefaultSize, 0
+            self.panelBatch,
+            wx.ID_ANY,
+            "0",
         )
         self.staticText_RecordsFound.Wrap(-1)
 
@@ -496,9 +418,6 @@ class MainFrame(wx.Frame):
             self.panelBatch,
             wx.ID_ANY,
             "Progress",
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         self.staticText_Progress.Wrap(-1)
 
@@ -518,7 +437,9 @@ class MainFrame(wx.Frame):
         fgSizer51.Add((0, 0), 1, wx.EXPAND, 5)
 
         self.staticText_ProcessingXofY = wx.StaticText(
-            self.panelBatch, wx.ID_ANY, "0/0", wx.DefaultPosition, wx.DefaultSize, 0
+            self.panelBatch,
+            wx.ID_ANY,
+            "0/0",
         )
         self.staticText_ProcessingXofY.Wrap(-1)
 
@@ -546,9 +467,6 @@ class MainFrame(wx.Frame):
             self.panelConfig,
             wx.ID_ANY,
             "Own VAT",
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         self.staticTextConfigOwnVat.Wrap(-1)
 
@@ -558,9 +476,6 @@ class MainFrame(wx.Frame):
             self.panelConfig,
             wx.ID_ANY,
             wx.EmptyString,
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         fgSizer31.Add(self.textCtrlConfigOwnVat, 0, wx.ALL, 5)
 
@@ -570,9 +485,6 @@ class MainFrame(wx.Frame):
             self.panelConfig,
             wx.ID_ANY,
             "Interface",
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         self.staticTextConfigInterface.Wrap(-1)
 
@@ -597,9 +509,6 @@ class MainFrame(wx.Frame):
             self.panelConfig,
             wx.ID_ANY,
             "Language",
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         self.staticTextConfigLanguage.Wrap(-1)
 
@@ -624,9 +533,6 @@ class MainFrame(wx.Frame):
             self.panelConfig,
             wx.ID_ANY,
             "CSV delimiter",
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         self.staticTextConfigCSVDelimiter.Wrap(-1)
 
@@ -636,9 +542,6 @@ class MainFrame(wx.Frame):
             self.panelConfig,
             wx.ID_ANY,
             wx.EmptyString,
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         self.textConfigCSVdelimiter.SetMaxLength(1)
         self.textConfigCSVdelimiter.SetMinSize(wx.Size(20, -1))
@@ -651,9 +554,6 @@ class MainFrame(wx.Frame):
             self.panelConfig,
             wx.ID_ANY,
             "Logfile",
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         self.staticTextConfigLogfile.Wrap(-1)
 
@@ -663,9 +563,6 @@ class MainFrame(wx.Frame):
             self.panelConfig,
             wx.ID_ANY,
             wx.EmptyString,
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         self.textCtrlConfigLogfile.SetMinSize(wx.Size(400, -1))
 
@@ -675,22 +572,14 @@ class MainFrame(wx.Frame):
             self.panelConfig,
             wx.ID_ANY,
             "Logfile",
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
-        self.buttonConfigLogfile.SetBitmap(
-            icons.overview_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap()
-        )
+        self.buttonConfigLogfile.SetBitmap(icons.overview_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
         fgSizer31.Add(self.buttonConfigLogfile, 0, wx.ALL, 5)
 
         self.staticTextConfigLogLevel = wx.StaticText(
             self.panelConfig,
             wx.ID_ANY,
             "Loglevel",
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
         self.staticTextConfigLogLevel.Wrap(-1)
 
@@ -715,13 +604,8 @@ class MainFrame(wx.Frame):
             self.panelConfig,
             wx.ID_ANY,
             "Save",
-            wx.DefaultPosition,
-            wx.DefaultSize,
-            0,
         )
-        self.buttonSaveConfig.SetBitmap(
-            icons.save_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap()
-        )
+        self.buttonSaveConfig.SetBitmap(icons.save_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
         fgSizer31.Add(self.buttonSaveConfig, 0, wx.ALL, 5)
 
         self.panelConfig.SetSizer(fgSizer31)
@@ -732,15 +616,9 @@ class MainFrame(wx.Frame):
         # create image list
         self.imageList = wx.ImageList(24, 24)
         # add the icons
-        self.imageList.Add(
-            icons.task_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap()
-        )
-        self.imageList.Add(
-            icons.playlist_add_check_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap()
-        )
-        self.imageList.Add(
-            icons.settings_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap()
-        )
+        self.imageList.Add(icons.task_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
+        self.imageList.Add(icons.playlist_add_check_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
+        self.imageList.Add(icons.settings_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
         # set the image list
         self.m_notebook3.AssignImageList(self.imageList)
         # set the icons
@@ -760,12 +638,8 @@ class MainFrame(wx.Frame):
         self.m_statusBar1 = self.CreateStatusBar(1, wx.STB_SIZEGRIP, wx.ID_ANY)
         self.mainmenu = wx.MenuBar(0)
         self.file = wx.Menu()
-        self.menuitemFileClose = wx.MenuItem(
-            self.file, ID_CLOSE, "Close", "Close VATValidation", wx.ITEM_NORMAL
-        )
-        self.menuitemFileClose.SetBitmap(
-            icons.exit_to_app_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap()
-        )
+        self.menuitemFileClose = wx.MenuItem(self.file, ID_CLOSE, "Close", "Close VATValidation", wx.ITEM_NORMAL)
+        self.menuitemFileClose.SetBitmap(icons.exit_to_app_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
         self.file.Append(self.menuitemFileClose)
 
         self.mainmenu.Append(self.file, "File")
@@ -778,9 +652,7 @@ class MainFrame(wx.Frame):
             "Go to GitHub repository.",
             wx.ITEM_NORMAL,
         )
-        self.menuitemHelpSupport.SetBitmap(
-            icons.contact_support_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap()
-        )
+        self.menuitemHelpSupport.SetBitmap(icons.contact_support_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
         self.help.Append(self.menuitemHelpSupport)
 
         self.menuitemHelpWebsite = wx.MenuItem(
@@ -790,9 +662,7 @@ class MainFrame(wx.Frame):
             "Open website for further information.",
             wx.ITEM_NORMAL,
         )
-        self.menuitemHelpWebsite.SetBitmap(
-            icons.globe_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap()
-        )
+        self.menuitemHelpWebsite.SetBitmap(icons.globe_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
         self.help.Append(self.menuitemHelpWebsite)
 
         self.menuitemHelpUpdate = wx.MenuItem(
@@ -802,17 +672,11 @@ class MainFrame(wx.Frame):
             "Check, if there is an update available.",
             wx.ITEM_NORMAL,
         )
-        self.menuitemHelpUpdate.SetBitmap(
-            icons.restart_alt_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap()
-        )
+        self.menuitemHelpUpdate.SetBitmap(icons.restart_alt_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
         self.help.Append(self.menuitemHelpUpdate)
 
-        self.menuitemHelpAbout = wx.MenuItem(
-            self.help, ID_ABOUT, "About...", "About VATValidation", wx.ITEM_NORMAL
-        )
-        self.menuitemHelpAbout.SetBitmap(
-            icons.info_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap()
-        )
+        self.menuitemHelpAbout = wx.MenuItem(self.help, ID_ABOUT, "About...", "About VATValidation", wx.ITEM_NORMAL)
+        self.menuitemHelpAbout.SetBitmap(icons.info_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
         self.help.Append(self.menuitemHelpAbout)
 
         self.mainmenu.Append(self.help, "Help")
@@ -828,15 +692,11 @@ class MainFrame(wx.Frame):
         self.buttonValidateBatch.Bind(wx.EVT_BUTTON, self.validateBatch)
         self.buttonConfigLogfile.Bind(wx.EVT_BUTTON, self.openLogfile)
         self.buttonSaveConfig.Bind(wx.EVT_BUTTON, self.saveConfig)
-        self.Bind(
-            wx.EVT_MENU, self.vatvalidationClose, id=self.menuitemFileClose.GetId()
-        )
+        self.Bind(wx.EVT_MENU, self.vatvalidationClose, id=self.menuitemFileClose.GetId())
         self.Bind(wx.EVT_MENU, self.openGitHubRepo, id=self.menuitemHelpSupport.GetId())
         self.Bind(wx.EVT_MENU, self.openWebsite, id=self.menuitemHelpWebsite.GetId())
         self.Bind(wx.EVT_MENU, self.checkForUpdates, id=self.menuitemHelpUpdate.GetId())
-        self.Bind(
-            wx.EVT_MENU, self.vatvalidationAbout, id=self.menuitemHelpAbout.GetId()
-        )
+        self.Bind(wx.EVT_MENU, self.vatvalidationAbout, id=self.menuitemHelpAbout.GetId())
 
     def __del__(self):
         pass

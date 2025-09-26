@@ -27,19 +27,6 @@ class DialogAbout(gui_about.dialogAbout):
         # initialize parent class
         gui_about.dialogAbout.__init__(self, parent)
 
-        self.staticTextName.SetLabelText(helper.NAME + " " + helper.VERSION)
-        self.staticTextLicence.SetLabelText(
-            self.staticTextLicence.GetLabelText() + " " + helper.LICENCE
-        )
-
-        # specify all the icons
-        gui_about.dialogAbout.SetIcon(
-            self,
-            icons.select_check_box_24dp_097e23_fill1_wght400_grad0_opsz24.GetIcon(),
-        )
-        self.bitmapLogo.SetBitmap(
-            icons.select_check_box_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap()
-        )
 
     def openGithub(self, event):
         webbrowser.open_new_tab(
