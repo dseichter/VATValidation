@@ -15,10 +15,6 @@
 
 import wx
 
-import gettext
-
-_ = gettext.gettext
-
 
 class dialogAbout(wx.Dialog):
     def __init__(self, parent):
@@ -26,7 +22,7 @@ class dialogAbout(wx.Dialog):
             self,
             parent,
             id=wx.ID_ANY,
-            title=_("About VATValidation"),
+            title="About VATValidation",
             pos=wx.DefaultPosition,
             size=wx.Size(240, 200),
             style=wx.DEFAULT_DIALOG_STYLE,
@@ -42,21 +38,21 @@ class dialogAbout(wx.Dialog):
         bSizer2.Add(self.bitmapLogo, 0, wx.ALL, 5)
 
         self.staticTextName = wx.StaticText(
-            self, wx.ID_ANY, _("MyLabel"), wx.DefaultPosition, wx.DefaultSize, 0
+            self, wx.ID_ANY, "MyLabel", wx.DefaultPosition, wx.DefaultSize, 0
         )
         self.staticTextName.Wrap(-1)
 
         bSizer2.Add(self.staticTextName, 0, wx.ALL, 5)
 
         self.staticTextLicence = wx.StaticText(
-            self, wx.ID_ANY, _("Licenced under"), wx.DefaultPosition, wx.DefaultSize, 0
+            self, wx.ID_ANY, "Licenced under", wx.DefaultPosition, wx.DefaultSize, 0
         )
         self.staticTextLicence.Wrap(-1)
 
         bSizer2.Add(self.staticTextLicence, 0, wx.ALL, 5)
 
         self.staticTextGithub = wx.StaticText(
-            self, wx.ID_ANY, _("More on GitHub"), wx.DefaultPosition, wx.DefaultSize, 0
+            self, wx.ID_ANY, "More on GitHub", wx.DefaultPosition, wx.DefaultSize, 0
         )
         self.staticTextGithub.Wrap(-1)
 
@@ -74,7 +70,7 @@ class dialogAbout(wx.Dialog):
             wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT)
         )
         self.staticTextGithub.SetToolTip(
-            _("Visit GitHub repository for further information.")
+            "Visit GitHub repository for further information."
         )
 
         bSizer2.Add(self.staticTextGithub, 0, wx.ALL, 5)

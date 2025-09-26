@@ -18,7 +18,6 @@ import wx
 
 # import the newly created GUI file
 import gui_vatvalidation
-import gui_about
 
 # Import the VATValidation library
 import single
@@ -26,7 +25,6 @@ import batch
 import helper
 import settings
 import about_ui
-import icons
 
 # import common libraries
 import webbrowser
@@ -51,13 +49,6 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
         # initialize parent class
         gui_vatvalidation.MainFrame.__init__(self, parent)
 
-        # add the version to the label
-        self.SetTitle(helper.NAME + " " + helper.VERSION)
-
-        self.m_notebook3.SetSelection(0)
-
-        # create a filesystem watcher and
-        # self.filewatcher = wx.FileSystemWatcher()
         self.Bind(wx.EVT_CLOSE, self.OnClose)
         wx.CallAfter(self.addWatchdog)
 
