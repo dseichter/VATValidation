@@ -19,7 +19,7 @@ import logging
 
 logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
 
-VERSION = "v2025-08-10"
+VERSION = "v2025-09-30"
 UPDATEURL = 'https://api.github.com/repos/dseichter/VATValidation/releases/latest'
 RELEASES = 'https://github.com/dseichter/VATValidation/releases'
 NAME = 'VATValidation'

@@ -52,7 +52,7 @@ class MainFrame(wx.Frame):
 
         self.staticText_ownvat = wx.StaticText(self.panelSingle, label="Own VAT")
         fgSizer2.Add(self.staticText_ownvat, 0, wx.ALL, 5)
-        self.textOwnvat = wx.TextCtrl(self.panelSingle)
+        self.textOwnvat = wx.TextCtrl(self.panelSingle, size=(150, -1))
         fgSizer2.Add(self.textOwnvat, 0, wx.ALL, 5)
         self.buttonClear = wx.Button(self.panelSingle, label="Clear")
         self.buttonClear.SetBitmap(icons.restart_alt_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
@@ -61,7 +61,7 @@ class MainFrame(wx.Frame):
 
         self.staticText_foreignvat = wx.StaticText(self.panelSingle, label="Foreign VAT")
         fgSizer2.Add(self.staticText_foreignvat, 0, wx.ALL, 5)
-        self.textForeignvat = wx.TextCtrl(self.panelSingle)
+        self.textForeignvat = wx.TextCtrl(self.panelSingle, size=(150, -1))
         fgSizer2.Add(self.textForeignvat, 0, wx.ALL, 5)
         fgSizer2.Add((0, 0), 1, wx.EXPAND, 5)
 
@@ -109,13 +109,6 @@ class MainFrame(wx.Frame):
         fgSizer5.Add((0, 0), 1, wx.EXPAND, 5)
 
         self.m_staticText_ValidationResult = wx.StaticText(self.panelSingle, label="Validation Result")
-        self.m_staticText_ValidationResult.SetFont(wx.Font(
-            wx.NORMAL_FONT.GetPointSize(),
-            wx.FONTFAMILY_DEFAULT,
-            wx.FONTSTYLE_NORMAL,
-            wx.FONTWEIGHT_BOLD,
-            False,
-        ))
         fgSizer5.Add(self.m_staticText_ValidationResult, 0, wx.ALL, 5)
 
         self.staticText_result = wx.StaticText(self.panelSingle, label="Result")
@@ -134,13 +127,6 @@ class MainFrame(wx.Frame):
             self.panelSingle,
             style=wx.TE_MULTILINE,
         )
-        self.textResultDetails.SetFont(wx.Font(
-            wx.NORMAL_FONT.GetPointSize(),
-            wx.FONTFAMILY_SCRIPT,
-            wx.FONTSTYLE_NORMAL,
-            wx.FONTWEIGHT_NORMAL,
-            False,
-        ))
         self.textResultDetails.SetMinSize((-1, 100))
         fgSizer5.Add(self.textResultDetails, 1, wx.ALL | wx.EXPAND, 5)
 
@@ -224,7 +210,7 @@ class MainFrame(wx.Frame):
 
         self.staticTextConfigOwnVat = wx.StaticText(self.panelConfig, label="Own VAT")
         fgSizer31.Add(self.staticTextConfigOwnVat, 0, wx.ALL, 5)
-        self.textCtrlConfigOwnVat = wx.TextCtrl(self.panelConfig)
+        self.textCtrlConfigOwnVat = wx.TextCtrl(self.panelConfig, size=(150, -1))
         fgSizer31.Add(self.textCtrlConfigOwnVat, 0, wx.ALL, 5)
         fgSizer31.Add((0, 0), 1, wx.EXPAND, 5)
 
