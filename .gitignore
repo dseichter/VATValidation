@@ -137,9 +137,9 @@ venv.bak/
 
 # mkdocs documentation
 /site
-vatvalidation-docs/site/
-vatvalidation-docs/.cache/
-vatvalidation-docs/.temp/
+docs/site/
+docs/.cache/
+docs/.temp/
 
 # mypy
 .mypy_cache/

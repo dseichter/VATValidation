@@ -10,7 +10,7 @@ Installieren Sie die erforderlichen Abhängigkeiten
 
 ```pip install -r src/requirements.txt```
 ```pip install -r icons/requirements.txt```
-```pip install -r vatvalidation-docs/requirements.txt```
+```pip install -r docs/requirements.txt```
 
 Wenn Sie einige Änderungen an der Benutzeroberfläche vornehmen möchten, laden Sie den neuesten wxFormBuilder von der [wxFormBuilder Homepage] (https://github.com/wxFormBuilder/wxFormBuilder) herunter und installieren Sie ihn.
 

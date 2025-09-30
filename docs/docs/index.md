@@ -7,6 +7,8 @@
 
 Validate VAT numbers using the interfaces of BZSt, VIES and/or HMRC. Provides single or batch validation with support for CSV, XLSX and JSON.
 
+![VATValidation](assets/single.png)
+
 Binaries for Windows and Linux are available (see [releases](https://github.com/dseichter/VATValidation/releases)).
 
 ## Features

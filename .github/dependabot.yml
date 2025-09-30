@@ -8,6 +8,6 @@ updates:
     directories:
       - "/src"
       - "/icons"
-      - "/vatvalidation-docs"
+      - "/docs"
     schedule:
       interval: "weekly"

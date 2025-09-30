@@ -6,13 +6,13 @@ on:
       - main
       - dseichter/*
     paths-ignore:
-      - 'vatvalidation-docs/**'
+      - 'docs/**'
       - '.github/workflows/gh-page.yml'
   pull_request:
     branches:
       - '*'
     paths-ignore:
-      - 'vatvalidation-docs/**'
+      - 'docs/**'
       - '.github/workflows/gh-page.yml'
    
 

@@ -7,6 +7,8 @@
 
 Validierung von Umsatzsteuernummern über die Schnittstellen von BZSt, MIAS und/oder HMRC. Bietet Einzel- oder Batch-Validierung mit Unterstützung für CSV, XLSX und JSON.
 
+![VATValidation](assets/single.png)
+
 Binärdateien für Windows und Linux stehen zur Verfügung (siehe [Releases](https://github.com/dseichter/VATValidation/releases)).
 
 ## Merkmale

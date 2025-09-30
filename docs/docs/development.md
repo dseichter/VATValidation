@@ -14,7 +14,7 @@ Install the required dependencies
 
 ```pip install -r src/requirements.txt```
 ```pip install -r icons/requirements.txt```
-```pip install -r vatvalidation-docs/requirements.txt```
+```pip install -r docs/requirements.txt```
 
 You can start the VATValidation by running the following command:
 

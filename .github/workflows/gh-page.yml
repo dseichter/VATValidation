@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'vatvalidation-docs/**'
+      - 'docs/**'
 
   workflow_dispatch:
 
@@ -30,4 +30,4 @@ jobs:
 
     - name: Deploy MkDocs site
       run: |
-        mkdocs gh-deploy -f vatvalidation-docs/mkdocs.yml --force
+        mkdocs gh-deploy -f docs/mkdocs.yml --force
