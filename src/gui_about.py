@@ -25,17 +25,14 @@ class dialogAbout(wx.Dialog):
             self,
             parent,
             title="About VATValidation",
-            size=wx.Size(240, 200),
+            size=(240, 200),
         )
-
-        self.SetSizeHints(wx.DefaultSize, wx.DefaultSize)
 
         bSizer2 = wx.BoxSizer(wx.VERTICAL)
 
         self.bitmapLogo = wx.StaticBitmap(self)
         bSizer2.Add(self.bitmapLogo, 0, wx.ALL, 5)
 
-        # specify all the icons
         self.SetIcon(icons.select_check_box_48dp_097e23_fill1_wght400_grad0_opsz48.GetIcon())
         self.bitmapLogo.SetBitmap(icons.select_check_box_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
 
@@ -44,17 +41,13 @@ class dialogAbout(wx.Dialog):
             wx.ID_ANY,
             helper.NAME + " " + helper.VERSION,
         )
-        self.staticTextName.Wrap(-1)
-
         bSizer2.Add(self.staticTextName, 0, wx.ALL, 5)
 
         self.staticTextLicence = wx.StaticText(
             self,
             wx.ID_ANY,
-            "Licenced under" + " " + helper.LICENCE,
+            "Licenced under " + helper.LICENCE,
         )
-        self.staticTextLicence.Wrap(-1)
-
         bSizer2.Add(self.staticTextLicence, 0, wx.ALL, 5)
 
         self.staticTextGithub = wx.StaticText(
@@ -62,8 +55,6 @@ class dialogAbout(wx.Dialog):
             wx.ID_ANY,
             "More on GitHub",
         )
-        self.staticTextGithub.Wrap(-1)
-
         self.staticTextGithub.SetFont(
             wx.Font(
                 wx.NORMAL_FONT.GetPointSize(),
@@ -71,12 +62,10 @@ class dialogAbout(wx.Dialog):
                 wx.FONTSTYLE_NORMAL,
                 wx.FONTWEIGHT_NORMAL,
                 True,
-                wx.EmptyString,
             )
         )
         self.staticTextGithub.SetForegroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT))
         self.staticTextGithub.SetToolTip("Visit GitHub repository for further information.")
-
         bSizer2.Add(self.staticTextGithub, 0, wx.ALL, 5)
 
         m_sdbSizer2 = wx.StdDialogButtonSizer()
@@ -85,12 +74,10 @@ class dialogAbout(wx.Dialog):
         self.m_sdbSizer2Cancel = wx.Button(self, wx.ID_CANCEL)
         m_sdbSizer2.AddButton(self.m_sdbSizer2Cancel)
         m_sdbSizer2.Realize()
-
         bSizer2.Add(m_sdbSizer2, 1, wx.EXPAND, 5)
 
         self.SetSizer(bSizer2)
         self.Layout()
-
         self.Centre(wx.BOTH)
 
         # Connect Events
