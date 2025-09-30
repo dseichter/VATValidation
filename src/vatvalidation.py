@@ -1,4 +1,4 @@
-# Copyright (c) 2024 Daniel Seichter
+# Copyright (c) 2024-2025 Daniel Seichter
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 import wx
 
 # import the newly created GUI file
-import gui
+import gui_vatvalidation
 
 # Import the VATValidation library
 import single
@@ -25,7 +25,6 @@ import batch
 import helper
 import settings
 import about_ui
-import icons
 
 # import common libraries
 import webbrowser
@@ -40,52 +39,16 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-BATCH_STATUS_FILE = 'batchstatus.json'
+BATCH_STATUS_FILE = "batchstatus.json"
 
 
 # inherit from the MainFrame created in wxFowmBuilder and create VATValidationFrame
-class VATValidationFrame(gui.MainFrame):
+class VATValidationFrame(gui_vatvalidation.MainFrame):
     # constructor
     def __init__(self, parent):
         # initialize parent class
-        gui.MainFrame.__init__(self, parent)
+        gui_vatvalidation.MainFrame.__init__(self, parent)
 
-        # add the version to the label
-        self.SetTitle(helper.NAME + " " + helper.VERSION)
-
-        # specify all the icons
-        gui.MainFrame.SetIcon(self, icons.tick_box.GetIcon())
-        self.menuitemFileClose.SetBitmap(icons.cancel.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
-
-        self.menuitemHelpSupport.SetBitmap(icons.get_help.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
-        self.menuitemHelpWebsite.SetBitmap(icons.website.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
-        self.menuitemHelpUpdate.SetBitmap(icons.restart.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
-        self.menuitemHelpAbout.SetBitmap(icons.info.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
-        self.buttonValidateSingle.SetBitmap(icons.search.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
-        self.buttonValidateSingle.SetSize(self.buttonValidateSingle.GetBestSize())
-
-        self.buttonValidateBatch.SetBitmap(icons.search.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
-        self.buttonValidateBatch.SetSize(self.buttonValidateBatch.GetBestSize())
-
-        self.buttonClear.SetBitmap(icons.broom.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
-        self.buttonClear.SetSize(self.buttonClear.GetBestSize())
-
-        self.m_notebook3.SetSelection(0)
-        # create image list
-        self.imageList = wx.ImageList(16, 16)
-        # add the icons
-        self.imageList.Add(icons.document.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
-        self.imageList.Add(icons.microsoft_excel.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
-        self.imageList.Add(icons.settings.GetBitmap().ConvertToImage().Rescale(16, 16).ConvertToBitmap())
-        # set the image list
-        self.m_notebook3.AssignImageList(self.imageList)
-        # set the icons
-        self.m_notebook3.SetPageImage(0, 0)
-        self.m_notebook3.SetPageImage(1, 1)
-        self.m_notebook3.SetPageImage(2, 2)
-
-        # create a filesystem watcher and
-        # self.filewatcher = wx.FileSystemWatcher()
         self.Bind(wx.EVT_CLOSE, self.OnClose)
         wx.CallAfter(self.addWatchdog)
 
@@ -197,7 +160,7 @@ class VATValidationFrame(gui.MainFrame):
         self.textResultIsValid.SetValue("Yes" if message["valid"] else "No")
         self.textResultCode.SetValue(message["errorcode"])
         self.textResultDetails.SetValue(message.get("errorcode_description", ""))
-        self.m_staticText_ValidationResult.SetLabel(f"Validation Result: (Interface: {message["type"]})")
+        self.m_staticText_ValidationResult.SetLabel(f"Validation Result: (Interface: {message['type']})")
 
         # In case of empty errorcode_description, load the company, address town, zip and street into textResultDetails
         if message.get("errorcode_description", "") == "":
@@ -226,14 +189,22 @@ class VATValidationFrame(gui.MainFrame):
         # check if given format is supported
         if self.filepickerInput.GetPath():
             ext = self.filepickerInput.GetPath().split(".")[-1].lower()
-            if ext not in ['xlsx', 'csv', 'json']:
-                wx.MessageBox("Unsupported input file format.", "Unsupported file format", wx.OK | wx.ICON_ERROR)
+            if ext not in ["xlsx", "csv", "json"]:
+                wx.MessageBox(
+                    "Unsupported input file format.",
+                    "Unsupported file format",
+                    wx.OK | wx.ICON_ERROR,
+                )
                 return
 
         if self.filepickerOutput.GetPath():
             ext = self.filepickerOutput.GetPath().split(".")[-1].lower()
-            if ext not in ['xlsx', 'csv', 'json']:
-                wx.MessageBox("Unsupported output file format.", "Unsupported file format", wx.OK | wx.ICON_ERROR)
+            if ext not in ["xlsx", "csv", "json"]:
+                wx.MessageBox(
+                    "Unsupported output file format.",
+                    "Unsupported file format",
+                    wx.OK | wx.ICON_ERROR,
+                )
                 return
 
         # set/reset everything to 0
@@ -243,7 +214,16 @@ class VATValidationFrame(gui.MainFrame):
         self.progressProcessing.Value = 0
 
         # start the batch validation
-        download_thread = threading.Thread(target=batch.validatebatch, kwargs={"inputfile": self.filepickerInput.GetPath(), "outputfile": self.filepickerOutput.GetPath(), "type": settings.load_value_from_json_file("interface"), "lang": settings.load_value_from_json_file("language"), "statusupdate": True})
+        download_thread = threading.Thread(
+            target=batch.validatebatch,
+            kwargs={
+                "inputfile": self.filepickerInput.GetPath(),
+                "outputfile": self.filepickerOutput.GetPath(),
+                "type": settings.load_value_from_json_file("interface"),
+                "lang": settings.load_value_from_json_file("language"),
+                "statusupdate": True,
+            },
+        )
         download_thread.start()
 
         while download_thread.is_alive():
@@ -296,13 +276,8 @@ class Handler(FileSystemEventHandler):
 
 # mandatory in wx, create an app, False stands for not deteriction stdin/stdout
 # refer manual for details
-app = wx.App(False)
-
-# create an object of VATValidationFrame
-frame = VATValidationFrame(None)
-
-# show the frame
-frame.Show(True)
-
-# start the applications
-app.MainLoop()
+if __name__ == "__main__":
+    app = wx.App(False)
+    frame = VATValidationFrame(None)
+    frame.Show(True)
+    app.MainLoop()
