@@ -22,7 +22,7 @@ class TestConfigJson(unittest.TestCase):
     def test_config_json_is_valid_json(self):
         with open(self.config_path, 'r', encoding='utf-8') as f:
             try:
-                data = json.load(f)
+                _ = json.load(f)
             except Exception as e:
                 self.fail(f"config.json is not valid JSON: {e}")
 
