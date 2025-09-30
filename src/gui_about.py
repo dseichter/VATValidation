@@ -21,40 +21,27 @@ import icons
 
 class dialogAbout(wx.Dialog):
     def __init__(self, parent):
-        wx.Dialog.__init__(
-            self,
+        super().__init__(
             parent,
             title="About VATValidation",
             size=(240, 200),
         )
 
-        bSizer2 = wx.BoxSizer(wx.VERTICAL)
+        mainSizer = wx.BoxSizer(wx.VERTICAL)
 
         self.bitmapLogo = wx.StaticBitmap(self)
-        bSizer2.Add(self.bitmapLogo, 0, wx.ALL, 5)
+        self.bitmapLogo.SetBitmap(icons.select_check_box_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
+        mainSizer.Add(self.bitmapLogo, 0, wx.ALL, 5)
 
         self.SetIcon(icons.select_check_box_48dp_097e23_fill1_wght400_grad0_opsz48.GetIcon())
-        self.bitmapLogo.SetBitmap(icons.select_check_box_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
 
-        self.staticTextName = wx.StaticText(
-            self,
-            wx.ID_ANY,
-            helper.NAME + " " + helper.VERSION,
-        )
-        bSizer2.Add(self.staticTextName, 0, wx.ALL, 5)
+        self.staticTextName = wx.StaticText(self, label=f"{helper.NAME} {helper.VERSION}")
+        mainSizer.Add(self.staticTextName, 0, wx.ALL, 5)
 
-        self.staticTextLicence = wx.StaticText(
-            self,
-            wx.ID_ANY,
-            "Licenced under " + helper.LICENCE,
-        )
-        bSizer2.Add(self.staticTextLicence, 0, wx.ALL, 5)
+        self.staticTextLicence = wx.StaticText(self, label=f"Licenced under {helper.LICENCE}")
+        mainSizer.Add(self.staticTextLicence, 0, wx.ALL, 5)
 
-        self.staticTextGithub = wx.StaticText(
-            self,
-            wx.ID_ANY,
-            "More on GitHub",
-        )
+        self.staticTextGithub = wx.StaticText(self, label="More on GitHub")
         self.staticTextGithub.SetFont(
             wx.Font(
                 wx.NORMAL_FONT.GetPointSize(),
@@ -66,17 +53,17 @@ class dialogAbout(wx.Dialog):
         )
         self.staticTextGithub.SetForegroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT))
         self.staticTextGithub.SetToolTip("Visit GitHub repository for further information.")
-        bSizer2.Add(self.staticTextGithub, 0, wx.ALL, 5)
+        mainSizer.Add(self.staticTextGithub, 0, wx.ALL, 5)
 
-        m_sdbSizer2 = wx.StdDialogButtonSizer()
-        self.m_sdbSizer2OK = wx.Button(self, wx.ID_OK)
-        m_sdbSizer2.AddButton(self.m_sdbSizer2OK)
-        self.m_sdbSizer2Cancel = wx.Button(self, wx.ID_CANCEL)
-        m_sdbSizer2.AddButton(self.m_sdbSizer2Cancel)
-        m_sdbSizer2.Realize()
-        bSizer2.Add(m_sdbSizer2, 1, wx.EXPAND, 5)
+        btnSizer = wx.StdDialogButtonSizer()
+        self.btnOK = wx.Button(self, wx.ID_OK)
+        btnSizer.AddButton(self.btnOK)
+        self.btnCancel = wx.Button(self, wx.ID_CANCEL)
+        btnSizer.AddButton(self.btnCancel)
+        btnSizer.Realize()
+        mainSizer.Add(btnSizer, 1, wx.EXPAND, 5)
 
-        self.SetSizer(bSizer2)
+        self.SetSizer(mainSizer)
         self.Layout()
         self.Centre(wx.BOTH)
 
