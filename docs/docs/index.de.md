@@ -11,6 +11,11 @@ Validierung von Umsatzsteuernummern über die Schnittstellen von BZSt, MIAS und/
 
 Binärdateien für Windows und Linux stehen zur Verfügung (siehe [Releases](https://github.com/dseichter/VATValidation/releases)).
 
+[![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/dseichter/VATValidation/total)](https://github.com/dseichter/VATValidation/releases)
+![GitHub License](https://img.shields.io/github/license/dseichter/VATValidation)
+[![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/dseichter/VATValidation)](https://github.com/dseichter/VATValidation/issues)
+[![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/dseichter/VATValidation)](https://github.com/dseichter/VATValidation/pulls)
+
 ## Merkmale
 
 - 🖥️ Grafische Benutzeroberfläche
