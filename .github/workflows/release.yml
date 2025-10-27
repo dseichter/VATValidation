@@ -33,7 +33,7 @@ jobs:
             run: pyinstaller --onefile -w src/vatvalidation.py -n VATValidation-windows-${{ github.ref_name }}.exe --icon=icons/vatvalidation.ico
 
           - name: Upload artifact
-            uses: actions/upload-artifact@v4
+            uses: actions/upload-artifact@v5
             with:
                   name: VATValidation-windows-${{ github.ref_name }}.exe
                   path: dist/VATValidation-windows-${{ github.ref_name }}.exe
@@ -68,7 +68,7 @@ jobs:
           run: pyinstaller --onefile src/vatvalidation_cli.py -n VATValidation-cli-windows-${{ github.ref_name }}.exe
 
         - name: Upload artifact
-          uses: actions/upload-artifact@v4
+          uses: actions/upload-artifact@v5
           with:
                 name: VATValidation-cli-windows-${{ github.ref_name }}.exe
                 path: dist/VATValidation-cli-windows-${{ github.ref_name }}.exe      
@@ -117,7 +117,7 @@ jobs:
             run: pyinstaller --onefile src/vatvalidation.py -n VATValidation-linux-${{ github.ref_name }}
 
           - name: Upload artifact
-            uses: actions/upload-artifact@v4
+            uses: actions/upload-artifact@v5
             with:
               name: VATValidation-linux-${{ github.ref_name }}
               path: dist/VATValidation-linux-${{ github.ref_name }}
@@ -155,7 +155,7 @@ jobs:
           run: pyinstaller --onefile src/vatvalidation_cli.py -n VATValidation-cli-linux-${{ github.ref_name }}
 
         - name: Upload artifact
-          uses: actions/upload-artifact@v4
+          uses: actions/upload-artifact@v5
           with:
             name: VATValidation-cli-linux-${{ github.ref_name }}
             path: dist/VATValidation-cli-linux-${{ github.ref_name }}              
