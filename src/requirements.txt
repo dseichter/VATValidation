@@ -4,6 +4,6 @@ urllib3==2.5.0
 pandas==2.3.3
 numpy==2.3.4
 openpyxl==3.1.5
-pyinstaller==6.16.0
+pyinstaller==6.17.0
 defusedxml==0.7.1
 watchdog==6.0.0
