@@ -2,7 +2,7 @@ wxPython==4.2.3; sys_platform != "linux"
 https://github.com/dseichter/wxpython-whl/releases/download/4.2.3/wxpython-4.2.3-cp313-cp313-linux_x86_64.whl; sys_platform == "linux"
 urllib3==2.5.0
 pandas==2.3.3
-numpy==2.3.4
+numpy==2.3.5
 openpyxl==3.1.5
 pyinstaller==6.16.0
 defusedxml==0.7.1
