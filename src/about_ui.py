@@ -14,16 +14,13 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 import gui_about
-
-# import VATValidation specific libraries
 import webbrowser
 
 
 class DialogAbout(gui_about.dialogAbout):
-    # constructor
-    def __init__(self, parent):
-        # initialize parent class
-        gui_about.dialogAbout.__init__(self, parent)
-
+    def __init__(self, parent=None):
+        super().__init__(parent)
+    
     def openGithub(self, event):
+        """Open GitHub repository"""
         webbrowser.open_new_tab("https://github.com/dseichter/VATValidation")
