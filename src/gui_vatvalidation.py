@@ -15,9 +15,8 @@
 
 from PySide6.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, 
                                QTabWidget, QLabel, QLineEdit, QPushButton, 
-                               QTextEdit, QComboBox, QFileDialog, QProgressBar,
-                               QGridLayout, QFrame, QMenuBar, QMenu, QStatusBar)
-from PySide6.QtCore import Qt, Signal
+                               QTextEdit, QComboBox, QProgressBar,
+                               QGridLayout, QFrame, QStatusBar)
 from PySide6.QtGui import QAction
 
 import icons

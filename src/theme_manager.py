@@ -14,7 +14,6 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 from PySide6.QtWidgets import QApplication
-from PySide6.QtCore import QSettings
 from PySide6.QtGui import QPalette, QColor
 
 
@@ -85,7 +84,7 @@ class ThemeManager:
                 result = subprocess.run(['defaults', 'read', '-g', 'AppleInterfaceStyle'], 
                                       capture_output=True, text=True)
                 is_dark = result.stdout.strip() == 'Dark'
-            except:
+            except Exception:
                 pass
         
         # Linux (check for dark theme)
@@ -95,7 +94,7 @@ class ThemeManager:
                 result = subprocess.run(['gsettings', 'get', 'org.gnome.desktop.interface', 'gtk-theme'], 
                                       capture_output=True, text=True)
                 is_dark = 'dark' in result.stdout.lower()
-            except:
+            except Exception:
                 pass
         
         if is_dark:
