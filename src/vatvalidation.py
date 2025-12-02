@@ -17,6 +17,8 @@ import sys
 from PySide6.QtWidgets import QApplication, QMessageBox, QFileDialog
 from PySide6.QtCore import QTimer
 
+import theme_manager
+
 # Import the newly created GUI file
 import gui_vatvalidation
 
@@ -55,6 +57,7 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
         self.buttonOutputFile.clicked.connect(self.selectOutputFile)
         self.buttonConfigLogfile.clicked.connect(self.openLogfile)
         self.buttonSaveConfig.clicked.connect(self.saveConfig)
+        self.comboBoxConfigTheme.currentTextChanged.connect(self.themeChanged)
         
         # Load config after a short delay to ensure UI is ready
         QTimer.singleShot(100, self.loadConfig)
@@ -125,6 +128,10 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
         self.textConfigCSVdelimiter.setText(settings.load_value_from_json_file("delimiter") or ",")
         self.textCtrlConfigLogfile.setText(settings.load_value_from_json_file("logfilename") or "")
         self.comboBoxConfigLoglevel.setCurrentText(settings.load_value_from_json_file("loglevel") or "ERROR")
+        self.comboBoxConfigTheme.setCurrentText(settings.load_value_from_json_file("theme") or "system")
+        
+        # Apply current theme
+        theme_manager.ThemeManager.apply_theme(settings.load_value_from_json_file("theme") or "system")
     
     def saveConfig(self):
         """Save configuration to file"""
@@ -134,7 +141,11 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
         settings.save_config("delimiter", self.textConfigCSVdelimiter.text())
         settings.save_config("logfilename", self.textCtrlConfigLogfile.text())
         settings.save_config("loglevel", self.comboBoxConfigLoglevel.currentText())
+        settings.save_config("theme", self.comboBoxConfigTheme.currentText())
         self.textOwnvat.setText(settings.load_value_from_json_file("ownvat"))
+        
+        # Apply new theme
+        theme_manager.ThemeManager.apply_theme(self.comboBoxConfigTheme.currentText())
         QMessageBox.information(
             self,
             "Configuration saved",
@@ -298,6 +309,10 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
         """Show about dialog"""
         dlg = about_ui.DialogAbout(self)
         dlg.exec()
+    
+    def themeChanged(self, theme_name):
+        """Apply theme immediately when changed"""
+        theme_manager.ThemeManager.apply_theme(theme_name)
 
 
 class Handler(FileSystemEventHandler):
@@ -312,6 +327,13 @@ class Handler(FileSystemEventHandler):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    
+    # Apply initial theme from settings
+    import settings
+    settings.create_config()
+    theme = settings.load_value_from_json_file("theme") or "system"
+    theme_manager.ThemeManager.apply_theme(theme)
+    
     frame = VATValidationFrame()
     frame.show()
     sys.exit(app.exec())

@@ -250,10 +250,16 @@ class MainFrame(QMainWindow):
         self.comboBoxConfigLoglevel.setCurrentIndex(1)
         config_layout.addWidget(self.comboBoxConfigLoglevel, 5, 1)
         
+        # Theme
+        config_layout.addWidget(QLabel("Theme"), 6, 0)
+        self.comboBoxConfigTheme = QComboBox()
+        self.comboBoxConfigTheme.addItems(["system", "light", "dark"])
+        config_layout.addWidget(self.comboBoxConfigTheme, 6, 1)
+        
         # Save button
         self.buttonSaveConfig = QPushButton("Save")
         self.buttonSaveConfig.setIcon(icons.get_icon('save_24dp_097e23_fill1_wght400_grad0_opsz24'))
-        config_layout.addWidget(self.buttonSaveConfig, 6, 0)
+        config_layout.addWidget(self.buttonSaveConfig, 7, 0)
         
         layout.addLayout(config_layout)
         layout.addStretch()

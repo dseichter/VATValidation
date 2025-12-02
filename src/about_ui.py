@@ -17,7 +17,7 @@ import gui_about
 import webbrowser
 
 
-class DialogAbout(gui_about.dialogAbout):
+class DialogAbout(gui_about.DialogAbout):
     def __init__(self, parent=None):
         super().__init__(parent)
     

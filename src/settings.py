@@ -54,6 +54,8 @@ def create_config():
         data['logfilename'] = f'{log_dir}/vatvalidation.log'
     if 'loglevel' not in data:
         data['loglevel'] = 'ERROR'
+    if 'theme' not in data:
+        data['theme'] = 'system'
 
     with open(CONFIGFILE, 'w') as f:
         json.dump(data, f, indent=4, sort_keys=True)
