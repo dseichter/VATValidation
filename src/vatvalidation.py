@@ -13,10 +13,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-# importing wx files
-import wx
+import sys
+from PySide6.QtWidgets import QApplication, QMessageBox, QFileDialog
+from PySide6.QtCore import QTimer
 
-# import the newly created GUI file
+import theme_manager
+
+# Import the newly created GUI file
 import gui_vatvalidation
 
 # Import the VATValidation library
@@ -26,7 +29,7 @@ import helper
 import settings
 import about_ui
 
-# import common libraries
+# Import common libraries
 import webbrowser
 import json
 import os
@@ -42,242 +45,295 @@ logger = logging.getLogger(__name__)
 BATCH_STATUS_FILE = "batchstatus.json"
 
 
-# inherit from the MainFrame created in wxFowmBuilder and create VATValidationFrame
 class VATValidationFrame(gui_vatvalidation.MainFrame):
-    # constructor
-    def __init__(self, parent):
-        # initialize parent class
-        gui_vatvalidation.MainFrame.__init__(self, parent)
-
-        self.Bind(wx.EVT_CLOSE, self.OnClose)
-        wx.CallAfter(self.addWatchdog)
-
-    def OnClose(self, _event):
-        self.observer.stop()
-        self.observer.join()
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        
+        # Connect signals
+        self.buttonClear.clicked.connect(self.clearFields)
+        self.buttonValidateSingle.clicked.connect(self.validateSingle)
+        self.buttonValidateBatch.clicked.connect(self.validateBatch)
+        self.buttonInputFile.clicked.connect(self.selectInputFile)
+        self.buttonOutputFile.clicked.connect(self.selectOutputFile)
+        self.buttonConfigLogfile.clicked.connect(self.openLogfile)
+        self.buttonSaveConfig.clicked.connect(self.saveConfig)
+        self.comboBoxConfigTheme.currentTextChanged.connect(self.themeChanged)
+        
+        # Load config after a short delay to ensure UI is ready
+        QTimer.singleShot(100, self.loadConfig)
+        
+        # Setup watchdog
+        QTimer.singleShot(200, self.addWatchdog)
+    
+    def closeEvent(self, event):
+        """Handle window close event"""
+        if hasattr(self, 'observer'):
+            self.observer.stop()
+            self.observer.join()
         if os.path.exists(BATCH_STATUS_FILE):
             os.remove(BATCH_STATUS_FILE)
-        self.Destroy()
-
-    @staticmethod
-    def OnWatchdog(self, event):
+        event.accept()
+    
+    def addWatchdog(self):
+        """Setup file system watcher for batch status"""
+        path = os.path.abspath(".")
+        self.observer = Observer()
+        event_handler = Handler(self)
+        self.observer.schedule(event_handler, path, recursive=True)
+        self.observer.start()
+    
+    def onWatchdog(self, event):
+        """Handle watchdog events for batch status updates"""
         if event.event_type in ["modified", "created"] and BATCH_STATUS_FILE in event.src_path:
             try:
                 with open(BATCH_STATUS_FILE, "r") as f:
                     data = json.load(f)
-                # get the current status
-                self.staticText_RecordsFound.SetLabel(str(data["total"]))
-                self.staticText_ProcessingXofY.SetLabel(f"{data['current']}/{data['total']}")
-                self.progressProcessing.Range = data["total"]
-                self.progressProcessing.Value = data["current"]
-            except FileNotFoundError:
-                pass
-            except json.decoder.JSONDecodeError:
+                # Update the current status
+                self.staticText_RecordsFoundValue.setText(str(data["total"]))
+                self.staticText_ProcessingXofY.setText(f"{data['current']}/{data['total']}")
+                self.progressProcessing.setMaximum(data["total"])
+                self.progressProcessing.setValue(data["current"])
+            except (FileNotFoundError, json.decoder.JSONDecodeError):
                 pass
         if event.event_type in ["deleted"] and BATCH_STATUS_FILE in event.src_path:
-            self.staticText_RecordsFound.SetLabel("0")
-            self.staticText_ProcessingXofY.SetLabel("0/0")
-            self.progressProcessing.Range = 0
-            self.progressProcessing.Value = 0
-
-    # load the config file
-    def loadConfig(self, event):
+            self.staticText_RecordsFoundValue.setText("0")
+            self.staticText_ProcessingXofY.setText("0/0")
+            self.progressProcessing.setMaximum(0)
+            self.progressProcessing.setValue(0)
+    
+    def loadConfig(self):
+        """Load configuration from file"""
         settings.create_config()
         try:
-            self.textCtrlConfigOwnVat.SetValue(settings.load_value_from_json_file("ownvat"))
-            self.textOwnvat.SetValue(settings.load_value_from_json_file("ownvat"))
+            own_vat = settings.load_value_from_json_file("ownvat")
+            self.textCtrlConfigOwnVat.setText(own_vat or "")
+            self.textOwnvat.setText(own_vat or "")
         except TypeError:
-            wx.MessageBox(
-                "Your own VAT is not set. Please provide your own VAT within the confguration.",
+            QMessageBox.warning(
+                self,
                 "Own VAT",
-                wx.OK | wx.ICON_WARNING,
+                "Your own VAT is not set. Please provide your own VAT within the configuration."
             )
-        if settings.load_value_from_json_file("ownvat") == "":
-            wx.MessageBox(
-                "Your own VAT is not set. Please provide your own VAT within the confguration.",
-                "Own VAT",
-                wx.OK | wx.ICON_WARNING,
+        
+        if not settings.load_value_from_json_file("ownvat"):
+            QMessageBox.warning(
+                self,
+                "Own VAT", 
+                "Your own VAT is not set. Please provide your own VAT within the configuration."
             )
-        # visible values of configuration
-        self.comboBoxConfigInterface.SetValue(settings.load_value_from_json_file("interface"))
-        self.comboBoxConfigLanguage.SetValue(settings.load_value_from_json_file("language"))
-        self.textConfigCSVdelimiter.SetValue(settings.load_value_from_json_file("delimiter"))
-        self.textCtrlConfigLogfile.SetValue(settings.load_value_from_json_file("logfilename"))
-        self.comboBoxConfigLoglevel.SetValue(settings.load_value_from_json_file("loglevel"))
-
-    # save the config file
-    def saveConfig(self, event):
-        # open the file
-        settings.save_config("ownvat", self.textCtrlConfigOwnVat.GetValue())
-        settings.save_config("interface", self.comboBoxConfigInterface.GetValue())
-        settings.save_config("language", self.comboBoxConfigLanguage.GetValue())
-        settings.save_config("delimiter", self.textConfigCSVdelimiter.GetValue())
-        settings.save_config("logfilename", self.textCtrlConfigLogfile.GetValue())
-        settings.save_config("loglevel", self.comboBoxConfigLoglevel.GetValue())
-        self.textOwnvat.SetValue(settings.load_value_from_json_file("ownvat"))
-        wx.MessageBox(
-            "Your changes of your configuration have been saved.",
+        
+        # Load visible configuration values
+        self.comboBoxConfigInterface.setCurrentText(settings.load_value_from_json_file("interface") or "vies")
+        self.comboBoxConfigLanguage.setCurrentText(settings.load_value_from_json_file("language") or "en")
+        self.textConfigCSVdelimiter.setText(settings.load_value_from_json_file("delimiter") or ",")
+        self.textCtrlConfigLogfile.setText(settings.load_value_from_json_file("logfilename") or "")
+        self.comboBoxConfigLoglevel.setCurrentText(settings.load_value_from_json_file("loglevel") or "ERROR")
+        self.comboBoxConfigTheme.setCurrentText(settings.load_value_from_json_file("theme") or "system")
+        
+        # Apply current theme
+        theme_manager.ThemeManager.apply_theme(settings.load_value_from_json_file("theme") or "system")
+    
+    def saveConfig(self):
+        """Save configuration to file"""
+        settings.save_config("ownvat", self.textCtrlConfigOwnVat.text())
+        settings.save_config("interface", self.comboBoxConfigInterface.currentText())
+        settings.save_config("language", self.comboBoxConfigLanguage.currentText())
+        settings.save_config("delimiter", self.textConfigCSVdelimiter.text())
+        settings.save_config("logfilename", self.textCtrlConfigLogfile.text())
+        settings.save_config("loglevel", self.comboBoxConfigLoglevel.currentText())
+        settings.save_config("theme", self.comboBoxConfigTheme.currentText())
+        self.textOwnvat.setText(settings.load_value_from_json_file("ownvat"))
+        
+        # Apply new theme
+        theme_manager.ThemeManager.apply_theme(self.comboBoxConfigTheme.currentText())
+        QMessageBox.information(
+            self,
             "Configuration saved",
-            wx.OK | wx.ICON_INFORMATION,
+            "Your changes of your configuration have been saved."
         )
-
-    # put a blank string in text when 'Clear' is clicked
-    def clearFields(self, event):
-        self.textCtrlConfigOwnVat.SetValue(settings.load_value_from_json_file("ownvat"))
-        self.textOwnvat.SetValue(settings.load_value_from_json_file("ownvat"))
-        self.textForeignvat.SetValue(str(""))
-        self.textCompany.SetValue(str(""))
-        self.textStreet.SetValue(str(""))
-        self.textZip.SetValue(str(""))
-        self.textTown.SetValue(str(""))
-        self.m_staticText_ValidationResult.SetLabel("Validation Result")
-        self.textResultIsValid.SetValue(str(""))
-        self.textResultCode.SetValue(str(""))
-        self.textResultDetails.SetValue(str(""))
-
-    def openLogfile(self, event):
-        webbrowser.open_new_tab(self.textCtrlConfigLogfile.GetValue())
-
-    def vatvalidationClose(self, event):
-        self.Close()
-
-    def validateSingle(self, event):
-        wx.MessageBox(
-            "Start the single validation.",
+    
+    def clearFields(self):
+        """Clear form fields"""
+        own_vat = settings.load_value_from_json_file("ownvat") or ""
+        self.textCtrlConfigOwnVat.setText(own_vat)
+        self.textOwnvat.setText(own_vat)
+        self.textForeignvat.setText("")
+        self.textCompany.setText("")
+        self.textStreet.setText("")
+        self.textZip.setText("")
+        self.textTown.setText("")
+        self.m_staticText_ValidationResult.setText("Validation Result")
+        self.textResultIsValid.setText("")
+        self.textResultCode.setText("")
+        self.textResultDetails.setText("")
+    
+    def selectInputFile(self):
+        """Select input file for batch processing"""
+        file_path, _ = QFileDialog.getOpenFileName(
+            self,
+            "Select Input File",
+            "",
+            "CSV files (*.csv);;Excel files (*.xlsx);;JSON files (*.json);;All files (*.*)"
+        )
+        if file_path:
+            self.textInputFile.setText(file_path)
+    
+    def selectOutputFile(self):
+        """Select output file for batch processing"""
+        file_path, _ = QFileDialog.getSaveFileName(
+            self,
+            "Select Output File", 
+            "",
+            "CSV files (*.csv);;Excel files (*.xlsx);;JSON files (*.json);;All files (*.*)"
+        )
+        if file_path:
+            self.textOutputFile.setText(file_path)
+    
+    def openLogfile(self):
+        """Open logfile in browser"""
+        webbrowser.open_new_tab(self.textCtrlConfigLogfile.text())
+    
+    def vatvalidationClose(self):
+        """Close application"""
+        self.close()
+    
+    def validateSingle(self):
+        """Validate single VAT entry"""
+        QMessageBox.information(
+            self,
             "Single Validation",
-            wx.OK | wx.ICON_INFORMATION,
+            "Start the single validation."
         )
+        
         message = single.validatesingle(
-            ownvat=self.textOwnvat.GetValue(),
-            foreignvat=self.textForeignvat.GetValue(),
-            company=self.textCompany.GetValue(),
-            street=self.textStreet.GetValue(),
-            zip=self.textZip.GetValue(),
-            town=self.textTown.GetValue(),
+            ownvat=self.textOwnvat.text(),
+            foreignvat=self.textForeignvat.text(),
+            company=self.textCompany.text(),
+            street=self.textStreet.text(),
+            zip=self.textZip.text(),
+            town=self.textTown.text(),
             type=settings.load_value_from_json_file("interface"),
             lang=settings.load_value_from_json_file("language"),
         )
-        self.textResultIsValid.SetValue("Yes" if message["valid"] else "No")
-        self.textResultCode.SetValue(message["errorcode"])
-        self.textResultDetails.SetValue(message.get("errorcode_description", ""))
-        self.m_staticText_ValidationResult.SetLabel(f"Validation Result: (Interface: {message['type']})")
-
-        # In case of empty errorcode_description, load the company, address town, zip and street into textResultDetails
-        if message.get("errorcode_description", "") == "":
-            self.textResultDetails.SetValue(f"Company: {message['company']}\nAddress: {message['address']}\nTown: {message['town']}\nZip: {message['zip']}\nStreet: {message['street']}")
-
-    def validateBatch(self, event):
-        if (
-            wx.MessageBox(
-                "Are you sure you want to start the batch validation?",
-                "Batch Validation",
-                wx.YES_NO | wx.ICON_QUESTION,  # on Windows, no icon will be shown (feature, not a bug)
-            )
-            == wx.NO
-        ):
+        
+        self.textResultIsValid.setText("Yes" if message["valid"] else "No")
+        self.textResultCode.setText(message["errorcode"])
+        self.textResultDetails.setText(message.get("errorcode_description", ""))
+        self.m_staticText_ValidationResult.setText(f"Validation Result: (Interface: {message['type']})")
+        
+        # In case of empty errorcode_description, load company details
+        if not message.get("errorcode_description", ""):
+            details = f"Company: {message['company']}\nAddress: {message['address']}\nTown: {message['town']}\nZip: {message['zip']}\nStreet: {message['street']}"
+            self.textResultDetails.setText(details)
+    
+    def validateBatch(self):
+        """Validate batch of VAT entries"""
+        reply = QMessageBox.question(
+            self,
+            "Batch Validation",
+            "Are you sure you want to start the batch validation?",
+            QMessageBox.Yes | QMessageBox.No
+        )
+        
+        if reply == QMessageBox.No:
             return
-
-        if self.filepickerOutput.GetPath() == "":
-            wx.MessageBox("Please select an output file.", "No output file", wx.OK | wx.ICON_ERROR)
+        
+        if not self.textOutputFile.text():
+            QMessageBox.critical(self, "No output file", "Please select an output file.")
             return
-
-        # check if given file exists
-        if not self.filepickerInput.GetPath():
-            wx.MessageBox("Please select an input file.", "No input file", wx.OK | wx.ICON_ERROR)
+        
+        if not self.textInputFile.text():
+            QMessageBox.critical(self, "No input file", "Please select an input file.")
             return
-
-        # check if given format is supported
-        if self.filepickerInput.GetPath():
-            ext = self.filepickerInput.GetPath().split(".")[-1].lower()
-            if ext not in ["xlsx", "csv", "json"]:
-                wx.MessageBox(
-                    "Unsupported input file format.",
-                    "Unsupported file format",
-                    wx.OK | wx.ICON_ERROR,
-                )
-                return
-
-        if self.filepickerOutput.GetPath():
-            ext = self.filepickerOutput.GetPath().split(".")[-1].lower()
-            if ext not in ["xlsx", "csv", "json"]:
-                wx.MessageBox(
-                    "Unsupported output file format.",
-                    "Unsupported file format",
-                    wx.OK | wx.ICON_ERROR,
-                )
-                return
-
-        # set/reset everything to 0
-        self.staticText_RecordsFound.SetLabel("0")
-        self.staticText_ProcessingXofY.SetLabel("0/0")
-        self.progressProcessing.Range = 0
-        self.progressProcessing.Value = 0
-
-        # start the batch validation
+        
+        # Check file formats
+        input_ext = self.textInputFile.text().split(".")[-1].lower()
+        if input_ext not in ["xlsx", "csv", "json"]:
+            QMessageBox.critical(self, "Unsupported file format", "Unsupported input file format.")
+            return
+        
+        output_ext = self.textOutputFile.text().split(".")[-1].lower()
+        if output_ext not in ["xlsx", "csv", "json"]:
+            QMessageBox.critical(self, "Unsupported file format", "Unsupported output file format.")
+            return
+        
+        # Reset progress
+        self.staticText_RecordsFoundValue.setText("0")
+        self.staticText_ProcessingXofY.setText("0/0")
+        self.progressProcessing.setMaximum(0)
+        self.progressProcessing.setValue(0)
+        
+        # Start batch validation in thread
         download_thread = threading.Thread(
             target=batch.validatebatch,
             kwargs={
-                "inputfile": self.filepickerInput.GetPath(),
-                "outputfile": self.filepickerOutput.GetPath(),
+                "inputfile": self.textInputFile.text(),
+                "outputfile": self.textOutputFile.text(),
                 "type": settings.load_value_from_json_file("interface"),
                 "lang": settings.load_value_from_json_file("language"),
                 "statusupdate": True,
             },
         )
         download_thread.start()
-
+        
+        # Wait for completion (this blocks the UI, matching original behavior)
         while download_thread.is_alive():
-            wx.Yield()
-            wx.MilliSleep(100)
-
-        # if done, show a message box
-        wx.MessageBox("Batch validation done.", "Batch Validation", wx.OK | wx.ICON_INFORMATION)
-
-    def openGitHubRepo(self, event):
+            QApplication.processEvents()
+            threading.Event().wait(0.1)
+        
+        QMessageBox.information(self, "Batch Validation", "Batch validation done.")
+    
+    def openGitHubRepo(self):
+        """Open GitHub repository"""
         webbrowser.open_new_tab("https://github.com/dseichter/VATValidation")
-
-    def openWebsite(self, event):
+    
+    def openWebsite(self):
+        """Open project website"""
         webbrowser.open_new_tab("https://dseichter.github.io/VATValidation/")
-
-    def checkForUpdates(self, event):
+    
+    def checkForUpdates(self):
+        """Check for application updates"""
         if helper.check_for_new_release():
-            result = wx.MessageBox(
-                "A new release is available.\nWould you like to open the download page?",
+            reply = QMessageBox.question(
+                self,
                 "Update available",
-                wx.YES_NO | wx.ICON_INFORMATION,
+                "A new release is available.\nWould you like to open the download page?",
+                QMessageBox.Yes | QMessageBox.No
             )
-            if result == wx.YES:
+            if reply == QMessageBox.Yes:
                 webbrowser.open_new_tab(helper.RELEASES)
         else:
-            wx.MessageBox("No new release available.", "No update", wx.OK | wx.ICON_INFORMATION)
-
-    def vatvalidationAbout(self, event):
-        # open the about dialog
+            QMessageBox.information(self, "No update", "No new release available.")
+    
+    def vatvalidationAbout(self):
+        """Show about dialog"""
         dlg = about_ui.DialogAbout(self)
-        dlg.ShowModal()
-        dlg.Destroy()
-
-    def addWatchdog(self):
-        path = os.path.abspath(".")
-        self.observer = Observer()
-        event_handler = Handler(self)
-        self.observer.schedule(event_handler, path, recursive=True)
-        self.observer.start()
+        dlg.exec()
+    
+    def themeChanged(self, theme_name):
+        """Apply theme immediately when changed"""
+        theme_manager.ThemeManager.apply_theme(theme_name)
 
 
 class Handler(FileSystemEventHandler):
     def __init__(self, parent):
         self.parent = parent
-
+    
     def on_any_event(self, event):
-        # provide the parent frame (main frame) and the event to the OnWatchdog function
-        wx.CallAfter(self.parent.OnWatchdog, self.parent, event)
+        """Handle file system events"""
+        # Use QTimer to ensure GUI updates happen in main thread
+        QTimer.singleShot(0, lambda: self.parent.onWatchdog(event))
 
 
-# mandatory in wx, create an app, False stands for not deteriction stdin/stdout
-# refer manual for details
 if __name__ == "__main__":
-    app = wx.App(False)
-    frame = VATValidationFrame(None)
-    frame.Show(True)
-    app.MainLoop()
+    app = QApplication(sys.argv)
+    
+    # Apply initial theme from settings
+    import settings
+    settings.create_config()
+    theme = settings.load_value_from_json_file("theme") or "system"
+    theme_manager.ThemeManager.apply_theme(theme)
+    
+    frame = VATValidationFrame()
+    frame.show()
+    sys.exit(app.exec())

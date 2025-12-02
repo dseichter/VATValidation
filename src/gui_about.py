@@ -13,66 +13,69 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-import wx
+from PySide6.QtWidgets import QDialog, QVBoxLayout, QLabel, QDialogButtonBox
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QFont, QPixmap
 
 import helper
 import icons
 
 
-class dialogAbout(wx.Dialog):
-    def __init__(self, parent):
-        super().__init__(
-            parent,
-            title="About VATValidation",
-            size=(240, 200),
-        )
-
-        mainSizer = wx.BoxSizer(wx.VERTICAL)
-
-        self.bitmapLogo = wx.StaticBitmap(self)
-        self.bitmapLogo.SetBitmap(icons.select_check_box_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
-        mainSizer.Add(self.bitmapLogo, 0, wx.ALL, 5)
-
-        self.SetIcon(icons.select_check_box_48dp_097e23_fill1_wght400_grad0_opsz48.GetIcon())
-
-        self.staticTextName = wx.StaticText(self, label=f"{helper.NAME} {helper.VERSION}")
-        mainSizer.Add(self.staticTextName, 0, wx.ALL, 5)
-
-        self.staticTextLicence = wx.StaticText(self, label=f"Licenced under {helper.LICENCE}")
-        mainSizer.Add(self.staticTextLicence, 0, wx.ALL, 5)
-
-        self.staticTextGithub = wx.StaticText(self, label="More on GitHub")
-        self.staticTextGithub.SetFont(
-            wx.Font(
-                wx.NORMAL_FONT.GetPointSize(),
-                wx.FONTFAMILY_DEFAULT,
-                wx.FONTSTYLE_NORMAL,
-                wx.FONTWEIGHT_NORMAL,
-                True,
-            )
-        )
-        self.staticTextGithub.SetForegroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT))
-        self.staticTextGithub.SetToolTip("Visit GitHub repository for further information.")
-        mainSizer.Add(self.staticTextGithub, 0, wx.ALL, 5)
-
-        btnSizer = wx.StdDialogButtonSizer()
-        self.btnOK = wx.Button(self, wx.ID_OK)
-        btnSizer.AddButton(self.btnOK)
-        self.btnCancel = wx.Button(self, wx.ID_CANCEL)
-        btnSizer.AddButton(self.btnCancel)
-        btnSizer.Realize()
-        mainSizer.Add(btnSizer, 1, wx.EXPAND, 5)
-
-        self.SetSizer(mainSizer)
-        self.Layout()
-        self.Centre(wx.BOTH)
-
-        # Connect Events
-        self.staticTextGithub.Bind(wx.EVT_LEFT_DOWN, self.openGithub)
-
-    def __del__(self):
-        pass
-
-    # Virtual event handlers, see about_ui.py
+class DialogAbout(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("About VATValidation")
+        self.setFixedSize(240, 200)
+        self.setWindowIcon(icons.get_icon('select_check_box_48dp_097e23_fill1_wght400_grad0_opsz48'))
+        
+        layout = QVBoxLayout(self)
+        
+        # Logo
+        logo_label = QLabel()
+        icon = icons.get_icon('select_check_box_24dp_097e23_fill1_wght400_grad0_opsz24')
+        pixmap = icon.pixmap(24, 24)
+        logo_label.setPixmap(pixmap)
+        logo_label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(logo_label)
+        
+        # Name and version
+        name_label = QLabel(f"{helper.NAME} {helper.VERSION}")
+        name_label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(name_label)
+        
+        # License
+        license_label = QLabel(f"Licensed under {helper.LICENCE}")
+        license_label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(license_label)
+        
+        # GitHub link
+        self.github_label = QLabel("More on GitHub")
+        font = self.github_label.font()
+        font.setUnderline(True)
+        self.github_label.setFont(font)
+        self.github_label.setStyleSheet("color: blue;")
+        self.github_label.setAlignment(Qt.AlignCenter)
+        self.github_label.setToolTip("Visit GitHub repository for further information.")
+        self.github_label.mousePressEvent = self.openGithub
+        layout.addWidget(self.github_label)
+        
+        # Buttons
+        button_box = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+        button_box.accepted.connect(self.accept)
+        button_box.rejected.connect(self.reject)
+        layout.addWidget(button_box)
+        
+        # Center the dialog
+        self.move_to_center()
+    
+    def move_to_center(self):
+        """Center the dialog on the screen"""
+        if self.parent():
+            parent_rect = self.parent().geometry()
+            x = parent_rect.x() + (parent_rect.width() - self.width()) // 2
+            y = parent_rect.y() + (parent_rect.height() - self.height()) // 2
+            self.move(max(x, 0), max(y, 0))
+    
     def openGithub(self, event):
-        event.Skip()
+        """Virtual event handler - to be implemented in subclass"""
+        pass

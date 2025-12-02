@@ -21,7 +21,7 @@ CONFIGFILE = 'config.json'
 
 # load value from json file with given key
 def load_value_from_json_file(key):
-    with open("config.json", "r") as f:
+    with open(CONFIGFILE, "r") as f:
         data = json.load(f)
 
     if key not in data:
@@ -54,6 +54,8 @@ def create_config():
         data['logfilename'] = f'{log_dir}/vatvalidation.log'
     if 'loglevel' not in data:
         data['loglevel'] = 'ERROR'
+    if 'theme' not in data:
+        data['theme'] = 'system'
 
     with open(CONFIGFILE, 'w') as f:
         json.dump(data, f, indent=4, sort_keys=True)

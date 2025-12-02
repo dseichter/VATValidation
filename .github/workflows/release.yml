@@ -55,9 +55,9 @@ jobs:
             python3 -m venv venv
             venv\Scripts\activate.bat
 
-        - name: Remove wxPython dependencies from requirements
+        - name: Remove PySide6 dependencies from requirements
           run: |
-            type src\requirements.txt | findstr /v "wxPython" >> src\requirements_new.txt
+            type src\requirements.txt | findstr /v "PySide6" >> src\requirements_new.txt
             del src\requirements.txt
             ren src\requirements_new.txt requirements.txt
 
@@ -97,9 +97,6 @@ jobs:
           - name: Update system packages
             run: sudo apt-get update
 
-          - name: Install dependencies
-            run: sudo apt-get install build-essential libgtk-3-dev
-
           - name: Set up Python
             uses: actions/setup-python@v6
             with:
@@ -132,9 +129,6 @@ jobs:
         - name: Update system packages
           run: sudo apt-get update          
 
-        - name: Install dependencies
-          run: sudo apt-get install build-essential libgtk-3-dev
-
         - name: Set up Python
           uses: actions/setup-python@v6
           with:
@@ -145,8 +139,8 @@ jobs:
             python3 -m venv venv
             source venv/bin/activate
 
-        - name: Remove wxPython from requirements
-          run: sed -i '/wxPython/d' src/requirements.txt
+        - name: Remove PySide6 from requirements
+          run: sed -i '/PySide6/d' src/requirements.txt
 
         - name: Install dependencies
           run: pip install -r src/requirements.txt

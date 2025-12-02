@@ -13,8 +13,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-import wx
-import wx.xrc
+from PySide6.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, 
+                               QTabWidget, QLabel, QLineEdit, QPushButton, 
+                               QTextEdit, QComboBox, QFileDialog, QProgressBar,
+                               QGridLayout, QFrame, QMenuBar, QMenu, QStatusBar)
+from PySide6.QtCore import Qt, Signal
+from PySide6.QtGui import QAction
 
 import icons
 import helper
@@ -24,343 +28,322 @@ ID_GITHUB = 6001
 ID_ABOUT = 6002
 
 
-class MainFrame(wx.Frame):
-    def __init__(self, parent):
-        super().__init__(
-            parent,
-            id=wx.ID_ANY,
-            title=f"{helper.NAME} {helper.VERSION}",
-            size=(642, 552),
-            style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL,
-        )
-
-        self.SetIcon(icons.select_check_box_24dp_097e23_fill1_wght400_grad0_opsz24.GetIcon())
-        self.SetSizeHints(-1, -1)
-
-        mainSizer = wx.BoxSizer(wx.VERTICAL)
-        notebookSizer = wx.BoxSizer(wx.VERTICAL)
-
-        self.m_notebook3 = wx.Notebook(self, wx.ID_ANY)
-
-        # --- Single Panel ---
-        self.panelSingle = wx.Panel(self.m_notebook3)
-        singleSizer = wx.BoxSizer(wx.VERTICAL)
-        fgSizer2 = wx.FlexGridSizer(0, 3, 0, 0)
-        fgSizer2.AddGrowableCol(1)
-        fgSizer2.SetFlexibleDirection(wx.BOTH)
-        fgSizer2.SetNonFlexibleGrowMode(wx.FLEX_GROWMODE_SPECIFIED)
-
-        self.staticText_ownvat = wx.StaticText(self.panelSingle, label="Own VAT")
-        fgSizer2.Add(self.staticText_ownvat, 0, wx.ALL, 5)
-        self.textOwnvat = wx.TextCtrl(self.panelSingle, size=(150, -1))
-        fgSizer2.Add(self.textOwnvat, 0, wx.ALL, 5)
-        self.buttonClear = wx.Button(self.panelSingle, label="Clear")
-        self.buttonClear.SetBitmap(icons.restart_alt_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
-        self.buttonClear.SetToolTip("Clear all entries except your own VAT (if saved).")
-        fgSizer2.Add(self.buttonClear, 0, wx.ALIGN_CENTER, 5)
-
-        self.staticText_foreignvat = wx.StaticText(self.panelSingle, label="Foreign VAT")
-        fgSizer2.Add(self.staticText_foreignvat, 0, wx.ALL, 5)
-        self.textForeignvat = wx.TextCtrl(self.panelSingle, size=(150, -1))
-        fgSizer2.Add(self.textForeignvat, 0, wx.ALL, 5)
-        fgSizer2.Add((0, 0), 1, wx.EXPAND, 5)
-
-        self.staticText_company = wx.StaticText(self.panelSingle, label="Company")
-        fgSizer2.Add(self.staticText_company, 0, wx.ALL, 5)
-        self.textCompany = wx.TextCtrl(self.panelSingle)
-        fgSizer2.Add(self.textCompany, 1, wx.ALL | wx.EXPAND, 5)
-        fgSizer2.Add((0, 0), 1, wx.EXPAND, 5)
-
-        self.staticText_street = wx.StaticText(self.panelSingle, label="Street")
-        fgSizer2.Add(self.staticText_street, 0, wx.ALL, 5)
-        self.textStreet = wx.TextCtrl(self.panelSingle)
-        fgSizer2.Add(self.textStreet, 0, wx.ALL | wx.EXPAND, 5)
-        fgSizer2.Add((0, 0), 1, wx.EXPAND, 5)
-
-        self.staticText_zip = wx.StaticText(self.panelSingle, label="ZIP")
-        fgSizer2.Add(self.staticText_zip, 0, wx.ALL, 5)
-        self.textZip = wx.TextCtrl(self.panelSingle)
-        fgSizer2.Add(self.textZip, 0, wx.ALL, 5)
-        fgSizer2.Add((0, 0), 1, wx.EXPAND, 5)
-
-        self.staticText_town = wx.StaticText(self.panelSingle, label="Town")
-        fgSizer2.Add(self.staticText_town, 0, wx.ALL, 5)
-        self.textTown = wx.TextCtrl(self.panelSingle)
-        fgSizer2.Add(self.textTown, 0, wx.ALL | wx.EXPAND, 5)
-        fgSizer2.Add((0, 0), 1, wx.EXPAND, 5)
-        fgSizer2.Add((0, 0), 1, wx.EXPAND, 5)
-
-        self.buttonValidateSingle = wx.Button(self.panelSingle, label="Validate your entries")
-        self.buttonValidateSingle.SetBitmap(icons.playlist_add_check_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
-        self.buttonValidateSingle.SetToolTip("Start validating your entries.")
-        fgSizer2.Add(self.buttonValidateSingle, 0, wx.ALIGN_CENTER, 5)
-
-        singleSizer.Add(fgSizer2, 1, wx.EXPAND, 5)
-
-        staticLineSizer = wx.BoxSizer(wx.VERTICAL)
-        self.m_staticline5 = wx.StaticLine(self.panelSingle)
-        staticLineSizer.Add(self.m_staticline5, 0, wx.EXPAND | wx.ALL, 5)
-        singleSizer.Add(staticLineSizer, 1, wx.EXPAND, 5)
-
-        fgSizer5 = wx.FlexGridSizer(0, 2, 0, 0)
-        fgSizer5.AddGrowableCol(1)
-        fgSizer5.SetFlexibleDirection(wx.BOTH)
-        fgSizer5.SetNonFlexibleGrowMode(wx.FLEX_GROWMODE_SPECIFIED)
-        fgSizer5.Add((0, 0), 1, wx.EXPAND, 5)
-
-        self.m_staticText_ValidationResult = wx.StaticText(self.panelSingle, label="Validation Result")
-        fgSizer5.Add(self.m_staticText_ValidationResult, 0, wx.ALL, 5)
-
-        self.staticText_result = wx.StaticText(self.panelSingle, label="Result")
-        fgSizer5.Add(self.staticText_result, 0, wx.ALL, 5)
-        self.textResultCode = wx.TextCtrl(self.panelSingle)
-        fgSizer5.Add(self.textResultCode, 0, wx.ALL, 5)
-
-        self.staticText_isvalid = wx.StaticText(self.panelSingle, label="Valid")
-        fgSizer5.Add(self.staticText_isvalid, 0, wx.ALL, 5)
-        self.textResultIsValid = wx.TextCtrl(self.panelSingle)
-        fgSizer5.Add(self.textResultIsValid, 0, wx.ALL, 5)
-
-        self.staticText_details = wx.StaticText(self.panelSingle, label="Details")
-        fgSizer5.Add(self.staticText_details, 0, wx.ALL, 5)
-        self.textResultDetails = wx.TextCtrl(
-            self.panelSingle,
-            style=wx.TE_MULTILINE,
-        )
-        self.textResultDetails.SetMinSize((-1, 100))
-        fgSizer5.Add(self.textResultDetails, 1, wx.ALL | wx.EXPAND, 5)
-
-        singleSizer.Add(fgSizer5, 1, wx.EXPAND, 5)
-        self.panelSingle.SetSizer(singleSizer)
-        self.panelSingle.Layout()
-        singleSizer.Fit(self.panelSingle)
-        self.m_notebook3.AddPage(self.panelSingle, "Single", True)
-
-        # --- Batch Panel ---
-        self.panelBatch = wx.Panel(self.m_notebook3)
-        batchSizer = wx.BoxSizer(wx.VERTICAL)
-        fgSizer3 = wx.FlexGridSizer(0, 2, 0, 0)
-        fgSizer3.AddGrowableCol(1)
-        fgSizer3.SetFlexibleDirection(wx.BOTH)
-        fgSizer3.SetNonFlexibleGrowMode(wx.FLEX_GROWMODE_SPECIFIED)
-
-        self.staticText_Inputfile = wx.StaticText(self.panelBatch, label="Input file")
-        fgSizer3.Add(self.staticText_Inputfile, 0, wx.ALL, 5)
-        self.filepickerInput = wx.FilePickerCtrl(
-            self.panelBatch,
-            message="Select a file",
-            wildcard="CSV files (*.csv)|*.csv|Excel files (*.xlsx)|*.xlsx|JSON files (*.json)|*.json|All files (*.*)|*.*",
-            style=wx.FLP_USE_TEXTCTRL | wx.FLP_OPEN | wx.FLP_FILE_MUST_EXIST | wx.FLP_SMALL,
-        )
-        self.filepickerInput.SetToolTip("Select your input file (JSON, XSLX, CSV) for processing.")
-        fgSizer3.Add(self.filepickerInput, 1, wx.ALL | wx.EXPAND, 5)
-
-        self.staticText_Outputfile = wx.StaticText(self.panelBatch, label="Output file")
-        fgSizer3.Add(self.staticText_Outputfile, 0, wx.ALL, 5)
-        self.filepickerOutput = wx.FilePickerCtrl(
-            self.panelBatch,
-            message="Select a file",
-            wildcard="CSV files (*.csv)|*.csv|Excel files (*.xlsx)|*.xlsx|JSON files (*.json)|*.json|All files (*.*)|*.*",
-            style=wx.FLP_USE_TEXTCTRL | wx.FLP_SAVE | wx.FLP_OVERWRITE_PROMPT | wx.FLP_SMALL,
-        )
-        self.filepickerOutput.SetToolTip("Select your output file to store the validation results to.")
-        fgSizer3.Add(self.filepickerOutput, 1, wx.ALL | wx.EXPAND, 5)
-
-        fgSizer3.Add((0, 0), 1, wx.EXPAND, 5)
-        self.buttonValidateBatch = wx.Button(self.panelBatch, label="Start processing file")
-        self.buttonValidateBatch.SetBitmap(icons.playlist_add_check_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
-        self.buttonValidateBatch.SetToolTip("Start processing your input file. This can take a while and the UI can stop for some seconds to work.")
-        fgSizer3.Add(self.buttonValidateBatch, 0, wx.ALIGN_LEFT, 5)
-        batchSizer.Add(fgSizer3, 0, wx.EXPAND, 5)
-
-        staticLineBatchSizer = wx.BoxSizer(wx.VERTICAL)
-        self.m_staticline10 = wx.StaticLine(self.panelBatch)
-        staticLineBatchSizer.Add(self.m_staticline10, 0, wx.EXPAND | wx.ALL, 5)
-        batchSizer.Add(staticLineBatchSizer, 0, wx.EXPAND, 5)
-
-        fgSizer51 = wx.FlexGridSizer(0, 2, 0, 0)
-        fgSizer51.SetFlexibleDirection(wx.BOTH)
-        fgSizer51.SetNonFlexibleGrowMode(wx.FLEX_GROWMODE_SPECIFIED)
-
-        self.staticText_RecordsFound = wx.StaticText(self.panelBatch, label="Records found")
-        fgSizer51.Add(self.staticText_RecordsFound, 0, wx.ALL, 5)
-        self.staticText_RecordsFoundValue = wx.StaticText(self.panelBatch, label="0")
-        fgSizer51.Add(self.staticText_RecordsFoundValue, 0, wx.ALL, 5)
-
-        self.staticText_Progress = wx.StaticText(self.panelBatch, label="Progress")
-        fgSizer51.Add(self.staticText_Progress, 0, wx.ALL, 5)
-        self.progressProcessing = wx.Gauge(self.panelBatch, range=100, style=wx.GA_HORIZONTAL)
-        fgSizer51.Add(self.progressProcessing, 0, wx.ALL, 5)
-        fgSizer51.Add((0, 0), 1, wx.EXPAND, 5)
-        self.staticText_ProcessingXofY = wx.StaticText(self.panelBatch, label="0/0")
-        fgSizer51.Add(self.staticText_ProcessingXofY, 0, wx.ALL, 5)
-        batchSizer.Add(fgSizer51, 1, wx.EXPAND, 5)
-
-        self.panelBatch.SetSizer(batchSizer)
-        self.panelBatch.Layout()
-        batchSizer.Fit(self.panelBatch)
-        self.m_notebook3.AddPage(self.panelBatch, "Batch", False)
-
-        # --- Config Panel ---
-        self.panelConfig = wx.Panel(self.m_notebook3)
-        fgSizer31 = wx.FlexGridSizer(0, 3, 0, 0)
-        fgSizer31.AddGrowableCol(1)
-        fgSizer31.SetFlexibleDirection(wx.BOTH)
-        fgSizer31.SetNonFlexibleGrowMode(wx.FLEX_GROWMODE_SPECIFIED)
-
-        self.staticTextConfigOwnVat = wx.StaticText(self.panelConfig, label="Own VAT")
-        fgSizer31.Add(self.staticTextConfigOwnVat, 0, wx.ALL, 5)
-        self.textCtrlConfigOwnVat = wx.TextCtrl(self.panelConfig, size=(150, -1))
-        fgSizer31.Add(self.textCtrlConfigOwnVat, 0, wx.ALL, 5)
-        fgSizer31.Add((0, 0), 1, wx.EXPAND, 5)
-
-        self.staticTextConfigInterface = wx.StaticText(self.panelConfig, label="Interface")
-        fgSizer31.Add(self.staticTextConfigInterface, 0, wx.ALL, 5)
-        comboBoxConfigInterfaceChoices = ["vies", "bzst"]
-        self.comboBoxConfigInterface = wx.ComboBox(
-            self.panelConfig,
-            choices=comboBoxConfigInterfaceChoices,
-        )
-        self.comboBoxConfigInterface.SetSelection(0)
-        fgSizer31.Add(self.comboBoxConfigInterface, 0, wx.ALL, 5)
-        fgSizer31.Add((0, 0), 1, wx.EXPAND, 5)
-
-        self.staticTextConfigLanguage = wx.StaticText(self.panelConfig, label="Language")
-        fgSizer31.Add(self.staticTextConfigLanguage, 0, wx.ALL, 5)
-        comboBoxConfigLanguageChoices = ["en", "de"]
-        self.comboBoxConfigLanguage = wx.ComboBox(
-            self.panelConfig,
-            choices=comboBoxConfigLanguageChoices,
-        )
-        self.comboBoxConfigLanguage.SetSelection(0)
-        fgSizer31.Add(self.comboBoxConfigLanguage, 0, wx.ALL, 5)
-        fgSizer31.Add((0, 0), 1, wx.EXPAND, 5)
-
-        self.staticTextConfigCSVDelimiter = wx.StaticText(self.panelConfig, label="CSV delimiter")
-        fgSizer31.Add(self.staticTextConfigCSVDelimiter, 0, wx.ALL, 5)
-        self.textConfigCSVdelimiter = wx.TextCtrl(self.panelConfig)
-        self.textConfigCSVdelimiter.SetMaxLength(1)
-        self.textConfigCSVdelimiter.SetMinSize((20, -1))
-        fgSizer31.Add(self.textConfigCSVdelimiter, 0, wx.ALL, 5)
-        fgSizer31.Add((0, 0), 1, wx.EXPAND, 5)
-
-        self.staticTextConfigLogfile = wx.StaticText(self.panelConfig, label="Logfile")
-        fgSizer31.Add(self.staticTextConfigLogfile, 0, wx.ALL, 5)
-        self.textCtrlConfigLogfile = wx.TextCtrl(self.panelConfig)
-        self.textCtrlConfigLogfile.SetMinSize((400, -1))
-        fgSizer31.Add(self.textCtrlConfigLogfile, 1, wx.ALL | wx.EXPAND, 5)
-        self.buttonConfigLogfile = wx.Button(self.panelConfig, label="Logfile")
-        self.buttonConfigLogfile.SetBitmap(icons.overview_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
-        fgSizer31.Add(self.buttonConfigLogfile, 0, wx.ALL, 5)
-
-        self.staticTextConfigLogLevel = wx.StaticText(self.panelConfig, label="Loglevel")
-        fgSizer31.Add(self.staticTextConfigLogLevel, 0, wx.ALL, 5)
-        comboBoxConfigLoglevelChoices = ["DEBUG", "ERROR"]
-        self.comboBoxConfigLoglevel = wx.ComboBox(
-            self.panelConfig,
-            choices=comboBoxConfigLoglevelChoices,
-        )
-        self.comboBoxConfigLoglevel.SetSelection(1)
-        fgSizer31.Add(self.comboBoxConfigLoglevel, 0, wx.ALL, 5)
-        fgSizer31.Add((0, 0), 1, wx.EXPAND, 5)
-
-        self.buttonSaveConfig = wx.Button(self.panelConfig, label="Save")
-        self.buttonSaveConfig.SetBitmap(icons.save_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
-        fgSizer31.Add(self.buttonSaveConfig, 0, wx.ALL, 5)
-
-        self.panelConfig.SetSizer(fgSizer31)
-        self.panelConfig.Layout()
-        fgSizer31.Fit(self.panelConfig)
-        self.m_notebook3.AddPage(self.panelConfig, "Configuration", False)
-
-        # --- Notebook Images ---
-        self.imageList = wx.ImageList(24, 24)
-        self.imageList.Add(icons.task_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
-        self.imageList.Add(icons.playlist_add_check_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
-        self.imageList.Add(icons.settings_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
-        self.m_notebook3.AssignImageList(self.imageList)
-        self.m_notebook3.SetPageImage(0, 0)
-        self.m_notebook3.SetPageImage(1, 1)
-        self.m_notebook3.SetPageImage(2, 2)
-        self.m_notebook3.SetSelection(0)
-
-        notebookSizer.Add(self.m_notebook3, 1, wx.EXPAND | wx.ALL, 0)
-        mainSizer.Add(notebookSizer, 1, wx.EXPAND, 5)
-        self.SetSizer(mainSizer)
-        self.Layout()
-        self.m_statusBar1 = self.CreateStatusBar(1, wx.STB_SIZEGRIP, wx.ID_ANY)
-
-        # --- Menu ---
-        self.mainmenu = wx.MenuBar()
-        self.file = wx.Menu()
-        self.menuitemFileClose = wx.MenuItem(self.file, ID_CLOSE, "Close", "Close VATValidation", wx.ITEM_NORMAL)
-        self.menuitemFileClose.SetBitmap(icons.exit_to_app_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
-        self.file.Append(self.menuitemFileClose)
-        self.mainmenu.Append(self.file, "File")
-
-        self.help = wx.Menu()
-        self.menuitemHelpSupport = wx.MenuItem(self.help, ID_GITHUB, "Support...", "Go to GitHub repository.", wx.ITEM_NORMAL)
-        self.menuitemHelpSupport.SetBitmap(icons.contact_support_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
-        self.help.Append(self.menuitemHelpSupport)
-        self.menuitemHelpWebsite = wx.MenuItem(self.help, wx.ID_ANY, "Open Website", "Open website for further information.", wx.ITEM_NORMAL)
-        self.menuitemHelpWebsite.SetBitmap(icons.globe_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
-        self.help.Append(self.menuitemHelpWebsite)
-        self.menuitemHelpUpdate = wx.MenuItem(self.help, wx.ID_ANY, "Check for updates", "Check, if there is an update available.", wx.ITEM_NORMAL)
-        self.menuitemHelpUpdate.SetBitmap(icons.restart_alt_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
-        self.help.Append(self.menuitemHelpUpdate)
-        self.menuitemHelpAbout = wx.MenuItem(self.help, ID_ABOUT, "About...", "About VATValidation", wx.ITEM_NORMAL)
-        self.menuitemHelpAbout.SetBitmap(icons.info_24dp_097e23_fill1_wght400_grad0_opsz24.GetBitmap())
-        self.help.Append(self.menuitemHelpAbout)
-        self.mainmenu.Append(self.help, "Help")
-        self.SetMenuBar(self.mainmenu)
-        self.Centre(wx.BOTH)
-
-        # --- Events ---
-        self.Bind(wx.EVT_SHOW, self.loadConfig)
-        self.buttonClear.Bind(wx.EVT_BUTTON, self.clearFields)
-        self.buttonValidateSingle.Bind(wx.EVT_BUTTON, self.validateSingle)
-        self.buttonValidateBatch.Bind(wx.EVT_BUTTON, self.validateBatch)
-        self.buttonConfigLogfile.Bind(wx.EVT_BUTTON, self.openLogfile)
-        self.buttonSaveConfig.Bind(wx.EVT_BUTTON, self.saveConfig)
-        self.Bind(wx.EVT_MENU, self.vatvalidationClose, id=self.menuitemFileClose.GetId())
-        self.Bind(wx.EVT_MENU, self.openGitHubRepo, id=self.menuitemHelpSupport.GetId())
-        self.Bind(wx.EVT_MENU, self.openWebsite, id=self.menuitemHelpWebsite.GetId())
-        self.Bind(wx.EVT_MENU, self.checkForUpdates, id=self.menuitemHelpUpdate.GetId())
-        self.Bind(wx.EVT_MENU, self.vatvalidationAbout, id=self.menuitemHelpAbout.GetId())
-
-    def __del__(self):
+class MainFrame(QMainWindow):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle(f"{helper.NAME} {helper.VERSION}")
+        self.resize(642, 552)
+        self.setWindowIcon(icons.get_icon('select_check_box_24dp_097e23_fill1_wght400_grad0_opsz24'))
+        
+        # Central widget and main layout
+        central_widget = QWidget()
+        self.setCentralWidget(central_widget)
+        main_layout = QVBoxLayout(central_widget)
+        
+        # Create tab widget
+        self.tab_widget = QTabWidget()
+        main_layout.addWidget(self.tab_widget)
+        
+        # Create tabs
+        self.create_single_tab()
+        self.create_batch_tab()
+        self.create_config_tab()
+        
+        # Create menu bar
+        self.create_menu_bar()
+        
+        # Create status bar
+        self.status_bar = QStatusBar()
+        self.setStatusBar(self.status_bar)
+        
+        # Center window
+        self.move_to_center()
+    
+    def create_single_tab(self):
+        """Create the Single validation tab"""
+        single_widget = QWidget()
+        layout = QVBoxLayout(single_widget)
+        
+        # Form layout
+        form_layout = QGridLayout()
+        
+        # Own VAT
+        form_layout.addWidget(QLabel("Own VAT"), 0, 0)
+        self.textOwnvat = QLineEdit()
+        self.textOwnvat.setFixedWidth(150)
+        form_layout.addWidget(self.textOwnvat, 0, 1)
+        
+        self.buttonClear = QPushButton("Clear")
+        self.buttonClear.setIcon(icons.get_icon('restart_alt_24dp_097e23_fill1_wght400_grad0_opsz24'))
+        self.buttonClear.setToolTip("Clear all entries except your own VAT (if saved).")
+        form_layout.addWidget(self.buttonClear, 0, 2)
+        
+        # Foreign VAT
+        form_layout.addWidget(QLabel("Foreign VAT"), 1, 0)
+        self.textForeignvat = QLineEdit()
+        self.textForeignvat.setFixedWidth(150)
+        form_layout.addWidget(self.textForeignvat, 1, 1)
+        
+        # Company
+        form_layout.addWidget(QLabel("Company"), 2, 0)
+        self.textCompany = QLineEdit()
+        form_layout.addWidget(self.textCompany, 2, 1, 1, 2)
+        
+        # Street
+        form_layout.addWidget(QLabel("Street"), 3, 0)
+        self.textStreet = QLineEdit()
+        form_layout.addWidget(self.textStreet, 3, 1, 1, 2)
+        
+        # ZIP
+        form_layout.addWidget(QLabel("ZIP"), 4, 0)
+        self.textZip = QLineEdit()
+        form_layout.addWidget(self.textZip, 4, 1)
+        
+        # Town
+        form_layout.addWidget(QLabel("Town"), 5, 0)
+        self.textTown = QLineEdit()
+        form_layout.addWidget(self.textTown, 5, 1, 1, 2)
+        
+        # Validate button
+        self.buttonValidateSingle = QPushButton("Validate your entries")
+        self.buttonValidateSingle.setIcon(icons.get_icon('playlist_add_check_24dp_097e23_fill1_wght400_grad0_opsz24'))
+        self.buttonValidateSingle.setToolTip("Start validating your entries.")
+        form_layout.addWidget(self.buttonValidateSingle, 6, 1)
+        
+        layout.addLayout(form_layout)
+        
+        # Separator line
+        line = QFrame()
+        line.setFrameShape(QFrame.HLine)
+        line.setFrameShadow(QFrame.Sunken)
+        layout.addWidget(line)
+        
+        # Results section
+        results_layout = QGridLayout()
+        
+        self.m_staticText_ValidationResult = QLabel("Validation Result")
+        results_layout.addWidget(self.m_staticText_ValidationResult, 0, 0, 1, 2)
+        
+        results_layout.addWidget(QLabel("Result"), 1, 0)
+        self.textResultCode = QLineEdit()
+        results_layout.addWidget(self.textResultCode, 1, 1)
+        
+        results_layout.addWidget(QLabel("Valid"), 2, 0)
+        self.textResultIsValid = QLineEdit()
+        results_layout.addWidget(self.textResultIsValid, 2, 1)
+        
+        results_layout.addWidget(QLabel("Details"), 3, 0)
+        self.textResultDetails = QTextEdit()
+        self.textResultDetails.setMinimumHeight(100)
+        results_layout.addWidget(self.textResultDetails, 3, 1)
+        
+        layout.addLayout(results_layout)
+        
+        self.tab_widget.addTab(single_widget, icons.get_icon('task_24dp_097e23_fill1_wght400_grad0_opsz24'), "Single")
+    
+    def create_batch_tab(self):
+        """Create the Batch processing tab"""
+        batch_widget = QWidget()
+        layout = QVBoxLayout(batch_widget)
+        
+        # File selection layout
+        file_layout = QGridLayout()
+        
+        # Input file
+        file_layout.addWidget(QLabel("Input file"), 0, 0)
+        input_layout = QHBoxLayout()
+        self.textInputFile = QLineEdit()
+        self.buttonInputFile = QPushButton("Browse...")
+        input_layout.addWidget(self.textInputFile)
+        input_layout.addWidget(self.buttonInputFile)
+        file_layout.addLayout(input_layout, 0, 1)
+        
+        # Output file
+        file_layout.addWidget(QLabel("Output file"), 1, 0)
+        output_layout = QHBoxLayout()
+        self.textOutputFile = QLineEdit()
+        self.buttonOutputFile = QPushButton("Browse...")
+        output_layout.addWidget(self.textOutputFile)
+        output_layout.addWidget(self.buttonOutputFile)
+        file_layout.addLayout(output_layout, 1, 1)
+        
+        # Validate button
+        self.buttonValidateBatch = QPushButton("Start processing file")
+        self.buttonValidateBatch.setIcon(icons.get_icon('playlist_add_check_24dp_097e23_fill1_wght400_grad0_opsz24'))
+        self.buttonValidateBatch.setToolTip("Start processing your input file. This can take a while and the UI can stop for some seconds to work.")
+        file_layout.addWidget(self.buttonValidateBatch, 2, 1)
+        
+        layout.addLayout(file_layout)
+        
+        # Separator line
+        line = QFrame()
+        line.setFrameShape(QFrame.HLine)
+        line.setFrameShadow(QFrame.Sunken)
+        layout.addWidget(line)
+        
+        # Progress section
+        progress_layout = QGridLayout()
+        
+        progress_layout.addWidget(QLabel("Records found"), 0, 0)
+        self.staticText_RecordsFoundValue = QLabel("0")
+        progress_layout.addWidget(self.staticText_RecordsFoundValue, 0, 1)
+        
+        progress_layout.addWidget(QLabel("Progress"), 1, 0)
+        self.progressProcessing = QProgressBar()
+        progress_layout.addWidget(self.progressProcessing, 1, 1)
+        
+        self.staticText_ProcessingXofY = QLabel("0/0")
+        progress_layout.addWidget(self.staticText_ProcessingXofY, 2, 1)
+        
+        layout.addLayout(progress_layout)
+        layout.addStretch()
+        
+        self.tab_widget.addTab(batch_widget, icons.get_icon('playlist_add_check_24dp_097e23_fill1_wght400_grad0_opsz24'), "Batch")
+    
+    def create_config_tab(self):
+        """Create the Configuration tab"""
+        config_widget = QWidget()
+        layout = QVBoxLayout(config_widget)
+        
+        config_layout = QGridLayout()
+        
+        # Own VAT
+        config_layout.addWidget(QLabel("Own VAT"), 0, 0)
+        self.textCtrlConfigOwnVat = QLineEdit()
+        self.textCtrlConfigOwnVat.setFixedWidth(150)
+        config_layout.addWidget(self.textCtrlConfigOwnVat, 0, 1)
+        
+        # Interface
+        config_layout.addWidget(QLabel("Interface"), 1, 0)
+        self.comboBoxConfigInterface = QComboBox()
+        self.comboBoxConfigInterface.addItems(["vies", "bzst"])
+        config_layout.addWidget(self.comboBoxConfigInterface, 1, 1)
+        
+        # Language
+        config_layout.addWidget(QLabel("Language"), 2, 0)
+        self.comboBoxConfigLanguage = QComboBox()
+        self.comboBoxConfigLanguage.addItems(["en", "de"])
+        config_layout.addWidget(self.comboBoxConfigLanguage, 2, 1)
+        
+        # CSV delimiter
+        config_layout.addWidget(QLabel("CSV delimiter"), 3, 0)
+        self.textConfigCSVdelimiter = QLineEdit()
+        self.textConfigCSVdelimiter.setMaxLength(1)
+        self.textConfigCSVdelimiter.setFixedWidth(20)
+        config_layout.addWidget(self.textConfigCSVdelimiter, 3, 1)
+        
+        # Logfile
+        config_layout.addWidget(QLabel("Logfile"), 4, 0)
+        logfile_layout = QHBoxLayout()
+        self.textCtrlConfigLogfile = QLineEdit()
+        self.textCtrlConfigLogfile.setMinimumWidth(400)
+        self.buttonConfigLogfile = QPushButton("Logfile")
+        self.buttonConfigLogfile.setIcon(icons.get_icon('overview_24dp_097e23_fill1_wght400_grad0_opsz24'))
+        logfile_layout.addWidget(self.textCtrlConfigLogfile)
+        logfile_layout.addWidget(self.buttonConfigLogfile)
+        config_layout.addLayout(logfile_layout, 4, 1, 1, 2)
+        
+        # Loglevel
+        config_layout.addWidget(QLabel("Loglevel"), 5, 0)
+        self.comboBoxConfigLoglevel = QComboBox()
+        self.comboBoxConfigLoglevel.addItems(["DEBUG", "ERROR"])
+        self.comboBoxConfigLoglevel.setCurrentIndex(1)
+        config_layout.addWidget(self.comboBoxConfigLoglevel, 5, 1)
+        
+        # Theme
+        config_layout.addWidget(QLabel("Theme"), 6, 0)
+        self.comboBoxConfigTheme = QComboBox()
+        self.comboBoxConfigTheme.addItems(["system", "light", "dark"])
+        config_layout.addWidget(self.comboBoxConfigTheme, 6, 1)
+        
+        # Save button
+        self.buttonSaveConfig = QPushButton("Save")
+        self.buttonSaveConfig.setIcon(icons.get_icon('save_24dp_097e23_fill1_wght400_grad0_opsz24'))
+        config_layout.addWidget(self.buttonSaveConfig, 7, 0)
+        
+        layout.addLayout(config_layout)
+        layout.addStretch()
+        
+        self.tab_widget.addTab(config_widget, icons.get_icon('settings_24dp_097e23_fill1_wght400_grad0_opsz24'), "Configuration")
+    
+    def create_menu_bar(self):
+        """Create the menu bar"""
+        menubar = self.menuBar()
+        
+        # File menu
+        file_menu = menubar.addMenu("File")
+        
+        close_action = QAction("Close", self)
+        close_action.setIcon(icons.get_icon('exit_to_app_24dp_097e23_fill1_wght400_grad0_opsz24'))
+        close_action.setStatusTip("Close VATValidation")
+        close_action.triggered.connect(self.vatvalidationClose)
+        file_menu.addAction(close_action)
+        
+        # Help menu
+        help_menu = menubar.addMenu("Help")
+        
+        support_action = QAction("Support...", self)
+        support_action.setIcon(icons.get_icon('contact_support_24dp_097e23_fill1_wght400_grad0_opsz24'))
+        support_action.setStatusTip("Go to GitHub repository.")
+        support_action.triggered.connect(self.openGitHubRepo)
+        help_menu.addAction(support_action)
+        
+        website_action = QAction("Open Website", self)
+        website_action.setIcon(icons.get_icon('globe_24dp_097e23_fill1_wght400_grad0_opsz24'))
+        website_action.setStatusTip("Open website for further information.")
+        website_action.triggered.connect(self.openWebsite)
+        help_menu.addAction(website_action)
+        
+        update_action = QAction("Check for updates", self)
+        update_action.setIcon(icons.get_icon('restart_alt_24dp_097e23_fill1_wght400_grad0_opsz24'))
+        update_action.setStatusTip("Check, if there is an update available.")
+        update_action.triggered.connect(self.checkForUpdates)
+        help_menu.addAction(update_action)
+        
+        about_action = QAction("About...", self)
+        about_action.setIcon(icons.get_icon('info_24dp_097e23_fill1_wght400_grad0_opsz24'))
+        about_action.setStatusTip("About VATValidation")
+        about_action.triggered.connect(self.vatvalidationAbout)
+        help_menu.addAction(about_action)
+    
+    def move_to_center(self):
+        """Center the window on the screen"""
+        screen_rect = self.screen().geometry()
+        window_rect = self.frameGeometry()
+        x = (screen_rect.width() - window_rect.width()) // 2
+        y = (screen_rect.height() - window_rect.height()) // 2
+        self.move(max(x, 0), max(y, 0))
+    
+    # Virtual event handlers - to be implemented in subclass
+    def loadConfig(self):
         pass
-
-    # Virtual event handlers, see vatvalidation.py
-    def loadConfig(self, event):
-        event.Skip()
-
-    def clearFields(self, event):
-        event.Skip()
-
-    def validateSingle(self, event):
-        event.Skip()
-
-    def validateBatch(self, event):
-        event.Skip()
-
-    def openLogfile(self, event):
-        event.Skip()
-
-    def saveConfig(self, event):
-        event.Skip()
-
-    def vatvalidationClose(self, event):
-        event.Skip()
-
-    def openGitHubRepo(self, event):
-        event.Skip()
-
-    def openWebsite(self, event):
-        event.Skip()
-
-    def checkForUpdates(self, event):
-        event.Skip()
-
-    def vatvalidationAbout(self, event):
-        event.Skip()
+    
+    def clearFields(self):
+        pass
+    
+    def validateSingle(self):
+        pass
+    
+    def validateBatch(self):
+        pass
+    
+    def openLogfile(self):
+        pass
+    
+    def saveConfig(self):
+        pass
+    
+    def vatvalidationClose(self):
+        pass
+    
+    def openGitHubRepo(self):
+        pass
+    
+    def openWebsite(self):
+        pass
+    
+    def checkForUpdates(self):
+        pass
+    
+    def vatvalidationAbout(self):
+        pass
