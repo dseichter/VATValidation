@@ -13,6 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
+import logging
+import os
+import subprocess  # nosec B404
+
 from PySide6.QtWidgets import QApplication
 from PySide6.QtGui import QPalette, QColor
 
@@ -73,29 +77,27 @@ class ThemeManager:
     @staticmethod
     def _apply_system_theme(app):
         """Apply system theme"""
-        import os
         # Check for dark mode on different platforms
         is_dark = False
+        logger = logging.getLogger(__name__)
         
         # macOS
         if os.name == 'posix' and 'darwin' in os.uname().sysname.lower():
             try:
-                import subprocess
-                result = subprocess.run(['defaults', 'read', '-g', 'AppleInterfaceStyle'], 
+                result = subprocess.run(['defaults', 'read', '-g', 'AppleInterfaceStyle'],  # nosec B603, B607
                                       capture_output=True, text=True)
                 is_dark = result.stdout.strip() == 'Dark'
-            except Exception:
-                pass
+            except Exception as e:  # pylint: disable=broad-except
+                logger.debug('Failed to detect macOS dark mode: %s', e)
         
         # Linux (check for dark theme)
         elif os.name == 'posix':
             try:
-                import subprocess
-                result = subprocess.run(['gsettings', 'get', 'org.gnome.desktop.interface', 'gtk-theme'], 
+                result = subprocess.run(['gsettings', 'get', 'org.gnome.desktop.interface', 'gtk-theme'],  # nosec B603, B607
                                       capture_output=True, text=True)
                 is_dark = 'dark' in result.stdout.lower()
-            except Exception:
-                pass
+            except Exception as e:  # pylint: disable=broad-except
+                logger.debug('Failed to detect Linux dark mode: %s', e)
         
         if is_dark:
             ThemeManager._apply_dark_theme(app)
