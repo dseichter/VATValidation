@@ -16,6 +16,7 @@
 import urllib3
 import json
 import logging
+from packaging import version
 
 logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -30,9 +31,13 @@ def check_for_new_release():
     try:
         http = urllib3.PoolManager()
         r = http.request('GET', UPDATEURL)
-        data = json.loads(r.data.decode('utf-8'))
-        latest_version = data['tag_name']
-        return latest_version != VERSION
+        releases = json.loads(r.data.decode('utf-8'))
+        # Find the latest stable (not prerelease) release
+        for release in releases:
+            if not release.get('prerelease', False):
+                latest_version = release.get('tag_name')
+                return version.parse(latest_version) > version.parse(VERSION)
+        return False  # No stable release found
     except Exception as e:
         logging.error(f"Error checking for new release: {e}")
         return False
