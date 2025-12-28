@@ -2,13 +2,14 @@
 
 **VATValidation** is a powerful, open-source tool for validating VAT numbers using the official interfaces of BZSt, VIES, and HMRC. It supports both single and batch validation with CSV, XLSX, and JSON formats.
 
-![ruff](https://github.com/dseichter/VATValidation/actions/workflows/ruff.yml/badge.svg)
-![bandit](https://github.com/dseichter/VATValidation/actions/workflows/bandit.yml/badge.svg)
-![trivy](https://github.com/dseichter/VATValidation/actions/workflows/trivy.yml/badge.svg)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dseichter_VATValidation&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=dseichter_VATValidation)
-
 <p align="center">
   <img src="docs/docs/assets/select_check_box_48dp_097E23_FILL1_wght400_GRAD0_opsz48.png" alt="VATValidation Logo"/>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/github/v/release/dseichter/VATValidation?style=flat-square" alt="Release">
+  <img src="https://img.shields.io/github/downloads/dseichter/VATValidation/total?style=flat-square" alt="Downloads">
+  <img src="https://img.shields.io/github/license/dseichter/VATValidation?style=flat-square" alt="License">
 </p>
 
 <p align="center">
@@ -16,6 +17,11 @@
   <b><a href="https://github.com/dseichter/VATValidation/releases">Downloads</a></b> •
   <b><a href="https://github.com/dseichter/VATValidation/issues">Issues</a></b>
 </p>
+
+![ruff](https://github.com/dseichter/VATValidation/actions/workflows/ruff.yml/badge.svg)
+![bandit](https://github.com/dseichter/VATValidation/actions/workflows/bandit.yml/badge.svg)
+![trivy](https://github.com/dseichter/VATValidation/actions/workflows/trivy.yml/badge.svg)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dseichter_VATValidation&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=dseichter_VATValidation)
 
 ---
 
