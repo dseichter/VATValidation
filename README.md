@@ -18,10 +18,12 @@
   <b><a href="https://github.com/dseichter/VATValidation/issues">Issues</a></b>
 </p>
 
-![ruff](https://github.com/dseichter/VATValidation/actions/workflows/ruff.yml/badge.svg)
-![bandit](https://github.com/dseichter/VATValidation/actions/workflows/bandit.yml/badge.svg)
-![trivy](https://github.com/dseichter/VATValidation/actions/workflows/trivy.yml/badge.svg)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dseichter_VATValidation&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=dseichter_VATValidation)
+<p align="center">
+<img src="https://github.com/dseichter/VATValidation/actions/workflows/ruff.yml/badge.svg" alt="ruff">
+<img src="https://github.com/dseichter/VATValidation/actions/workflows/bandit.yml/badge.svg" alt="bandit">
+<img src="https://github.com/dseichter/VATValidation/actions/workflows/trivy.yml/badge.svg" alt="trivy">
+<a href="https://sonarcloud.io/summary/new_code?id=dseichter_VATValidation"><img src="https://sonarcloud.io/api/project_badges/measure?project=dseichter_VATValidation&metric=alert_status" alt="Quality Gate Status"></a>
+</p>
 
 ---
 
