@@ -1,5 +1,7 @@
 # VATValidation
 
+**VATValidation** is a powerful, open-source tool for validating VAT numbers using the official interfaces of BZSt, VIES, and HMRC. It supports both single and batch validation with CSV, XLSX, and JSON formats.
+
 ![ruff](https://github.com/dseichter/VATValidation/actions/workflows/ruff.yml/badge.svg)
 ![bandit](https://github.com/dseichter/VATValidation/actions/workflows/bandit.yml/badge.svg)
 ![trivy](https://github.com/dseichter/VATValidation/actions/workflows/trivy.yml/badge.svg)
@@ -10,12 +12,12 @@
 </p>
 
 <p align="center">
-  <b><a href="https://dseichter.github.io/VATValidation/">📖 Documentation (GitHub Pages)</a></b>
+  <b><a href="https://dseichter.github.io/VATValidation/">Documentation</a></b> •
+  <b><a href="https://github.com/dseichter/VATValidation/releases">Downloads</a></b> •
+  <b><a href="https://github.com/dseichter/VATValidation/issues">Issues</a></b>
 </p>
 
 ---
-
-**VATValidation** is a powerful, open-source tool for validating VAT numbers using the official interfaces of BZSt, VIES, and HMRC. It supports both single and batch validation with CSV, XLSX, and JSON formats.
 
 ![VATValidation](docs/docs/assets/single.png)
 
