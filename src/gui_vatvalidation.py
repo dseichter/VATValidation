@@ -214,7 +214,7 @@ class MainFrame(QMainWindow):
         
         # Interface
         config_layout.addWidget(QLabel("Interface"), 1, 0)
-        config_layout.addWidget(QLabel("VIES (HMRC will be detected automaticall)"), 1, 0)
+        config_layout.addWidget(QLabel("VIES (HMRC will be detected automatically)"), 1, 1)
         
         # Language
         config_layout.addWidget(QLabel("Language"), 2, 0)
