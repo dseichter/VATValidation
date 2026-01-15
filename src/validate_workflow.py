@@ -74,7 +74,7 @@ def start_workflow(payload):
         payload["lang"] = "en"
 
     # start the validation
-    # Use hmrc for GB VAT numbers, otherwise use given type
+    # Use hmrc for GB VAT numbers, otherwise use vies
     if payload["foreignvat"].upper().startswith("GB"):
         response = validate_hmrc.start_validation(payload)
     else:

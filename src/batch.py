@@ -20,6 +20,7 @@ import settings
 # import common libraries
 import json
 import pandas as pd
+import pathlib
 
 import logging_config  # Setup the logging  # noqa: F401
 import logging
@@ -35,7 +36,7 @@ def validatebatch(inputfile, outputfile="", lang="en", statusupdate=False):
     Validate the batch file and write the results to the output file.
     """
     # get the file extension
-    ext = inputfile.split(".")[-1].lower()
+    ext = pathlib.Path(inputfile).suffix[1:].lower() 
 
     # if the output file is not set, use the input file with a different extension
     # using the UI, this error can't happen, because the user has to select the output file
