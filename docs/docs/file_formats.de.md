@@ -4,7 +4,7 @@ VATValidation unterstützt die Batch-Verarbeitung in den Dateiformaten **CSV**, 
 
 ## Eingabefelder
 
-Wenn Sie eine Batch-Datei zur Validierung erstellen, müssen Sie die folgenden 8 Spalten/Felder in dieser exakten Reihenfolge enthalten:
+Wenn Sie eine Batch-Datei zur Validierung erstellen, müssen Sie die folgenden 8 Spalten/Felder enthalten:
 
 | Feldname | Beschreibung | Erforderlich | Beispiel |
 |----------|-------------|--------------|----------|
@@ -19,133 +19,133 @@ Wenn Sie eine Batch-Datei zur Validierung erstellen, müssen Sie die folgenden 8
 
 ### Beispiele für Eingabedaten
 
-=== "CSV-Format"
+#### CSV-Format
 
-    ```csv
-    key1,key2,ownvat,foreignvat,company,street,zip,town
-    DE,123456789,DE123456789,FR40303265045,Beispiel GmbH,Hauptstr. 42,10115,Berlin
-    DE,123456789,DE123456789,IT12345678901,Test Unternehmen,Berliner Str. 10,20095,München
-    ```
+Das Trennzeichen kann konfiguriert werden.
 
-=== "JSON-Format"
+```csv
+key1,key2,ownvat,foreignvat,company,street,zip,town
+DE,123456789,DE123456789,FR40303265045,Beispiel GmbH,Hauptstr. 42,10115,Berlin
+DE,123456789,DE123456789,IT12345678901,Test Unternehmen,Berliner Str. 10,20095,München
+```
 
-    ```json
-    [
-      {
-        "key1": "DE",
-        "key2": "123456789",
-        "ownvat": "DE123456789",
-        "foreignvat": "FR40303265045",
-        "company": "Beispiel GmbH",
-        "street": "Hauptstr. 42",
-        "zip": "10115",
-        "town": "Berlin"
-      },
-      {
-        "key1": "DE",
-        "key2": "123456789",
-        "ownvat": "DE123456789",
-        "foreignvat": "IT12345678901",
-        "company": "Test Unternehmen",
-        "street": "Berliner Str. 10",
-        "zip": "20095",
-        "town": "München"
-      }
-    ]
-    ```
+#### JSON-Format
 
-=== "XLSX-Format"
+```json
+[
+    {
+    "key1": "DE",
+    "key2": "123456789",
+    "ownvat": "DE123456789",
+    "foreignvat": "FR40303265045",
+    "company": "Beispiel GmbH",
+    "street": "Hauptstr. 42",
+    "zip": "10115",
+    "town": "Berlin"
+    },
+    {
+    "key1": "DE",
+    "key2": "123456789",
+    "ownvat": "DE123456789",
+    "foreignvat": "IT12345678901",
+    "company": "Test Unternehmen",
+    "street": "Berliner Str. 10",
+    "zip": "20095",
+    "town": "München"
+    }
+]
+```
 
-    | key1 | key2 | ownvat | foreignvat | company | street | zip | town |
-    |------|------|--------|-----------|---------|--------|-----|------|
-    | DE | 123456789 | DE123456789 | FR40303265045 | Beispiel GmbH | Hauptstr. 42 | 10115 | Berlin |
-    | DE | 123456789 | DE123456789 | IT12345678901 | Test Unternehmen | Berliner Str. 10 | 20095 | München |
+#### XLSX-Format
+
+```xlsx
+| key1 | key2 | ownvat | foreignvat | company | street | zip | town |
+|------|------|--------|-----------|---------|--------|-----|------|
+| DE | 123456789 | DE123456789 | FR40303265045 | Beispiel GmbH | Hauptstr. 42 | 10115 | Berlin |
+| DE | 123456789 | DE123456789 | IT12345678901 | Test Unternehmen | Berliner Str. 10 | 20095 | München |
+```
 
 ## Ausgabefelder
 
 Nach der Validierung enthält die Ausgabedatei die Validierungsergebnisse mit den folgenden Feldern:
 
-| Feldname | Typ | Beschreibung |
-|----------|-----|-------------|
-| `statusCode` | Ganzzahl | HTTP-ähnlicher Statuscode, der das Validierungsergebnis anzeigt (z.B. 200 für Erfolg, 406 für Fehler) |
-| `body` | Zeichenkette (JSON) | Enthält die detaillierte Validierungsantwort als JSON-Zeichenkette |
-
-Das `body`-Feld enthält ein JSON-Objekt mit der folgenden Struktur:
-
-| Feld | Typ | Beschreibung |
-|------|-----|-------------|
-| `errorcode` | Zeichenkette | Fehlercode bei fehlgeschlagener Validierung (z.B. "VAT0001" für fehlende Felder) |
-| `message` | Zeichenkette | Aussagekräftige Nachricht über das Validierungsergebnis oder einen Fehler |
-| `valid` | Wahrheitswert | Gibt an, ob die Steuernummer gültig ist |
-| `address` | Zeichenkette | Die mit der Steuernummer verbundene Adresse (falls verfügbar) |
-| `name` | Zeichenkette | Der mit der Steuernummer verbundene Unternehmensname (falls verfügbar) |
-| `requestIdentifier` | Zeichenkette | Eindeutige Request-ID vom Validierungsdienst |
-| `consumerAddress` | Zeichenkette | Adresse des Verbrauchers/Antragstellers (für VIES-Validierung) |
-| `consumerName` | Zeichenkette | Name des Verbrauchers/Antragstellers (für VIES-Validierung) |
-| `checkDate` | Zeichenkette | ISO-Format-Datum der Validierungsprüfung |
+| Feldname | Beschreibung |
+|----------|-------------|
+| `key1` | Erster Teil Ihrer eigenen Steuernummer (Ländercode) |
+| `key2` | Zweiter Teil Ihrer eigenen Steuernummer (Steuernummer) |
+| `ownvat` | Ihre vollständige Steuernummer |
+| `foreignvat` | Die ausländische Steuernummer, die validiert wurde |
+| `type` | Validierungsquelle ("vies" oder "hmrc") |
+| `valid` | Gibt an, ob die Steuernummer gültig ist (wahr/falsch) |
+| `errorcode` | Fehlercode bei fehlgeschlagener Validierung |
+| `errorcode_description` | Lesbare Beschreibung des Fehlercodes |
+| `valid_from` | Datum, ab dem die Steuernummer gültig ist (falls verfügbar) |
+| `valid_to` | Datum, bis zu dem die Steuernummer gültig ist (falls verfügbar) |
+| `timestamp` | ISO-Format-Datum der Validierungsprüfung |
+| `company` | Mit der Steuernummer verbundener Unternehmensname |
+| `address` | Mit der Steuernummer verbundene Adresse |
+| `town` | Stadt/Ort (aus der Adresse extrahiert, falls verfügbar) |
+| `zip` | Postleitzahl (aus der Adresse extrahiert, falls verfügbar) |
+| `street` | Straßenadresse (aus der Adresse extrahiert, falls verfügbar) |
 
 ### Beispiele für Ausgabedaten
 
-=== "CSV-Format"
+#### CSV-Format
 
-    ```csv
-    statusCode,body
-    200,"{""valid"": true, ""address"": ""Beispiel AG, Hauptstr. 10, 75001 Paris"", ""name"": ""Beispiel AG"", ""message"": ""Die Steuernummer ist gültig.""}"
-    200,"{""valid"": false, ""message"": ""Die Steuernummer ist nicht gültig.""}"
-    406,"{""errorcode"": ""VAT0001"", ""message"": ""Das folgende Feld fehlt: foreignvat""}"
-    ```
+```csv
+key1,key2,ownvat,foreignvat,type,valid,errorcode,errorcode_description,valid_from,valid_to,timestamp,company,address,town,zip,street
+DE,123456789,DE123456789,FR40303265045,vies,true,,Gültige Steuernummer,,,2025-01-15T10:30:00,Beispiel AG,"Beispiel AG, Hauptstr. 10, 75001 Paris",Paris,75001,Hauptstr. 10
+DE,123456789,DE123456789,IT12345678901,vies,false,INVALID,,,,2025-01-15T10:30:01,,,,,
+```
 
-=== "JSON-Format"
+#### JSON-Format
 
-    ```json
-    [
-      {
-        "statusCode": 200,
-        "body": "{\"valid\": true, \"address\": \"Beispiel AG, Hauptstr. 10, 75001 Paris\", \"name\": \"Beispiel AG\", \"message\": \"Die Steuernummer ist gültig.\"}"
-      },
-      {
-        "statusCode": 200,
-        "body": "{\"valid\": false, \"message\": \"Die Steuernummer ist nicht gültig.\"}"
-      },
-      {
-        "statusCode": 406,
-        "body": "{\"errorcode\": \"VAT0001\", \"message\": \"Das folgende Feld fehlt: foreignvat\"}"
-      }
-    ]
-    ```
+```json
+[
+    {
+    "key1": "DE",
+    "key2": "123456789",
+    "ownvat": "DE123456789",
+    "foreignvat": "FR40303265045",
+    "type": "vies",
+    "valid": true,
+    "errorcode": "",
+    "errorcode_description": "Gültige Steuernummer",
+    "valid_from": "",
+    "valid_to": "",
+    "timestamp": "2025-01-15T10:30:00",
+    "company": "Beispiel AG",
+    "address": "Beispiel AG, Hauptstr. 10, 75001 Paris",
+    "town": "Paris",
+    "zip": "75001",
+    "street": "Hauptstr. 10"
+    },
+    {
+    "key1": "DE",
+    "key2": "123456789",
+    "ownvat": "DE123456789",
+    "foreignvat": "IT12345678901",
+    "type": "vies",
+    "valid": false,
+    "errorcode": "INVALID",
+    "errorcode_description": "Ungültige Steuernummer",
+    "valid_from": "",
+    "valid_to": "",
+    "timestamp": "2025-01-15T10:30:01",
+    "company": "",
+    "address": "",
+    "town": "",
+    "zip": "",
+    "street": ""
+    }
+]
+```
 
-=== "XLSX-Format"
+#### XLSX-Format
 
-    | statusCode | body |
-    |------------|------|
-    | 200 | {"valid": true, "address": "Beispiel AG, Hauptstr. 10, 75001 Paris", "name": "Beispiel AG"} |
-    | 200 | {"valid": false, "message": "Die Steuernummer ist nicht gültig."} |
-    | 406 | {"errorcode": "VAT0001", "message": "Das folgende Feld fehlt: foreignvat"} |
-
-## Dateikonfiguration
-
-### CSV-Trennzeichen
-
-Sie können das Trennzeichen für CSV-Dateien über den **Konfiguration**-Tab in der GUI konfigurieren. Häufig verwendete Trennzeichen sind:
-
-- `,` (Komma) - Standard
-- `;` (Semikolon)
-- `\t` (Tabulator)
-
-Die gleiche Trennzeicheneinstellung gilt für Ein- und Ausgabe-CSV-Dateien.
-
-## Hinweise zur Verwendung
-
-1. **Alle Eingabefelder sind erforderlich** - Auch wenn einige (wie company, street, zip, town) optional für die Validierung sind, müssen sie in der Datei vorhanden sein.
-
-2. **Spaltenreihenfolge** - Die Eingabespalten müssen in der exakt angegebenen Reihenfolge vorliegen (key1, key2, ownvat, foreignvat, company, street, zip, town).
-
-3. **Steuernummernformat** - Das `foreignvat`-Feld sollte die vollständige Steuernummer einschließlich des Ländercodes enthalten (z.B. `FR40303265045` für Frankreich).
-
-4. **Ausgabedatei** - Standardmäßig verwendet die Ausgabedatei das gleiche Format und Trennzeichen wie die Eingabedatei. Wenn Sie keine Ausgabedatei angeben, wird eine mit dem gleichen Namen wie die Eingabedatei erstellt, aber mit `.log.` vor der Erweiterung (z.B. `input.csv` → `input.log.csv`).
-
-5. **JSON-Body-Feld** - Beachten Sie, dass die detaillierten Ergebnisse in der Ausgabe als JSON-Zeichenkette im `body`-Feld gespeichert sind. Möglicherweise müssen Sie diese Zeichenkette analysieren, um auf einzelne Ergebnisfelder zuzugreifen.
-
-6. **Validierungs-API** - Je nach Ihrer Konfiguration kann die Validierung entweder:
-   - **VIES** - für EU-Steuernummern
-   - **HMRC** - für britische Steuernummern
+```xlsx
+| key1 | key2 | ownvat | foreignvat | type | valid | errorcode | errorcode_description | valid_from | valid_to | timestamp | company | address | town | zip | street |
+|------|------|--------|-----------|------|-------|-----------|----------------------|------------|----------|-----------|---------|---------|------|-----|--------|
+| DE | 123456789 | DE123456789 | FR40303265045 | vies | TRUE | | Gültige Steuernummer | | | 2025-01-15T10:30:00 | Beispiel AG | Beispiel AG, Hauptstr. 10, 75001 Paris | Paris | 75001 | Hauptstr. 10 |
+| DE | 123456789 | DE123456789 | IT12345678901 | vies | FALSE | INVALID | Ungültige Steuernummer | | | 2025-01-15T10:30:01 | | | | | |
+```
