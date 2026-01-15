@@ -26,6 +26,8 @@ Binärdateien für Windows und Linux stehen zur Verfügung (siehe [Releases](htt
 - 🛠️ CLI Batch-Verarbeitung ((siehe [Kommandozeile](commandline.md)))
 - 🔒**keine** Abhängigkeiten erforderlich
 
+Seit 2026 ist die Schnittstelle des BZSt nicht mehr verfügbar.
+
 Dies ist der Nachfolger meiner VAT-Validation. Jetzt als Open Source veröffentlicht.
 
 Wenn Ihnen diese Software gefällt, zögern Sie bitte nicht, ihr einen :star: zu geben oder mir eine :moneybag: Spende in der Höhe zukommen zu lassen, die die Software Ihrer Meinung nach wert ist.

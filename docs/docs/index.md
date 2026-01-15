@@ -26,6 +26,8 @@ Binaries for Windows and Linux are available (see [releases](https://github.com/
 - 🛠️ CLI batch processing (see [commandine](commandline.md))
 - 🔒 **NO** external dependencies required
 
+Since 2026 the BZSt interface has been shutdowned.
+
 This is the successor of my VAT-Validation. Now released as Open Source.
 
 If you like this software, please don't hesitate to give it a :star: or send me a :moneybag: donation in the amount you think the software is worth.
