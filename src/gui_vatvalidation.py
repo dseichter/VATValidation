@@ -1,4 +1,4 @@
-# Copyright (c) 2024-2025 Daniel Seichter
+# Copyright (c) 2024-2026 Daniel Seichter
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -214,9 +214,7 @@ class MainFrame(QMainWindow):
         
         # Interface
         config_layout.addWidget(QLabel("Interface"), 1, 0)
-        self.comboBoxConfigInterface = QComboBox()
-        self.comboBoxConfigInterface.addItems(["vies", "bzst"])
-        config_layout.addWidget(self.comboBoxConfigInterface, 1, 1)
+        config_layout.addWidget(QLabel("VIES (HMRC will be detected automatically)"), 1, 1)
         
         # Language
         config_layout.addWidget(QLabel("Language"), 2, 0)

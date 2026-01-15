@@ -1,4 +1,4 @@
-# Copyright (c) 2024-2025 Daniel Seichter
+# Copyright (c) 2024-2026 Daniel Seichter
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,8 +31,8 @@ settings.create_config()
 # Create the parser with an extended description or epilog
 parser = argparse.ArgumentParser(
     description=helper.NAME + " CLI" + " - " + helper.VERSION,
-    epilog="For more information, visit our GitHub repository: https://github.com/dseichter/VATValidation\r\n\n"
-    "License: GPL 3.0 - see LICENSE file at the root of the repository for details.",
+    epilog="For more information, visit our GitHub repository: https://github.com/dseichter/VATValidation\nLicense: GPL 3.0 - see LICENSE file at the root of the repository for details.",
+    formatter_class=argparse.RawDescriptionHelpFormatter,
 )
 
 # Add the version argument
@@ -57,16 +57,8 @@ if len(sys.argv) == 1:
 args = parser.parse_args()
 
 # You can now use args.input and args.output for further processing
-print(
-    "Start batch validation with input file: "
-    + args.input
-    + " and output file: "
-    + args.output
-    + " using "
-    + settings.load_value_from_json_file("interface")
-    + " interface."
-)
-response = batch.validatebatch(inputfile=args.input, outputfile=args.output, type=settings.load_value_from_json_file("interface"), lang="en")
+print(f"Start batch validation with input file: {args.input} and output file: {args.output} using VIES interface.")
+response = batch.validatebatch(inputfile=args.input, outputfile=args.output, lang="en")
 
 match response:
     case 0:

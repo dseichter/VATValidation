@@ -1,4 +1,4 @@
-# Copyright (c) 2024-2025 Daniel Seichter
+# Copyright (c) 2024-2026 Daniel Seichter
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ from packaging import version
 
 logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
 
-VERSION = "v2025-12-02"
+VERSION = "v2026-01-15"
 UPDATEURL = 'https://api.github.com/repos/dseichter/VATValidation/releases/latest'
 RELEASES = 'https://github.com/dseichter/VATValidation/releases'
 NAME = 'VATValidation'

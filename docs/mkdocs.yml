@@ -2,7 +2,7 @@ site_name: VATValidation
 site_url: https://dseichter.github.io/VATValidation/
 site_description: A tool to validate VAT numbers and check their status.
 site_author: Daniel Seichter
-copyright: Copyright © 2025 Daniel Seichter
+copyright: Copyright © 2025-2026 Daniel Seichter
 repo_url: https://github.com/dseichter/VATValidation
 repo_name: dseichter/VATValidation
 theme:
@@ -40,6 +40,7 @@ plugins:
             Home: Startseite
             Command Line: Kommandozeile
             Configuration: Konfiguration
+            File Formats and Fields: Dateiformate und Felder
             Graphical User Interface: Grafische Benutzeroberfläche
             Development: Entwicklung
             About: Über
@@ -53,6 +54,7 @@ nav:
   - Home: index.md
   - Command Line: commandline.md
   - Configuration: configuration.md
+  - File Formats and Fields: file_formats.md
   - Graphical User Interface: gui.md
   - Development: development.md
   - About: about.md

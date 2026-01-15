@@ -1,4 +1,4 @@
-# Copyright (c) 2024-2025 Daniel Seichter
+# Copyright (c) 2024-2026 Daniel Seichter
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,6 +14,7 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 import sys
+import pathlib
 from PySide6.QtWidgets import QApplication, QMessageBox, QFileDialog
 from PySide6.QtCore import QTimer
 
@@ -123,7 +124,6 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
             )
         
         # Load visible configuration values
-        self.comboBoxConfigInterface.setCurrentText(settings.load_value_from_json_file("interface") or "vies")
         self.comboBoxConfigLanguage.setCurrentText(settings.load_value_from_json_file("language") or "en")
         self.textConfigCSVdelimiter.setText(settings.load_value_from_json_file("delimiter") or ",")
         self.textCtrlConfigLogfile.setText(settings.load_value_from_json_file("logfilename") or "")
@@ -136,7 +136,6 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
     def saveConfig(self):
         """Save configuration to file"""
         settings.save_config("ownvat", self.textCtrlConfigOwnVat.text())
-        settings.save_config("interface", self.comboBoxConfigInterface.currentText())
         settings.save_config("language", self.comboBoxConfigLanguage.currentText())
         settings.save_config("delimiter", self.textConfigCSVdelimiter.text())
         settings.save_config("logfilename", self.textCtrlConfigLogfile.text())
@@ -212,7 +211,6 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
             street=self.textStreet.text(),
             zip=self.textZip.text(),
             town=self.textTown.text(),
-            type=settings.load_value_from_json_file("interface"),
             lang=settings.load_value_from_json_file("language"),
         )
         
@@ -247,12 +245,12 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
             return
         
         # Check file formats
-        input_ext = self.textInputFile.text().split(".")[-1].lower()
+        input_ext = pathlib.Path(self.textInputFile.text()).suffix[1:].lower()
         if input_ext not in ["xlsx", "csv", "json"]:
             QMessageBox.critical(self, "Unsupported file format", "Unsupported input file format.")
             return
         
-        output_ext = self.textOutputFile.text().split(".")[-1].lower()
+        output_ext = pathlib.Path(self.textOutputFile.text()).suffix[1:].lower()
         if output_ext not in ["xlsx", "csv", "json"]:
             QMessageBox.critical(self, "Unsupported file format", "Unsupported output file format.")
             return
@@ -269,7 +267,7 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
             kwargs={
                 "inputfile": self.textInputFile.text(),
                 "outputfile": self.textOutputFile.text(),
-                "type": settings.load_value_from_json_file("interface"),
+                "type": "vies",
                 "lang": settings.load_value_from_json_file("language"),
                 "statusupdate": True,
             },

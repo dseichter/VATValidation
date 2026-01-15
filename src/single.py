@@ -1,4 +1,4 @@
-# Copyright (c) 2024-2025 Daniel Seichter
+# Copyright (c) 2024-2026 Daniel Seichter
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,7 +30,6 @@ def validatesingle(
     street="",
     zip="",
     town="",
-    type="vies",
     lang="en"
 ):
     data = {
@@ -42,7 +41,7 @@ def validatesingle(
         "street": street,
         "zip": zip,
         "town": town,
-        "type": type,
+        "type": "vies",
         "lang": lang,
     }
     r = validate_workflow.start_workflow(data)

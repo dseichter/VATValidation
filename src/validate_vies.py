@@ -1,4 +1,4 @@
-# Copyright (c) 2024-2025 Daniel Seichter
+# Copyright (c) 2024-2026 Daniel Seichter
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ validationresult = {
     "key2": None,
     "ownvat": None,
     "foreignvat": None,
-    "type": "VIES",
+    "type": "vies",
     "valid": None,
     "errorcode": None,
     "errorcode_description": None,
@@ -175,7 +175,7 @@ def start_validation(payload):
             "key2": payload["key2"],
             "ownvat": payload["ownvat"],
             "foreignvat": payload["foreignvat"],
-            "type": "VIES",
+            "type": "vies",
             "valid": result["valid"] == "true",
             "errorcode": result["errorcode"],
             "errorcode_description": load_codes(payload["lang"], result["errorcode"]),

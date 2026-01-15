@@ -4,7 +4,7 @@ VATValidation bietet eine grafische Benutzeroberfläche für Einzel- und Stapel-
 
 ## Einzelvalidierung
 
-Sie können die Software an Ihrem Arbeitsplatz einsetzen und direkt gegen die offiziell unterstützten Schnittstellen von BZSt, MIAS und/oder HMRC prüfen.
+Sie können die Software an Ihrem Arbeitsplatz einsetzen und direkt gegen die offiziell unterstützten Schnittstellen von  VIES und/oder HMRC prüfen.
 
 ![Einzelvalidierung](assets/single.png "VATValidation Einzelvalidierung")
 
