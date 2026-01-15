@@ -62,11 +62,9 @@ print(
     + args.input
     + " and output file: "
     + args.output
-    + " using "
-    + settings.load_value_from_json_file("interface")
-    + " interface."
+    + " using VIES interface."
 )
-response = batch.validatebatch(inputfile=args.input, outputfile=args.output, type=settings.load_value_from_json_file("interface"), lang="en")
+response = batch.validatebatch(inputfile=args.input, outputfile=args.output, lang="en")
 
 match response:
     case 0:

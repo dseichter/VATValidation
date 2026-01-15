@@ -214,9 +214,7 @@ class MainFrame(QMainWindow):
         
         # Interface
         config_layout.addWidget(QLabel("Interface"), 1, 0)
-        self.comboBoxConfigInterface = QComboBox()
-        self.comboBoxConfigInterface.addItems(["vies"])
-        config_layout.addWidget(self.comboBoxConfigInterface, 1, 1)
+        config_layout.addWidget(QLabel("VIES (HMRC will be detected automaticall)"), 1, 0)
         
         # Language
         config_layout.addWidget(QLabel("Language"), 2, 0)

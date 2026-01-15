@@ -30,7 +30,6 @@ def validatesingle(
     street="",
     zip="",
     town="",
-    type="vies",
     lang="en"
 ):
     data = {
@@ -42,7 +41,7 @@ def validatesingle(
         "street": street,
         "zip": zip,
         "town": town,
-        "type": type,
+        "type": "vies",
         "lang": lang,
     }
     r = validate_workflow.start_workflow(data)

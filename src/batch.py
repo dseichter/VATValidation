@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 columns = ["key1", "key2", "ownvat", "foreignvat", "company", "street", "zip", "town"]
 
 
-def validatebatch(inputfile, outputfile="", type="vies", lang="en", statusupdate=False):
+def validatebatch(inputfile, outputfile="", lang="en", statusupdate=False):
     """
     Validate the batch file and write the results to the output file.
     """
@@ -44,20 +44,20 @@ def validatebatch(inputfile, outputfile="", type="vies", lang="en", statusupdate
 
     match ext:
         case "csv":
-            resultcode = processcsv(inputfile, outputfile, type, lang, statusupdate)
+            resultcode = processcsv(inputfile, outputfile, lang, statusupdate)
             return resultcode
         case "xlsx":
-            resultcode = processxlsx(inputfile, outputfile, type, lang, statusupdate)
+            resultcode = processxlsx(inputfile, outputfile, lang, statusupdate)
             return resultcode
         case "json":
-            resultcode = processjson(inputfile, outputfile, type, lang, statusupdate)
+            resultcode = processjson(inputfile, outputfile, lang, statusupdate)
             return resultcode
         case _:
             logger.error("Unsupported file format")
             return 127
 
 
-def processcsv(inputfile, outputfile, type, lang, statusupdate):
+def processcsv(inputfile, outputfile, lang, statusupdate):
     try:
 
         # read the file and check if all rows have the same number of columns
@@ -107,7 +107,6 @@ def processcsv(inputfile, outputfile, type, lang, statusupdate):
                 street=row["street"],
                 zip=row["zip"],
                 town=row["town"],
-                type=type,
                 lang=lang
             )
 
@@ -139,7 +138,7 @@ def processcsv(inputfile, outputfile, type, lang, statusupdate):
         return 99
 
 
-def processxlsx(inputfile, outputfile, type, lang, statusupdate):
+def processxlsx(inputfile, outputfile, lang, statusupdate):
     try:
         # read the input file
         data = pd.read_excel(inputfile, usecols=columns)
@@ -167,7 +166,6 @@ def processxlsx(inputfile, outputfile, type, lang, statusupdate):
                 street=row["street"],
                 zip=row["zip"],
                 town=row["town"],
-                type=type,
                 lang=lang
             )
             # append the result to the results list
@@ -192,7 +190,7 @@ def processxlsx(inputfile, outputfile, type, lang, statusupdate):
         return 99
 
 
-def processjson(inputfile, outputfile, type, lang, statusupdate):
+def processjson(inputfile, outputfile, lang, statusupdate):
     try:
         data = pd.read_json(inputfile)
         # create a list to store the results
@@ -213,7 +211,6 @@ def processjson(inputfile, outputfile, type, lang, statusupdate):
                 street=row["street"],
                 zip=row["zip"],
                 town=row["town"],
-                type=type,
                 lang=lang
             )
             # append the result to the results list
