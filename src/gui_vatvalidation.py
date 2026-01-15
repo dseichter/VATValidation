@@ -215,7 +215,7 @@ class MainFrame(QMainWindow):
         # Interface
         config_layout.addWidget(QLabel("Interface"), 1, 0)
         self.comboBoxConfigInterface = QComboBox()
-        self.comboBoxConfigInterface.addItems(["vies", "bzst"])
+        self.comboBoxConfigInterface.addItems(["vies"])
         config_layout.addWidget(self.comboBoxConfigInterface, 1, 1)
         
         # Language

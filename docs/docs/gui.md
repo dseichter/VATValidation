@@ -4,7 +4,7 @@ The VATValidation provides a graphical user interface for single and batch valid
 
 ## Single Validation
 
-You can use the software at your workplace and check directly against the official supported interfaces of BZSt, VIES and/or HMRC.
+You can use the software at your workplace and check directly against the official supported interfaces of VIES and/or HMRC.
 
 ![single validation](assets/single.png "VATValidation Single Validation")
 

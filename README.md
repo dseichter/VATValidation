@@ -1,6 +1,6 @@
 # VATValidation
 
-**VATValidation** is a powerful, open-source tool for validating VAT numbers using the official interfaces of BZSt, VIES, and HMRC. It supports both single and batch validation with CSV, XLSX, and JSON formats.
+**VATValidation** is a powerful, open-source tool for validating VAT numbers using the official interfaces of VIES and HMRC. It supports both single and batch validation with CSV, XLSX, and JSON formats.
 
 <p align="center">
   <img src="docs/docs/assets/select_check_box_48dp_097E23_FILL1_wght400_GRAD0_opsz48.png" alt="VATValidation Logo"/>
@@ -38,7 +38,6 @@ Binaries for Windows and Linux are available in the <a href="https://github.com/
 - 🖥️ Graphical user interface
 - ✅ Single VAT number validation
 - 📦 Batch processing of CSV, JSON, or XLSX
-- 🇩🇪 Validation using BZSt (best, if you own a German VAT number)
 - 🇪🇺 Validation using VIES (EU VAT numbers)
 - 🇬🇧 Validation using HMRC (check UK VAT numbers)
 - 🛠️ CLI batch processing (see releases)

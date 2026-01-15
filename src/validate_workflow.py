@@ -17,7 +17,6 @@ import json
 import datetime
 from decimal import Decimal
 
-import validate_bzst
 import validate_vies
 import validate_hmrc
 
@@ -66,9 +65,7 @@ def start_workflow(payload):
             return return_fielderror(field)
 
     if "type" not in payload:
-        payload["type"] = (
-            "bzst" if payload["ownvat"].upper().startswith("DE") else "vies"
-        )
+        payload["type"] = "vies"
 
     if "lang" not in payload:
         payload["lang"] = "en"
@@ -80,8 +77,6 @@ def start_workflow(payload):
     # Use hmrc for GB VAT numbers, otherwise use given type
     if payload["foreignvat"].upper().startswith("GB"):
         response = validate_hmrc.start_validation(payload)
-    elif payload["type"] == "bzst":
-        response = validate_bzst.start_validation(payload)
     else:
         response = validate_vies.start_validation(payload)
 
