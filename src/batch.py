@@ -103,13 +103,13 @@ def _load_data_from_file(inputfile, ext):
         return data, 0
 
     except FileNotFoundError as e:
-        logging.error(f"File not found: {e}")
+        logger.error(f"File not found: {e}")
         return None, 1
     except pd.errors.EmptyDataError as e:
-        logging.error(f"Empty data error: {e}")
+        logger.error(f"Empty data error: {e}")
         return None, 2
     except Exception as e:
-        logging.error(f"An unexpected error occurred: {e}")
+        logger.error(f"An unexpected error occurred: {e}")
         return None, 99
 
 
@@ -123,7 +123,7 @@ def _save_results_to_file(dataframe, outputfile, ext):
         elif ext == "json":
             dataframe.to_json(outputfile, orient="records", lines=False, indent=2)
     except Exception as e:
-        logging.error(f"Error saving file: {e}")
+        logger.error(f"Error saving file: {e}")
         return 99
     return 0
 

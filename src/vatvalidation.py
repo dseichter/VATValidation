@@ -14,6 +14,7 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 import sys
+import pathlib
 from PySide6.QtWidgets import QApplication, QMessageBox, QFileDialog
 from PySide6.QtCore import QTimer
 
@@ -244,12 +245,12 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
             return
         
         # Check file formats
-        input_ext = self.textInputFile.text().split(".")[-1].lower()
+        input_ext = pathlib.Path(self.textInputFile.text()).suffix[1:].lower()
         if input_ext not in ["xlsx", "csv", "json"]:
             QMessageBox.critical(self, "Unsupported file format", "Unsupported input file format.")
             return
         
-        output_ext = self.textOutputFile.text().split(".")[-1].lower()
+        output_ext = pathlib.Path(self.textOutputFile.text()).suffix[1:].lower()
         if output_ext not in ["xlsx", "csv", "json"]:
             QMessageBox.critical(self, "Unsupported file format", "Unsupported output file format.")
             return
