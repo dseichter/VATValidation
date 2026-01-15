@@ -57,13 +57,7 @@ if len(sys.argv) == 1:
 args = parser.parse_args()
 
 # You can now use args.input and args.output for further processing
-print(
-    "Start batch validation with input file: "
-    + args.input
-    + " and output file: "
-    + args.output
-    + " using VIES interface."
-)
+print(f"Start batch validation with input file: {args.input} and output file: {args.output} using VIES interface.")
 response = batch.validatebatch(inputfile=args.input, outputfile=args.output, lang="en")
 
 match response:
