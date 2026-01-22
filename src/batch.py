@@ -79,6 +79,7 @@ def _load_data_from_file(inputfile, ext):
                 split_columns = first_line.split(delimiter)
                 if len(split_columns) != len(COLUMNS):
                     logger.error(f"Expected {len(COLUMNS)} columns, but found {len(split_columns)}.")
+                    logger.error("Please check your setup (delimiter) in config.json.")
                     return None, 4
 
             # read csv with columns
