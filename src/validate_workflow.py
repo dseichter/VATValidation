@@ -73,7 +73,11 @@ def start_workflow(payload):
     if payload["lang"] not in ["en", "de"]:
         payload["lang"] = "en"
 
-    # start the validation
+    # force to be a string values, if they are not able to be parsed as a string
+    if not isinstance(payload["ownvat"], str):
+        payload["ownvat"] = str(payload["ownvat"])
+    if not isinstance(payload["foreignvat"], str):
+        payload["foreignvat"] = str(payload["foreignvat"])
     # Use hmrc for GB VAT numbers, otherwise use vies
     if payload["foreignvat"].upper().startswith("GB"):
         response = validate_hmrc.start_validation(payload)
