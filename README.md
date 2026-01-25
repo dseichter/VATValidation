@@ -38,12 +38,13 @@ Binaries for Windows and Linux are available in the <a href="https://github.com/
 - 🖥️ Graphical user interface
 - ✅ Single VAT number validation
 - 📦 Batch processing of CSV, JSON, or XLSX
+- 🇩🇪 Validation using BZSt (German Federal Central Tax Office)
 - 🇪🇺 Validation using VIES (EU VAT numbers)
 - 🇬🇧 Validation using HMRC (check UK VAT numbers)
 - 🛠️ CLI batch processing (see releases)
 - 🔒 **NO** external dependencies required
 
-Since 2026 the BZSt interface has been shutdowned.
+Since 2026 the old BZSt interface has been shutdown. The new BZSt API is now supported.
 
 ---
 

@@ -5,7 +5,7 @@
 ![trivy](https://github.com/dseichter/VATValidation/actions/workflows/trivy.yml/badge.svg)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dseichter_VATValidation&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=dseichter_VATValidation)
 
-Validate VAT numbers using the interfaces of VIES and/or HMRC. Provides single or batch validation with support for CSV, XLSX and JSON.
+Validate VAT numbers using the interfaces of BZSt, VIES and/or HMRC. Provides single or batch validation with support for CSV, XLSX and JSON.
 
 ![VATValidation](assets/single.png)
 
@@ -21,12 +21,13 @@ Binaries for Windows and Linux are available (see [releases](https://github.com/
 - 🖥️ Graphical user interface
 - ✅ Single VAT number validation
 - 📦 Batch processing of CSV, JSON, or XLSX
+- 🇩🇪 Validation using BZSt (German Federal Central Tax Office)
 - 🇪🇺 Validation using VIES
 - 🇬🇧 Validation using HMRC (including VAT IDs beginning with `UK`)
 - 🛠️ CLI batch processing (see [commandine](commandline.md))
 - 🔒 **NO** external dependencies required
 
-Since 2026 the BZSt interface has been shutdowned.
+Since 2026 the old BZSt interface has been shutdown. The new BZSt API is now supported.
 
 This is the successor of my VAT-Validation. Now released as Open Source.
 
