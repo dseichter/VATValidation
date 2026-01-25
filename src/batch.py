@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 COLUMNS = ["key1", "key2", "ownvat", "foreignvat", "company", "street", "zip", "town"]
 
 
-def validatebatch(inputfile, outputfile="", lang="en", statusupdate=False):
+def validatebatch(inputfile, outputfile="", type="vies", lang="en", statusupdate=False):
     """
     Validate the batch file and write the results to the output file.
     """
@@ -45,13 +45,13 @@ def validatebatch(inputfile, outputfile="", lang="en", statusupdate=False):
 
     match ext:
         case "csv":
-            resultcode = processcsv(inputfile, outputfile, lang, statusupdate)
+            resultcode = processcsv(inputfile, outputfile, type, lang, statusupdate)
             return resultcode
         case "xlsx":
-            resultcode = processxlsx(inputfile, outputfile, lang, statusupdate)
+            resultcode = processxlsx(inputfile, outputfile, type, lang, statusupdate)
             return resultcode
         case "json":
-            resultcode = processjson(inputfile, outputfile, lang, statusupdate)
+            resultcode = processjson(inputfile, outputfile, type, lang, statusupdate)
             return resultcode
         case _:
             logger.error("Unsupported file format")
@@ -129,7 +129,7 @@ def _save_results_to_file(dataframe, outputfile, ext):
     return 0
 
 
-def _process_batch_data(data, lang, statusupdate, skip_header=False):
+def _process_batch_data(data, type, lang, statusupdate, skip_header=False):
     """Process batch data and return validation results."""
     results = []
     write_status_update(statusupdate, len(data), 0)
@@ -152,6 +152,7 @@ def _process_batch_data(data, lang, statusupdate, skip_header=False):
             street=row["street"],
             zip=row["zip"],
             town=row["town"],
+            type=type,
             lang=lang
         )
 
@@ -167,7 +168,7 @@ def _process_batch_data(data, lang, statusupdate, skip_header=False):
     return results
 
 
-def processcsv(inputfile, outputfile, lang, statusupdate):
+def processcsv(inputfile, outputfile, type, lang, statusupdate):
     """Process CSV file for batch validation."""
     ext = "csv"
     data, error_code = _load_data_from_file(inputfile, ext)
@@ -175,13 +176,13 @@ def processcsv(inputfile, outputfile, lang, statusupdate):
     if error_code != 0:
         return error_code
 
-    results = _process_batch_data(data, lang, statusupdate, skip_header=True)
+    results = _process_batch_data(data, type, lang, statusupdate, skip_header=True)
     dataframe = pd.DataFrame(results)
     
     return _save_results_to_file(dataframe, outputfile, ext)
 
 
-def processxlsx(inputfile, outputfile, lang, statusupdate):
+def processxlsx(inputfile, outputfile, type, lang, statusupdate):
     """Process XLSX file for batch validation."""
     ext = "xlsx"
     data, error_code = _load_data_from_file(inputfile, ext)
@@ -189,13 +190,13 @@ def processxlsx(inputfile, outputfile, lang, statusupdate):
     if error_code != 0:
         return error_code
 
-    results = _process_batch_data(data, lang, statusupdate, skip_header=False)
+    results = _process_batch_data(data, type, lang, statusupdate, skip_header=False)
     dataframe = pd.DataFrame(results)
     
     return _save_results_to_file(dataframe, outputfile, ext)
 
 
-def processjson(inputfile, outputfile, lang, statusupdate):
+def processjson(inputfile, outputfile, type, lang, statusupdate):
     """Process JSON file for batch validation."""
     ext = "json"
     data, error_code = _load_data_from_file(inputfile, ext)
@@ -203,7 +204,7 @@ def processjson(inputfile, outputfile, lang, statusupdate):
     if error_code != 0:
         return error_code
 
-    results = _process_batch_data(data, lang, statusupdate, skip_header=False)
+    results = _process_batch_data(data, type, lang, statusupdate, skip_header=False)
     dataframe = pd.DataFrame(results)
     
     return _save_results_to_file(dataframe, outputfile, ext)
