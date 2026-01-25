@@ -142,8 +142,9 @@ def start_validation(payload):
             try:
                 error_data = json.loads(resp.data.decode('utf-8'))
                 error_msg = error_data.get('message', error_msg)
-            except:
-                pass
+            except Exception as e:
+                logger.warning(f"Failed to parse error response: {e}")
+                pass # nosec B110
             
             # Set valid to "n/a" for 5xx server errors
             valid_status = "n/a" if 500 <= resp.status < 600 else False
