@@ -58,7 +58,7 @@ args = parser.parse_args()
 
 # You can now use args.input and args.output for further processing
 print(f"Start batch validation with input file: {args.input} and output file: {args.output} using VIES interface.")
-response = batch.validatebatch(inputfile=args.input, outputfile=args.output, lang="en")
+response = batch.validatebatch(inputfile=args.input, outputfile=args.output, lang="en", type=settings.load_value_from_json_file("interface"))
 
 match response:
     case 0:

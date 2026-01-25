@@ -124,6 +124,7 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
             )
         
         # Load visible configuration values
+        self.comboBoxConfigInterface.setCurrentText(settings.load_value_from_json_file("interface") or "vies")
         self.comboBoxConfigLanguage.setCurrentText(settings.load_value_from_json_file("language") or "en")
         self.textConfigCSVdelimiter.setText(settings.load_value_from_json_file("delimiter") or ",")
         self.textCtrlConfigLogfile.setText(settings.load_value_from_json_file("logfilename") or "")
@@ -136,6 +137,7 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
     def saveConfig(self):
         """Save configuration to file"""
         settings.save_config("ownvat", self.textCtrlConfigOwnVat.text())
+        settings.save_config("interface", self.comboBoxConfigInterface.currentText())
         settings.save_config("language", self.comboBoxConfigLanguage.currentText())
         settings.save_config("delimiter", self.textConfigCSVdelimiter.text())
         settings.save_config("logfilename", self.textCtrlConfigLogfile.text())
@@ -212,6 +214,7 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
             zip=self.textZip.text(),
             town=self.textTown.text(),
             lang=settings.load_value_from_json_file("language"),
+            type=settings.load_value_from_json_file("interface")
         )
         
         self.textResultIsValid.setText("Yes" if message["valid"] else "No")
@@ -267,7 +270,7 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
             kwargs={
                 "inputfile": self.textInputFile.text(),
                 "outputfile": self.textOutputFile.text(),
-                "type": "vies",
+                "type": settings.load_value_from_json_file("interface"),
                 "lang": settings.load_value_from_json_file("language"),
                 "statusupdate": True,
             },

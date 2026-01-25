@@ -47,6 +47,9 @@ def setup_logging():
 
     # Add the handlers to the logger
     logger.addHandler(file_handler)
+    
+    # Suppress watchdog debug messages
+    logging.getLogger('watchdog').setLevel(logging.WARNING)
 
 
 # Call the setup_logging function to configure logging
