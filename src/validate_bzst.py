@@ -64,11 +64,11 @@ def get_status_description(status_code, lang='de'):
     if isinstance(status_messages, list):
         for msg in status_messages:
             if msg.get('status') == status_code:
-                return msg.get(f'beschreibung_{lang}', msg.get('beschreibung_de', ''))
+                return msg.get('meldung', '')
     elif isinstance(status_messages, dict):
-        for msg in status_messages.get('statusmeldungen', []):
+        for msg in status_messages.get('status_messages', []):
             if msg.get('status') == status_code:
-                return msg.get(f'beschreibung_{lang}', msg.get('beschreibung_de', ''))
+                return msg.get('meldung', '')
     return ''
 
 def start_validation(payload):
@@ -109,47 +109,53 @@ def start_validation(payload):
         logger.debug(f"Response status: {resp.status}")
         logger.debug(f"Response data: {resp.data}")
         
-        if resp.status == 200:
-            result = json.loads(resp.data.decode('utf-8'))
-            
-            # Parse BZST response
-            status_code = result.get("status", "")
-            is_valid = status_code in ["evatr-0000", "evatr-2008"]
-            
-            validation_result = {
-                "key1": payload["key1"],
-                "key2": payload["key2"],
-                "ownvat": payload["ownvat"],
-                "foreignvat": payload["foreignvat"],
-                "type": "bzst",
-                "valid": is_valid,
-                "errorcode": status_code,
-                "errorcode_description": get_status_description(status_code, payload.get("lang", "de")),
-                "valid_from": result.get("gueltigAb", ""),
-                "valid_to": result.get("gueltigBis", ""),
-                "timestamp": datetime.datetime.now().isoformat(),
-                "company": result.get("ergFirmenname", ""),
-                "address": result.get("address", ""),
-                "town": result.get("ergOrt", ""),
-                "zip": result.get("ergPlz", ""),
-                "street": result.get("ergStrasse", ""),
-            }
-            
-            return validation_result
-            
-        else:
-            error_msg = f"BZST API error: {resp.status}"
+        # Only HTTP 200 is a success, but 4xx can still have evatr-xxxx status codes
+        if resp.status == 200 or (400 <= resp.status < 500):
             try:
-                error_data = json.loads(resp.data.decode('utf-8'))
-                error_msg = error_data.get('message', error_msg)
-            except Exception as e:
-                logger.warning(f"Failed to parse error response: {e}")
-                pass # nosec B110
-            
-            # Set valid to "n/a" for 5xx server errors
-            valid_status = "n/a" if 500 <= resp.status < 600 else False
+                result = json.loads(resp.data.decode('utf-8'))
                 
-            return {
+                # Parse BZST response
+                status_code = result.get("status", "")
+                
+                # Only treat as valid if status is evatr-0000, evatr-0003 or evatr-2008 AND (HTTP 200 or 400)
+                is_valid = (resp.status in [200, 400]) and (status_code in ["evatr-0000", "evatr-0003", "evatr-2008"])
+                
+                validation_result = {
+                    "key1": payload["key1"],
+                    "key2": payload["key2"],
+                    "ownvat": payload["ownvat"],
+                    "foreignvat": payload["foreignvat"],
+                    "type": "bzst",
+                    "valid": is_valid,
+                    "errorcode": status_code,
+                    "errorcode_description": get_status_description(status_code, payload.get("lang", "de")),
+                    "valid_from": result.get("gueltigAb", ""),
+                    "valid_to": result.get("gueltigBis", ""),
+                    "timestamp": datetime.datetime.now().isoformat(),
+                    "company": result.get("ergFirmenname", ""),
+                    "address": result.get("address", ""),
+                    "town": result.get("ergOrt", ""),
+                    "zip": result.get("ergPlz", ""),
+                    "street": result.get("ergStrasse", ""),
+                }
+                
+                return validation_result
+            except json.JSONDecodeError:
+                logger.warning(f"Failed to parse JSON response for status {resp.status}")
+        
+        # Handle other error statuses (5xx, etc.)
+        error_msg = f"BZST API error: {resp.status}"
+        try:
+            error_data = json.loads(resp.data.decode('utf-8'))
+            error_msg = error_data.get('message', error_msg)
+        except Exception as e:
+            logger.warning(f"Failed to parse error response: {e}")
+            pass # nosec B110
+        
+        # Set valid to "n/a" for 5xx server errors
+        valid_status = "n/a" if 500 <= resp.status < 600 else False
+        
+        return {
                 "key1": payload["key1"],
                 "key2": payload["key2"],
                 "ownvat": payload["ownvat"],

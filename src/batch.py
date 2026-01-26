@@ -87,17 +87,17 @@ def _load_data_from_file(inputfile, ext):
                 inputfile,
                 names=COLUMNS,
                 delimiter=settings.load_value_from_json_file("delimiter"),
-            )
+            ).fillna('')
         elif ext == "xlsx":
             # read the input file
-            data = pd.read_excel(inputfile, usecols=COLUMNS)
+            data = pd.read_excel(inputfile, usecols=COLUMNS).fillna('')
             # check, if all columns are present
             for column in COLUMNS:
                 if column not in data.columns:
                     logger.error(f"Missing column: {column}")
                     return None, 4
         elif ext == "json":
-            data = pd.read_json(inputfile)
+            data = pd.read_json(inputfile).fillna('')
         else:
             return None, 127
 
