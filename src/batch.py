@@ -143,18 +143,36 @@ def _process_batch_data(data, type, lang, statusupdate, skip_header=False):
         write_status_update(statusupdate, len(data), index)
         
         # validate the row
-        message = single.validatesingle(
-            key1=row["key1"],
-            key2=row["key2"],
-            ownvat=row["ownvat"],
-            foreignvat=row["foreignvat"],
-            company=row["company"],
-            street=row["street"],
-            zip=row["zip"],
-            town=row["town"],
-            type=type,
-            lang=lang
-        )
+        try:
+            message = single.validatesingle(
+                key1=row["key1"],
+                key2=row["key2"],
+                ownvat=row["ownvat"],
+                foreignvat=row["foreignvat"],
+                company=row["company"],
+                street=row["street"],
+                zip=row["zip"],
+                town=row["town"],
+                type=type,
+                lang=lang
+            )
+        except Exception as e:
+            logger.error(f"Validation error for row {index}: {e}")
+            message = {
+                "key1": row["key1"],
+                "key2": row["key2"],
+                "ownvat": row["ownvat"],
+                "foreignvat": row["foreignvat"],
+                "type": type,
+                "valid": False,
+                "errorcode": "VALIDATION_ERROR",
+                "errorcode_description": str(e),
+                "company": "",
+                "address": "",
+                "town": "",
+                "zip": "",
+                "street": ""
+            }
 
         # parse everything as string to easily replace newlines
         tempstring = json.dumps(message)

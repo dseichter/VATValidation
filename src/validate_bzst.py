@@ -58,7 +58,7 @@ def load_status_messages():
     
     return {}
 
-def get_status_description(status_code, lang='de'):
+def get_status_description(status_code):
     """Get status description from loaded messages"""
     status_messages = load_status_messages()
     if isinstance(status_messages, list):
@@ -128,7 +128,7 @@ def start_validation(payload):
                     "type": "bzst",
                     "valid": is_valid,
                     "errorcode": status_code,
-                    "errorcode_description": get_status_description(status_code, payload.get("lang", "de")),
+                    "errorcode_description": get_status_description(status_code,),
                     "valid_from": result.get("gueltigAb", ""),
                     "valid_to": result.get("gueltigBis", ""),
                     "timestamp": datetime.datetime.now().isoformat(),
@@ -150,7 +150,6 @@ def start_validation(payload):
             error_msg = error_data.get('message', error_msg)
         except Exception as e:
             logger.warning(f"Failed to parse error response: {e}")
-            pass # nosec B110
         
         # Set valid to "n/a" for 5xx server errors
         valid_status = "n/a" if 500 <= resp.status < 600 else False
