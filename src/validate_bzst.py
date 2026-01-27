@@ -1,4 +1,4 @@
-# Copyright (c) 2024-2025 Daniel Seichter
+# Copyright (c) 2024-2026 Daniel Seichter
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,9 +15,9 @@
 
 import datetime
 import json
-import os
 import urllib3
 
+import codes_bzst
 import logging_config  # Setup the logging  # noqa: F401
 import logging
 
@@ -26,50 +26,17 @@ logger = logging.getLogger(__name__)
 http = urllib3.PoolManager()
 
 BASE_URL = "https://api.evatr.vies.bzst.de"
-STATUS_FILE = "bzst_status.json"
 
-def load_status_messages():
-    """Load BZST status messages, update if needed"""
-    if os.path.exists(STATUS_FILE):
-        try:
-            with open(STATUS_FILE, 'r', encoding='utf-8') as f:
-                data = json.load(f)
-                # Check if file is older than 24 hours
-                last_update = datetime.datetime.fromisoformat(data.get('last_update', '2000-01-01'))
-                if datetime.datetime.now() - last_update < datetime.timedelta(hours=24):
-                    return data.get('status_messages', {})
-        except Exception as e:
-            logger.warning(f"Failed to load status file: {e}")
-    
-    # Download new status messages
-    try:
-        resp = http.request("GET", f"{BASE_URL}/app/v1/info/statusmeldungen")
-        if resp.status == 200:
-            status_data = json.loads(resp.data.decode('utf-8'))
-            # Save to file
-            with open(STATUS_FILE, 'w', encoding='utf-8') as f:
-                json.dump({
-                    'last_update': datetime.datetime.now().isoformat(),
-                    'status_messages': status_data
-                }, f, indent=2)
-            return status_data
-    except Exception as e:
-        logger.error(f"Failed to download status messages: {e}")
-    
-    return {}
 
-def get_status_description(status_code):
-    """Get status description from loaded messages"""
-    status_messages = load_status_messages()
-    if isinstance(status_messages, list):
-        for msg in status_messages:
-            if msg.get('status') == status_code:
-                return msg.get('meldung', '')
-    elif isinstance(status_messages, dict):
-        for msg in status_messages.get('status_messages', []):
-            if msg.get('status') == status_code:
-                return msg.get('meldung', '')
-    return ''
+def load_codes(lang, errorcode):
+    """Load BZST error code descriptions from codes_bzst module"""
+    if errorcode is None:
+        return ""
+    
+    for code in codes_bzst.returncodes:
+        if code["status"] == errorcode:
+            return code.get(lang, code.get("de", ""))
+    return ""
 
 def start_validation(payload):
     """Start BZST validation"""
@@ -128,7 +95,7 @@ def start_validation(payload):
                     "type": "bzst",
                     "valid": is_valid,
                     "errorcode": status_code,
-                    "errorcode_description": get_status_description(status_code,),
+                    "errorcode_description": load_codes(payload.get("lang", "en"), status_code),
                     "valid_from": result.get("gueltigAb", ""),
                     "valid_to": result.get("gueltigBis", ""),
                     "timestamp": datetime.datetime.now().isoformat(),
