@@ -65,6 +65,11 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
         
         # Setup watchdog
         QTimer.singleShot(200, self.addWatchdog)
+        
+        # Setup timer for polling batch status
+        self.batch_status_timer = QTimer()
+        self.batch_status_timer.timeout.connect(self.updateBatchStatus)
+        self.batch_processing = False
     
     def closeEvent(self, event):
         """Handle window close event"""
@@ -102,6 +107,24 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
             self.progressProcessing.setMaximum(0)
             self.progressProcessing.setValue(0)
     
+    def updateBatchStatus(self):
+        """Poll the batch status file and update the UI"""
+        if not self.batch_processing:
+            self.batch_status_timer.stop()
+            return
+        
+        try:
+            if os.path.exists(BATCH_STATUS_FILE):
+                with open(BATCH_STATUS_FILE, "r") as f:
+                    data = json.load(f)
+                # Update the current status
+                self.staticText_RecordsFoundValue.setText(str(data["total"]))
+                self.staticText_ProcessingXofY.setText(f"{data['current']}/{data['total']}")
+                self.progressProcessing.setMaximum(data["total"])
+                self.progressProcessing.setValue(data["current"])
+        except (FileNotFoundError, json.decoder.JSONDecodeError):
+            pass
+    
     def loadConfig(self):
         """Load configuration from file"""
         settings.create_config()
@@ -124,6 +147,7 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
             )
         
         # Load visible configuration values
+        self.comboBoxConfigInterface.setCurrentText(settings.load_value_from_json_file("interface") or "vies")
         self.comboBoxConfigLanguage.setCurrentText(settings.load_value_from_json_file("language") or "en")
         self.textConfigCSVdelimiter.setText(settings.load_value_from_json_file("delimiter") or ",")
         self.textCtrlConfigLogfile.setText(settings.load_value_from_json_file("logfilename") or "")
@@ -136,6 +160,7 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
     def saveConfig(self):
         """Save configuration to file"""
         settings.save_config("ownvat", self.textCtrlConfigOwnVat.text())
+        settings.save_config("interface", self.comboBoxConfigInterface.currentText())
         settings.save_config("language", self.comboBoxConfigLanguage.currentText())
         settings.save_config("delimiter", self.textConfigCSVdelimiter.text())
         settings.save_config("logfilename", self.textCtrlConfigLogfile.text())
@@ -212,6 +237,7 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
             zip=self.textZip.text(),
             town=self.textTown.text(),
             lang=settings.load_value_from_json_file("language"),
+            type=settings.load_value_from_json_file("interface")
         )
         
         self.textResultIsValid.setText("Yes" if message["valid"] else "No")
@@ -261,13 +287,19 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
         self.progressProcessing.setMaximum(0)
         self.progressProcessing.setValue(0)
         
+        # Mark that batch processing has started
+        self.batch_processing = True
+        
+        # Start timer to poll batch status (update every 100ms)
+        self.batch_status_timer.start(100)
+        
         # Start batch validation in thread
         download_thread = threading.Thread(
             target=batch.validatebatch,
             kwargs={
                 "inputfile": self.textInputFile.text(),
                 "outputfile": self.textOutputFile.text(),
-                "type": "vies",
+                "type": settings.load_value_from_json_file("interface"),
                 "lang": settings.load_value_from_json_file("language"),
                 "statusupdate": True,
             },
@@ -278,6 +310,14 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
         while download_thread.is_alive():
             QApplication.processEvents()
             threading.Event().wait(0.1)
+        
+        # Stop polling the status file
+        self.batch_processing = False
+        self.batch_status_timer.stop()
+        
+        # Clean up status file
+        if os.path.exists(BATCH_STATUS_FILE):
+            os.remove(BATCH_STATUS_FILE)
         
         QMessageBox.information(self, "Batch Validation", "Batch validation done.")
     

@@ -32,6 +32,10 @@ def setup_logging():
     if loglevel == "ERROR":
         logger.setLevel(logging.ERROR)
 
+    # Remove any existing handlers (to avoid duplicates and default console handler)
+    for handler in logger.handlers[:]:
+        logger.removeHandler(handler)
+
     # Create a file handler
     file_handler = logging.FileHandler(log_file)
     if loglevel == "DEBUG":
@@ -41,12 +45,21 @@ def setup_logging():
     if loglevel == "ERROR":
         file_handler.setLevel(logging.ERROR)
 
+    # Create a console handler with INFO level (DEBUG messages won't appear in console)
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.INFO)
+
     # Create a formatter and set it for the handlers
     formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
     file_handler.setFormatter(formatter)
+    console_handler.setFormatter(formatter)
 
     # Add the handlers to the logger
     logger.addHandler(file_handler)
+    logger.addHandler(console_handler)
+    
+    # Suppress watchdog debug messages
+    logging.getLogger('watchdog').setLevel(logging.WARNING)
 
 
 # Call the setup_logging function to configure logging

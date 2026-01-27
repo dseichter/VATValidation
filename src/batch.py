@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 COLUMNS = ["key1", "key2", "ownvat", "foreignvat", "company", "street", "zip", "town"]
 
 
-def validatebatch(inputfile, outputfile="", lang="en", statusupdate=False):
+def validatebatch(inputfile, outputfile="", type="vies", lang="en", statusupdate=False):
     """
     Validate the batch file and write the results to the output file.
     """
@@ -45,13 +45,13 @@ def validatebatch(inputfile, outputfile="", lang="en", statusupdate=False):
 
     match ext:
         case "csv":
-            resultcode = processcsv(inputfile, outputfile, lang, statusupdate)
+            resultcode = processcsv(inputfile, outputfile, type, lang, statusupdate)
             return resultcode
         case "xlsx":
-            resultcode = processxlsx(inputfile, outputfile, lang, statusupdate)
+            resultcode = processxlsx(inputfile, outputfile, type, lang, statusupdate)
             return resultcode
         case "json":
-            resultcode = processjson(inputfile, outputfile, lang, statusupdate)
+            resultcode = processjson(inputfile, outputfile, type, lang, statusupdate)
             return resultcode
         case _:
             logger.error("Unsupported file format")
@@ -87,17 +87,17 @@ def _load_data_from_file(inputfile, ext):
                 inputfile,
                 names=COLUMNS,
                 delimiter=settings.load_value_from_json_file("delimiter"),
-            )
+            ).fillna('')
         elif ext == "xlsx":
             # read the input file
-            data = pd.read_excel(inputfile, usecols=COLUMNS)
+            data = pd.read_excel(inputfile, usecols=COLUMNS).fillna('')
             # check, if all columns are present
             for column in COLUMNS:
                 if column not in data.columns:
                     logger.error(f"Missing column: {column}")
                     return None, 4
         elif ext == "json":
-            data = pd.read_json(inputfile)
+            data = pd.read_json(inputfile).fillna('')
         else:
             return None, 127
 
@@ -129,7 +129,7 @@ def _save_results_to_file(dataframe, outputfile, ext):
     return 0
 
 
-def _process_batch_data(data, lang, statusupdate, skip_header=False):
+def _process_batch_data(data, type, lang, statusupdate, skip_header=False):
     """Process batch data and return validation results."""
     results = []
     write_status_update(statusupdate, len(data), 0)
@@ -143,17 +143,36 @@ def _process_batch_data(data, lang, statusupdate, skip_header=False):
         write_status_update(statusupdate, len(data), index)
         
         # validate the row
-        message = single.validatesingle(
-            key1=row["key1"],
-            key2=row["key2"],
-            ownvat=row["ownvat"],
-            foreignvat=row["foreignvat"],
-            company=row["company"],
-            street=row["street"],
-            zip=row["zip"],
-            town=row["town"],
-            lang=lang
-        )
+        try:
+            message = single.validatesingle(
+                key1=row["key1"],
+                key2=row["key2"],
+                ownvat=row["ownvat"],
+                foreignvat=row["foreignvat"],
+                company=row["company"],
+                street=row["street"],
+                zip=row["zip"],
+                town=row["town"],
+                type=type,
+                lang=lang
+            )
+        except Exception as e:
+            logger.error(f"Validation error for row {index}: {e}")
+            message = {
+                "key1": row["key1"],
+                "key2": row["key2"],
+                "ownvat": row["ownvat"],
+                "foreignvat": row["foreignvat"],
+                "type": type,
+                "valid": False,
+                "errorcode": "VALIDATION_ERROR",
+                "errorcode_description": str(e),
+                "company": "",
+                "address": "",
+                "town": "",
+                "zip": "",
+                "street": ""
+            }
 
         # parse everything as string to easily replace newlines
         tempstring = json.dumps(message)
@@ -167,7 +186,7 @@ def _process_batch_data(data, lang, statusupdate, skip_header=False):
     return results
 
 
-def processcsv(inputfile, outputfile, lang, statusupdate):
+def processcsv(inputfile, outputfile, type, lang, statusupdate):
     """Process CSV file for batch validation."""
     ext = "csv"
     data, error_code = _load_data_from_file(inputfile, ext)
@@ -175,13 +194,13 @@ def processcsv(inputfile, outputfile, lang, statusupdate):
     if error_code != 0:
         return error_code
 
-    results = _process_batch_data(data, lang, statusupdate, skip_header=True)
+    results = _process_batch_data(data, type, lang, statusupdate, skip_header=True)
     dataframe = pd.DataFrame(results)
     
     return _save_results_to_file(dataframe, outputfile, ext)
 
 
-def processxlsx(inputfile, outputfile, lang, statusupdate):
+def processxlsx(inputfile, outputfile, type, lang, statusupdate):
     """Process XLSX file for batch validation."""
     ext = "xlsx"
     data, error_code = _load_data_from_file(inputfile, ext)
@@ -189,13 +208,13 @@ def processxlsx(inputfile, outputfile, lang, statusupdate):
     if error_code != 0:
         return error_code
 
-    results = _process_batch_data(data, lang, statusupdate, skip_header=False)
+    results = _process_batch_data(data, type, lang, statusupdate, skip_header=False)
     dataframe = pd.DataFrame(results)
     
     return _save_results_to_file(dataframe, outputfile, ext)
 
 
-def processjson(inputfile, outputfile, lang, statusupdate):
+def processjson(inputfile, outputfile, type, lang, statusupdate):
     """Process JSON file for batch validation."""
     ext = "json"
     data, error_code = _load_data_from_file(inputfile, ext)
@@ -203,7 +222,7 @@ def processjson(inputfile, outputfile, lang, statusupdate):
     if error_code != 0:
         return error_code
 
-    results = _process_batch_data(data, lang, statusupdate, skip_header=False)
+    results = _process_batch_data(data, type, lang, statusupdate, skip_header=False)
     dataframe = pd.DataFrame(results)
     
     return _save_results_to_file(dataframe, outputfile, ext)
