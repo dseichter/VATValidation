@@ -65,6 +65,11 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
         
         # Setup watchdog
         QTimer.singleShot(200, self.addWatchdog)
+        
+        # Setup timer for polling batch status
+        self.batch_status_timer = QTimer()
+        self.batch_status_timer.timeout.connect(self.updateBatchStatus)
+        self.batch_processing = False
     
     def closeEvent(self, event):
         """Handle window close event"""
@@ -101,6 +106,24 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
             self.staticText_ProcessingXofY.setText("0/0")
             self.progressProcessing.setMaximum(0)
             self.progressProcessing.setValue(0)
+    
+    def updateBatchStatus(self):
+        """Poll the batch status file and update the UI"""
+        if not self.batch_processing:
+            self.batch_status_timer.stop()
+            return
+        
+        try:
+            if os.path.exists(BATCH_STATUS_FILE):
+                with open(BATCH_STATUS_FILE, "r") as f:
+                    data = json.load(f)
+                # Update the current status
+                self.staticText_RecordsFoundValue.setText(str(data["total"]))
+                self.staticText_ProcessingXofY.setText(f"{data['current']}/{data['total']}")
+                self.progressProcessing.setMaximum(data["total"])
+                self.progressProcessing.setValue(data["current"])
+        except (FileNotFoundError, json.decoder.JSONDecodeError):
+            pass
     
     def loadConfig(self):
         """Load configuration from file"""
@@ -264,6 +287,12 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
         self.progressProcessing.setMaximum(0)
         self.progressProcessing.setValue(0)
         
+        # Mark that batch processing has started
+        self.batch_processing = True
+        
+        # Start timer to poll batch status (update every 100ms)
+        self.batch_status_timer.start(100)
+        
         # Start batch validation in thread
         download_thread = threading.Thread(
             target=batch.validatebatch,
@@ -281,6 +310,14 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
         while download_thread.is_alive():
             QApplication.processEvents()
             threading.Event().wait(0.1)
+        
+        # Stop polling the status file
+        self.batch_processing = False
+        self.batch_status_timer.stop()
+        
+        # Clean up status file
+        if os.path.exists(BATCH_STATUS_FILE):
+            os.remove(BATCH_STATUS_FILE)
         
         QMessageBox.information(self, "Batch Validation", "Batch validation done.")
     
