@@ -29,6 +29,8 @@ DE,123456789,DE123456789,FR40303265045,Beispiel GmbH,Hauptstr. 42,10115,Berlin
 DE,123456789,DE123456789,IT12345678901,Test Unternehmen,Berliner Str. 10,20095,München
 ```
 
+Bitte verwenden Sie stets UTF-8, um Fehler beim Import zu vermeiden.
+
 #### JSON-Format
 
 ```json

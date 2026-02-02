@@ -29,6 +29,8 @@ DE,123456789,DE123456789,FR40303265045,Example GmbH,Main St 42,10115,Berlin
 DE,123456789,DE123456789,IT12345678901,Test Company,Berlin Str 10,20095,Munich
 ```
 
+Please use always UTF-8 as encoding, to be sure, all characters are imported correct.
+
 #### JSON Format
 
 ```json

@@ -92,7 +92,7 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
         """Handle watchdog events for batch status updates"""
         if event.event_type in ["modified", "created"] and BATCH_STATUS_FILE in event.src_path:
             try:
-                with open(BATCH_STATUS_FILE, "r") as f:
+                with open(BATCH_STATUS_FILE, "r", encoding='utf-8') as f:
                     data = json.load(f)
                 # Update the current status
                 self.staticText_RecordsFoundValue.setText(str(data["total"]))
@@ -115,7 +115,7 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
         
         try:
             if os.path.exists(BATCH_STATUS_FILE):
-                with open(BATCH_STATUS_FILE, "r") as f:
+                with open(BATCH_STATUS_FILE, "r", encoding='utf-8') as f:
                     data = json.load(f)
                 # Update the current status
                 self.staticText_RecordsFoundValue.setText(str(data["total"]))
