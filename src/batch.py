@@ -63,7 +63,7 @@ def _load_data_from_file(inputfile, ext):
     try:
         if ext == "csv":
             # read the file and check if all rows have the same number of columns
-            with open(inputfile, 'r') as f:
+            with open(inputfile, 'r', encoding='utf-8', errors='replace') as f:
                 first_line = f.readline().strip()
                 # check if the first line is empty
                 if not first_line:
@@ -87,6 +87,8 @@ def _load_data_from_file(inputfile, ext):
                 inputfile,
                 names=COLUMNS,
                 delimiter=settings.load_value_from_json_file("delimiter"),
+                encoding='utf-8',
+                on_bad_lines='skip',
             ).fillna('')
         elif ext == "xlsx":
             # read the input file
@@ -118,7 +120,7 @@ def _save_results_to_file(dataframe, outputfile, ext):
     """Save results DataFrame to file based on extension."""
     try:
         if ext == "csv":
-            dataframe.to_csv(outputfile, index=False, header=True, sep=settings.load_value_from_json_file("delimiter"))
+            dataframe.to_csv(outputfile, index=False, header=True, sep=settings.load_value_from_json_file("delimiter"), encoding='utf-8')
         elif ext == "xlsx":
             dataframe.to_excel(outputfile, index=False, header=False)
         elif ext == "json":
@@ -230,7 +232,7 @@ def processjson(inputfile, outputfile, type, lang, statusupdate):
 
 def write_status_update(statusupdate, total, current):
     if statusupdate:
-        with open('batchstatus.json', 'w') as f:
+        with open('batchstatus.json', 'w', encoding='utf-8') as f:
             data = {
                 "total": total,
                 "current": current + 1
