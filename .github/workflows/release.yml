@@ -172,6 +172,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build-windows-binary, build-linux-binary, test-cli-windows, test-cli-linux]
     steps:
+        - name: Checkout
+          uses: actions/checkout@v6
+          with:
+            fetch-depth: 0
+            
         - uses: actions/download-artifact@v7
           with:
             name: VATValidation-linux-${{ github.ref_name }}
@@ -188,15 +193,47 @@ jobs:
           with:
             name: VATValidation-cli-windows-${{ github.ref_name }}.exe            
 
+        - name: Generate Release Notes
+          id: release_notes
+          run: |
+            # Get commits since last tag
+            LAST_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+            if [ -z "$LAST_TAG" ]; then
+              COMMITS=$(git log --pretty=format:"* %s by @%an in %H" --no-merges)
+            else
+              COMMITS=$(git log ${LAST_TAG}..HEAD --pretty=format:"* %s by @%an in %H" --no-merges)
+            fi
+            
+            # Separate dependabot and regular changes
+            DEPENDABOT_CHANGES=$(echo "$COMMITS" | grep -i "dependabot" || true)
+            OTHER_CHANGES=$(echo "$COMMITS" | grep -v -i "dependabot" || true)
+            
+            # Build release notes
+            RELEASE_NOTES="## What's Changed\n"
+            if [ ! -z "$OTHER_CHANGES" ]; then
+              RELEASE_NOTES="${RELEASE_NOTES}${OTHER_CHANGES}\n\n"
+            fi
+            
+            if [ ! -z "$DEPENDABOT_CHANGES" ]; then
+              RELEASE_NOTES="${RELEASE_NOTES}## Dependency Updates\n${DEPENDABOT_CHANGES}\n\n"
+            fi
+            
+            RELEASE_NOTES="${RELEASE_NOTES}**Full Changelog**: https://github.com/${{ github.repository }}/compare/${LAST_TAG}...${{ github.ref_name }}"
+            
+            # Save to output
+            echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
+            echo -e "$RELEASE_NOTES" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+
         - name: Create Release
           id: create_release
           uses: softprops/action-gh-release@v2
           with:
             tag_name: ${{ github.ref_name }}
             name: Release ${{ github.ref_name }}
+            body: ${{ steps.release_notes.outputs.RELEASE_NOTES }}
             draft: false
             prerelease: ${{ contains(github.ref_name, 'rc') || contains(github.ref_name, 'beta') }}
-            generate_release_notes: true
             files: |
               VATValidation-linux-${{ github.ref_name }}
               VATValidation-windows-${{ github.ref_name }}.exe
