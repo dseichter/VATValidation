@@ -1,0 +1,51 @@
+name: Product Hunt Update Reminder
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  create-reminder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Product Hunt Update Issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const release = context.payload.release;
+            const issueBody = `## 🚀 New Release Published: ${release.tag_name}
+
+A new release has been published. Consider updating Product Hunt with the latest version.
+
+### Release Information
+- **Version:** ${release.tag_name}
+- **Release URL:** ${release.html_url}
+- **Published:** ${release.published_at}
+
+### Product Hunt Update Checklist
+- [ ] Log in to Product Hunt
+- [ ] Navigate to VATValidation product page
+- [ ] Update version number if displayed
+- [ ] Post update announcement in comments
+- [ ] Share release highlights
+
+### Suggested Update Comment Template
+\`\`\`
+🎉 VATValidation ${release.tag_name} is now available!
+
+${release.body ? '**What\'s New:**\n' + release.body.split('\n').slice(0, 5).join('\n') : 'Check the release notes for details.'}
+
+📦 Download: ${release.html_url}
+📚 Docs: https://dseichter.github.io/VATValidation/
+\`\`\`
+
+---
+*This issue was automatically created by the Product Hunt Update Reminder workflow.*`;
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `📢 Update Product Hunt - Release ${release.tag_name}`,
+              body: issueBody,
+              labels: ['product-hunt', 'release', 'reminder']
+            });
