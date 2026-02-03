@@ -14,7 +14,7 @@ on:
     paths-ignore:
       - 'docs/**'
       - '.github/workflows/gh-page.yml'
-
+  workflow_dispatch:
 
 jobs:
   Bandit:
