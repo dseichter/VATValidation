@@ -6,7 +6,7 @@ I am using pyenv on my computers and virtual machines.
 
 Create and activate an environment by running the following command:
 
-```pyenv virtualenv 3.13.7 vatvalidation-venv```
+```pyenv virtualenv 3.14.2 vatvalidation-venv```
 
 ```pyenv activate vatvalidation-venv```
 
