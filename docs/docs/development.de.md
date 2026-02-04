@@ -2,7 +2,7 @@
 
 Erstellen und aktivieren Sie eine Umgebung, indem Sie den folgenden Befehl ausführen:
 
-```pyenv virtualenv 3.13.7 vatvalidation-venv```
+```pyenv virtualenv 3.14.2 vatvalidation-venv```
 
 ```pyenv activate vatvalidation-venv```
 
