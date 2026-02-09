@@ -217,10 +217,18 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
             self.textOutputFile.setText(file_path)
     
     def on_input_file_changed(self):
-        """Strip whitespace from input file path"""
+        """Strip whitespace from input file path and validate file type"""
         text = self.textInputFile.text()
         if text != text.strip():
             self.textInputFile.setText(text.strip())
+            return
+        
+        # Validate file extension
+        if text:
+            file_ext = pathlib.Path(text).suffix[1:].lower()
+            if file_ext not in ["csv", "json", "xlsx"]:
+                QMessageBox.warning(self, "Invalid file type", "Only CSV, JSON, and XLSX files are supported.")
+                self.textInputFile.setText("")
     
     def openLogfile(self):
         """Open logfile in browser"""
