@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 COLUMNS = ["key1", "key2", "ownvat", "foreignvat", "company", "street", "zip", "town"]
 
 
-def validatebatch(inputfile, outputfile="", type="vies", lang="en", statusupdate=False):
+def validatebatch(inputfile, outputfile="", type="vies", lang="en", statusupdate=False, delimiter=None):
     """
     Validate the batch file and write the results to the output file.
     """
@@ -45,7 +45,7 @@ def validatebatch(inputfile, outputfile="", type="vies", lang="en", statusupdate
 
     match ext:
         case "csv":
-            resultcode = processcsv(inputfile, outputfile, type, lang, statusupdate)
+            resultcode = processcsv(inputfile, outputfile, type, lang, statusupdate, delimiter)
             return resultcode
         case "xlsx":
             resultcode = processxlsx(inputfile, outputfile, type, lang, statusupdate)
@@ -58,7 +58,7 @@ def validatebatch(inputfile, outputfile="", type="vies", lang="en", statusupdate
             return 127
 
 
-def _load_data_from_file(inputfile, ext):
+def _load_data_from_file(inputfile, ext, delimiter=None):
     """Load data from file based on extension. Returns (data, error_code) tuple."""
     try:
         if ext == "csv":
@@ -70,7 +70,8 @@ def _load_data_from_file(inputfile, ext):
                     logger.error("Input file is empty.")
                     return None, 2
 
-                delimiter = settings.load_value_from_json_file("delimiter")
+                # prefer provided delimiter argument, otherwise fallback to settings
+                delimiter = delimiter if delimiter is not None else settings.load_value_from_json_file("delimiter")
                 # check if the first line ends with the delimiter
                 if first_line.endswith(delimiter):
                     logger.error("First line ends with the delimiter.")
@@ -86,7 +87,7 @@ def _load_data_from_file(inputfile, ext):
             data = pd.read_csv(
                 inputfile,
                 names=COLUMNS,
-                delimiter=settings.load_value_from_json_file("delimiter"),
+                delimiter=delimiter if delimiter is not None else settings.load_value_from_json_file("delimiter"),
                 encoding='utf-8',
                 on_bad_lines='skip',
             ).fillna('')
@@ -116,11 +117,11 @@ def _load_data_from_file(inputfile, ext):
         return None, 99
 
 
-def _save_results_to_file(dataframe, outputfile, ext):
+def _save_results_to_file(dataframe, outputfile, ext, delimiter=None):
     """Save results DataFrame to file based on extension."""
     try:
         if ext == "csv":
-            dataframe.to_csv(outputfile, index=False, header=True, sep=settings.load_value_from_json_file("delimiter"), encoding='utf-8')
+            dataframe.to_csv(outputfile, index=False, header=True, sep=(delimiter if delimiter is not None else settings.load_value_from_json_file("delimiter")), encoding='utf-8')
         elif ext == "xlsx":
             dataframe.to_excel(outputfile, index=False, header=False)
         elif ext == "json":
@@ -188,10 +189,10 @@ def _process_batch_data(data, type, lang, statusupdate, skip_header=False):
     return results
 
 
-def processcsv(inputfile, outputfile, type, lang, statusupdate):
+def processcsv(inputfile, outputfile, type, lang, statusupdate, delimiter=None):
     """Process CSV file for batch validation."""
     ext = "csv"
-    data, error_code = _load_data_from_file(inputfile, ext)
+    data, error_code = _load_data_from_file(inputfile, ext, delimiter)
     
     if error_code != 0:
         return error_code
@@ -199,7 +200,7 @@ def processcsv(inputfile, outputfile, type, lang, statusupdate):
     results = _process_batch_data(data, type, lang, statusupdate, skip_header=True)
     dataframe = pd.DataFrame(results)
     
-    return _save_results_to_file(dataframe, outputfile, ext)
+    return _save_results_to_file(dataframe, outputfile, ext, delimiter)
 
 
 def processxlsx(inputfile, outputfile, type, lang, statusupdate):

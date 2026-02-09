@@ -33,7 +33,6 @@ parser = argparse.ArgumentParser(
     description=helper.NAME + " CLI" + " - " + helper.VERSION,
     epilog="""
 For more information, visit our GitHub repository: https://github.com/dseichter/VATValidation
-See config.json to change the configuration, e.g. interface, of the application.
 License: GPL 3.0 - see LICENSE file at the root of the repository for details.
     """,
     formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -52,6 +51,14 @@ parser.add_argument(
     "--output", type=str, help="Output filename for validation results.", required=True
 )
 
+# Optional delimiter override for CSV files
+parser.add_argument(
+    "--delimiter",
+    type=str,
+    help="Optional CSV delimiter (single character) to use for this run. MUST be quoted, e.g. '--delimiter '\";\"'' to pass a semicolon.",
+    required=False,
+)
+
 # Check if no arguments were passed
 if len(sys.argv) == 1:
     parser.print_help(sys.stderr)
@@ -60,9 +67,39 @@ if len(sys.argv) == 1:
 # Parse the arguments
 args = parser.parse_args()
 
+delimiter_char = None
+
+# If delimiter provided, accept either a single character or a quoted/escaped value
+if getattr(args, 'delimiter', None):
+    val = args.delimiter
+    # If the user provided a plain single character, accept it directly
+    if len(val) == 1:
+        delimiter_char = val
+    else:
+        # Otherwise accept a quoted value like '";"' or '"\\t"'
+        if len(val) >= 3 and val[0] in ('"', "'") and val[-1] == val[0]:
+            inner = val[1:-1]
+            try:
+                inner_decoded = inner.encode('utf-8').decode('unicode_escape')
+            except Exception:
+                inner_decoded = inner
+            if len(inner_decoded) != 1:
+                print("Delimiter must be a single character (after unquoting/escape processing).")
+                sys.exit(2)
+            delimiter_char = inner_decoded
+        else:
+            print("Delimiter must be a single character. For special characters, quote and/or escape them, e.g. --delimiter ';' or --delimiter '\\t'.")
+            sys.exit(2)
+
 # You can now use args.input and args.output for further processing
 print(f"Start batch validation with input file: {args.input} and output file: {args.output} using VIES interface.")
-response = batch.validatebatch(inputfile=args.input, outputfile=args.output, lang="en", type=settings.load_value_from_json_file("interface"))
+response = batch.validatebatch(
+    inputfile=args.input,
+    outputfile=args.output,
+    lang="en",
+    type=settings.load_value_from_json_file("interface"),
+    delimiter=delimiter_char,
+)
 
 match response:
     case 0:
