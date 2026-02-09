@@ -60,6 +60,9 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
         self.buttonSaveConfig.clicked.connect(self.saveConfig)
         self.comboBoxConfigTheme.currentTextChanged.connect(self.themeChanged)
         
+        # Strip whitespace from input file when text changes (fixes the drop issue with spaces)
+        self.textInputFile.textChanged.connect(self.on_input_file_changed)
+        
         # Load config after a short delay to ensure UI is ready
         QTimer.singleShot(100, self.loadConfig)
         
@@ -212,6 +215,12 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
         )
         if file_path:
             self.textOutputFile.setText(file_path)
+    
+    def on_input_file_changed(self):
+        """Strip whitespace from input file path"""
+        text = self.textInputFile.text()
+        if text != text.strip():
+            self.textInputFile.setText(text.strip())
     
     def openLogfile(self):
         """Open logfile in browser"""
