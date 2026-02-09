@@ -152,6 +152,7 @@ class MainFrame(QMainWindow):
         file_layout.addWidget(QLabel("Input file"), 0, 0)
         input_layout = QHBoxLayout()
         self.textInputFile = QLineEdit()
+        self.textInputFile.setDragEnabled(True)
         self.buttonInputFile = QPushButton("Browse...")
         input_layout.addWidget(self.textInputFile)
         input_layout.addWidget(self.buttonInputFile)
