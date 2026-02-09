@@ -17,6 +17,10 @@ options:
   --input INPUT    Input filename for VAT numbers.
   --output OUTPUT  Output filename for validation results.
 
+Zusätzliche Optionen
+  --delimiter DELIM  Optionaler CSV-Delimiter (ein Zeichen) nur für diesen Import. Beispiel:
+                     `--delimiter ,` oder `--delimiter ';'` oder `--delimiter "\\t"`.
+
 For more information, visit our GitHub repository: https://github.com/dseichter/VATValidation License: GPL 3.0 - see LICENSE file at the root of the repository for details.
 ```
 
