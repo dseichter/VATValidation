@@ -16,7 +16,7 @@
 import sys
 import pathlib
 from PySide6.QtWidgets import QApplication, QMessageBox, QFileDialog
-from PySide6.QtCore import QTimer
+from PySide6.QtCore import QTimer, QEvent
 
 import theme_manager
 
@@ -59,6 +59,11 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
         self.buttonConfigLogfile.clicked.connect(self.openLogfile)
         self.buttonSaveConfig.clicked.connect(self.saveConfig)
         self.comboBoxConfigTheme.currentTextChanged.connect(self.themeChanged)
+        
+        # Strip whitespace from input file when text changes (fixes the drop issue with spaces)
+        self.textInputFile.textChanged.connect(self.on_input_file_changed)
+        # Install event filter to handle drops and overwrite field contents
+        self.textInputFile.installEventFilter(self)
         
         # Load config after a short delay to ensure UI is ready
         QTimer.singleShot(100, self.loadConfig)
@@ -212,6 +217,40 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
         )
         if file_path:
             self.textOutputFile.setText(file_path)
+    
+    def on_input_file_changed(self):
+        """Strip whitespace from input file path and validate file type"""
+        text = self.textInputFile.text()
+        if text != text.strip():
+            self.textInputFile.setText(text.strip())
+            return
+        
+        # Validate file extension
+        if text:
+            file_ext = pathlib.Path(text).suffix[1:].lower()
+            if file_ext not in ["csv", "json", "xlsx"]:
+                QMessageBox.warning(self, "Invalid file type", "Only CSV, JSON, and XLSX files are supported.")
+                self.textInputFile.setText("")
+
+    def eventFilter(self, obj, event):
+        """Intercept drop events on `textInputFile` to overwrite the full text if user drops anothers file.
+        Otherwise the new filepath had been included and 'file not found' error will appear
+
+        Returns True when the event was handled to prevent default insertion behavior.
+        """
+        if obj is self.textInputFile and event.type() == QEvent.Drop:
+            md = event.mimeData()
+            if md and md.hasUrls():
+                urls = md.urls()
+                if urls:
+                    fp = urls[0].toLocalFile()
+                    if fp:
+                        self.textInputFile.setText(fp.strip())
+                        return True
+            if md and md.hasText():
+                self.textInputFile.setText(md.text().strip())
+                return True
+        return super().eventFilter(obj, event)
     
     def openLogfile(self):
         """Open logfile in browser"""
