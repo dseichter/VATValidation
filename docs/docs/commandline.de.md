@@ -9,7 +9,7 @@ Führen Sie das Tool einfach aus, indem Sie eine Eingabe- und eine Ausgabedatei 
 ```shell
 usage: vatvalidation_cli.py [-h] [--version] --input INPUT --output OUTPUT
 
-VAT-Validation CLI - v2024-07-06
+VATValidation CLI - v2026-02-03
 
 options:
   -h, --help       show this help message and exit
@@ -17,11 +17,13 @@ options:
   --input INPUT    Input filename for VAT numbers.
   --output OUTPUT  Output filename for validation results.
 
-Zusätzliche Optionen
-  --delimiter DELIM  Optionaler CSV-Delimiter (ein Zeichen) nur für diesen Import. Beispiel:
-                     `--delimiter ,` oder `--delimiter ';'` oder `--delimiter "\\t"`.
+Additional options
+  --delimiter DELIM  Optional CSV delimiter (single character) to use for this import. For
+                      example: `--delimiter ,` or `--delimiter ';'` or `--delimiter "\\t"`.
+  --interface INTERFACE
+                        Overwrite the interface to be used during validation. Accepted values are: bzst,vies                  
 
 For more information, visit our GitHub repository: https://github.com/dseichter/VATValidation License: GPL 3.0 - see LICENSE file at the root of the repository for details.
 ```
 
-Es wird nur die Stapelverarbeitung angeboten.
+Es wird nur die Stapelverarbeitung im Moment angeboten.
