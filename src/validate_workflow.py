@@ -20,6 +20,7 @@ from decimal import Decimal
 import validate_vies
 import validate_hmrc
 import validate_bzst
+import validate_swiss
 
 import logging_config  # Setup the logging  # noqa: F401
 import logging
@@ -79,9 +80,11 @@ def start_workflow(payload):
         payload["ownvat"] = str(payload["ownvat"])
     if not isinstance(payload["foreignvat"], str):
         payload["foreignvat"] = str(payload["foreignvat"])
-    # Use hmrc for GB VAT numbers, bzst if selected, otherwise use vies
+    # Use hmrc for GB VAT numbers, bzst if selected, swiss for CHE, otherwise use vies
     if payload["foreignvat"].upper().startswith("GB"):
         response = validate_hmrc.start_validation(payload)
+    elif payload["foreignvat"].upper().startswith("CHE"):
+        response = validate_swiss.start_validation(payload)
     elif payload.get("type", "vies") == "bzst":
         response = validate_bzst.start_validation(payload)
     else:
