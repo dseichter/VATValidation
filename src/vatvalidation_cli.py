@@ -59,6 +59,13 @@ parser.add_argument(
     required=False,
 )
 
+parser.add_argument(
+    "--interface",
+    type=str,
+    help="Overwrite the interface to be used during validation. Accepted values are: bzst,vies",
+    required=False,
+)
+
 # Check if no arguments were passed
 if len(sys.argv) == 1:
     parser.print_help(sys.stderr)
@@ -91,13 +98,21 @@ if getattr(args, 'delimiter', None):
             print("Delimiter must be a single character. For special characters, quote and/or escape them, e.g. --delimiter ';' or --delimiter '\\t'.")
             sys.exit(2)
 
-# You can now use args.input and args.output for further processing
-print(f"Start batch validation with input file: {args.input} and output file: {args.output} using VIES interface.")
+interface_type=settings.load_value_from_json_file("interface")
+if getattr(args, 'interface', None):
+    val = args.interface
+    if val not in ("bzst", "vies"):
+        print("Interface must be either 'bzst' or 'vies'.")
+        sys.exit(2)
+    else:
+        interface_type=val         
+
+print(f"Start batch validation with input file: {args.input} and output file: {args.output} using {interface_type} interface.")
 response = batch.validatebatch(
     inputfile=args.input,
     outputfile=args.output,
     lang="en",
-    type=settings.load_value_from_json_file("interface"),
+    type=interface_type,
     delimiter=delimiter_char,
 )
 
