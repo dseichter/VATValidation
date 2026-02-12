@@ -24,7 +24,7 @@ Binaries for Windows and Linux are available (see [releases](https://github.com/
 - 🇩🇪 Validation using BZSt (German Federal Central Tax Office)
 - 🇪🇺 Validation using VIES
 - 🇬🇧 Validation using HMRC (including VAT IDs beginning with `UK`)
-- 🛠️ CLI batch processing (see [commandine](commandline.md))
+- 🛠️ CLI batch processing (see [commandline](commandline.md))
 - 🔒 **NO** external dependencies required
 
 Since 2026 the old BZSt interface has been shutdown. The new BZSt API is now supported.
