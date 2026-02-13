@@ -67,7 +67,7 @@ def start_validation(payload):
         
         if resp.status == 200:
             root = ET.fromstring(resp.data.decode('utf-8'))
-            ns = {'s': 'http://schemas.xmlsoap.org/soap/envelope/', 'uid': 'http://www.uid.admin.ch/xmlns/uid-wse'}
+            ns = {'s': 'http://schemas.xmlsoap.org/soap/envelope/', 'uid': 'http://www.uid.admin.ch/xmlns/uid-wse'} # NOSONAR - SOAP namespace, not actual URL
             result_elem = root.find('.//uid:ValidateVatNumberResult', ns)
             
             is_valid = result_elem.text.lower() == 'true' if result_elem is not None else False
