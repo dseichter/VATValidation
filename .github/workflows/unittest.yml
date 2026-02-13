@@ -34,14 +34,25 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r src/requirements.txt
+        pip install -r test/requirements.txt
 
     - name: Run tests
       run: |
-        python -m unittest discover . -v 2>&1 | tee unittest_output.log
+        pytest test/ -v --html=test-report.html --self-contained-html --tb=short --color=yes 2>&1 | tee unittest_output.log
+
+    - name: Upload test report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-report
+        path: test-report.html
 
     - name: Add test summary to workflow
+      if: always()
       run: |
         echo "### 🧪 Unit Test Results" >> $GITHUB_STEP_SUMMARY
         echo '```' >> $GITHUB_STEP_SUMMARY
-        head -n 50 unittest_output.log >> $GITHUB_STEP_SUMMARY
+        tail -n 30 unittest_output.log >> $GITHUB_STEP_SUMMARY
         echo '```' >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "📊 [Download detailed HTML report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
