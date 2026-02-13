@@ -321,34 +321,45 @@ class MainFrame(QMainWindow):
     
     # Virtual event handlers - to be implemented in subclass
     def loadConfig(self):
+        # Empty: implemented in subclass
         pass
     
     def clearFields(self):
+        # Empty: implemented in subclass
         pass
     
     def validateSingle(self):
+        # Empty: implemented in subclass
         pass
     
     def validateBatch(self):
+        # Empty: implemented in subclass
         pass
     
     def openLogfile(self):
+        # Empty: implemented in subclass
         pass
     
     def saveConfig(self):
+        # Empty: implemented in subclass
         pass
     
     def vatvalidationClose(self):
+        # Empty: implemented in subclass
         pass
     
     def openGitHubRepo(self):
+        # Empty: implemented in subclass
         pass
     
     def openWebsite(self):
+        # Empty: implemented in subclass
         pass
     
     def checkForUpdates(self):
+        # Empty: implemented in subclass
         pass
     
     def vatvalidationAbout(self):
+        # Empty: implemented in subclass
         pass
