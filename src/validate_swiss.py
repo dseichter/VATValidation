@@ -41,7 +41,7 @@ def start_validation(payload):
     logger.debug(f"Validating: {foreign_vat}")
     
     soap_request = f'''<?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:uid="http://www.uid.admin.ch/xmlns/uid-wse">
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:uid="http://www.uid.admin.ch/xmlns/uid-wse">  <!-- NOSONAR - Standard SOAP namespace -->
   <soap:Body>
     <uid:ValidateVatNumber>
       <uid:vatNumber>{foreign_vat}</uid:vatNumber>
@@ -52,7 +52,7 @@ def start_validation(payload):
     try:
         headers = {
             'Content-Type': 'text/xml; charset=utf-8',
-            'SOAPAction': 'http://www.uid.admin.ch/xmlns/uid-wse/IPublicServices/ValidateVatNumber'
+            'SOAPAction': 'http://www.uid.admin.ch/xmlns/uid-wse/IPublicServices/ValidateVatNumber'  # NOSONAR - SOAP namespace, not actual URL
         }
         
         resp = http.request(
