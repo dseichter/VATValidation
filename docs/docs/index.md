@@ -24,6 +24,7 @@ Binaries for Windows and Linux are available (see [releases](https://github.com/
 - 🇩🇪 Validation using BZSt (German Federal Central Tax Office)
 - 🇪🇺 Validation using VIES
 - 🇬🇧 Validation using HMRC (including VAT IDs beginning with `UK`)
+- 🇨🇭 Validation using Swiss UID (check Swiss VAT numbers)
 - 🛠️ CLI batch processing (see [commandline](commandline.md))
 - 🔒 **NO** external dependencies required
 

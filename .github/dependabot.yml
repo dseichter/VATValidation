@@ -9,5 +9,6 @@ updates:
       - "/src"
       - "/icons"
       - "/docs"
+      - "/test"
     schedule:
       interval: "weekly"

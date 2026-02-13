@@ -84,7 +84,7 @@ def start_validation(payload):
 
     try:
         resp = http.request("GET", URL + payload["foreignvat"][2:])
-        logger.debug(resp.status, resp.data)
+        logger.debug("Response status: %s, data: %s", resp.status, resp.data)
         result = json.loads(resp.data)
 
         validationresult = {

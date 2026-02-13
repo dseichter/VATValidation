@@ -24,6 +24,7 @@ Binärdateien für Windows und Linux stehen zur Verfügung (siehe [Releases](htt
 - 🇩🇪 Validierung mittels BZSt (Bundeszentralamt für Steuern)
 - 🇪🇺 Validierung über VIES
 - 🇬🇧 Validierung mit HMRC (u.a. für mit `UK` beginnende USt-Id)
+- 🇨🇭 Validierung mit Schweizer UID (Prüfung von Schweizer USt-Nummern)
 - 🛠️ CLI Batch-Verarbeitung ((siehe [Kommandozeile](commandline.md)))
 - 🔒**keine** Abhängigkeiten erforderlich
 
