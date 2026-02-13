@@ -38,7 +38,7 @@ jobs:
 
     - name: Run tests
       run: |
-        pytest test/ -v --html=test-report.html --self-contained-html --tb=short --color=yes 2>&1 | tee unittest_output.log
+        pytest test/ -v --html=test-report.html --self-contained-html --tb=short --color=yes --cov=src --cov-report=xml --cov-report=html 2>&1 | tee unittest_output.log
 
     - name: Upload test report
       if: always()
