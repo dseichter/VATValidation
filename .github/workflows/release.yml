@@ -14,10 +14,10 @@ jobs:
       steps:
 
           - name: 'Checkout'
-            uses: actions/checkout@v6
+            uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v6
 
           - name: Set up Python
-            uses: actions/setup-python@v6
+            uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v6
             with:
               python-version: 3.14
 
@@ -33,7 +33,7 @@ jobs:
             run: pyinstaller --onefile -w src/vatvalidation.py -n VATValidation-windows-${{ github.ref_name }}.exe --icon=icons/vatvalidation.ico
 
           - name: Upload artifact
-            uses: actions/upload-artifact@v6
+            uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v6
             with:
                   name: VATValidation-windows-${{ github.ref_name }}.exe
                   path: dist/VATValidation-windows-${{ github.ref_name }}.exe
@@ -43,10 +43,10 @@ jobs:
     steps:
 
         - name: 'Checkout'
-          uses: actions/checkout@v6
+          uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v6
 
         - name: Set up Python
-          uses: actions/setup-python@v6
+          uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v6
           with:
             python-version: 3.14
 
@@ -68,7 +68,7 @@ jobs:
           run: pyinstaller --onefile src/vatvalidation_cli.py -n VATValidation-cli-windows-${{ github.ref_name }}.exe
 
         - name: Upload artifact
-          uses: actions/upload-artifact@v6
+          uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v6
           with:
                 name: VATValidation-cli-windows-${{ github.ref_name }}.exe
                 path: dist/VATValidation-cli-windows-${{ github.ref_name }}.exe      
@@ -78,7 +78,7 @@ jobs:
     needs: [build-windows-binary-cli]
     steps:
 
-        - uses: actions/download-artifact@v7
+        - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v7
           with:
             name: VATValidation-cli-windows-${{ github.ref_name }}.exe
 
@@ -92,13 +92,13 @@ jobs:
       steps:
 
           - name: 'Checkout'
-            uses: actions/checkout@v6
+            uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v6
 
           - name: Update system packages
             run: sudo apt-get update
 
           - name: Set up Python
-            uses: actions/setup-python@v6
+            uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v6
             with:
               python-version: 3.14
 
@@ -114,7 +114,7 @@ jobs:
             run: pyinstaller --onefile src/vatvalidation.py -n VATValidation-linux-${{ github.ref_name }}
 
           - name: Upload artifact
-            uses: actions/upload-artifact@v6
+            uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v6
             with:
               name: VATValidation-linux-${{ github.ref_name }}
               path: dist/VATValidation-linux-${{ github.ref_name }}
@@ -124,13 +124,13 @@ jobs:
     steps:
 
         - name: 'Checkout'
-          uses: actions/checkout@v6
+          uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v6
 
         - name: Update system packages
           run: sudo apt-get update          
 
         - name: Set up Python
-          uses: actions/setup-python@v6
+          uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v6
           with:
             python-version: 3.14
 
@@ -149,7 +149,7 @@ jobs:
           run: pyinstaller --onefile src/vatvalidation_cli.py -n VATValidation-cli-linux-${{ github.ref_name }}
 
         - name: Upload artifact
-          uses: actions/upload-artifact@v6
+          uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v6
           with:
             name: VATValidation-cli-linux-${{ github.ref_name }}
             path: dist/VATValidation-cli-linux-${{ github.ref_name }}              
@@ -159,7 +159,7 @@ jobs:
     needs: [build-linux-binary-cli]
     steps:
 
-        - uses: actions/download-artifact@v7
+        - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v7
           with:
             name: VATValidation-cli-linux-${{ github.ref_name }}
 
@@ -173,23 +173,23 @@ jobs:
     needs: [build-windows-binary, build-linux-binary, test-cli-windows, test-cli-linux]
     steps:
         - name: Checkout
-          uses: actions/checkout@v6
+          uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v6
           with:
             fetch-depth: 0
             
-        - uses: actions/download-artifact@v7
+        - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v7
           with:
             name: VATValidation-linux-${{ github.ref_name }}
 
-        - uses: actions/download-artifact@v7
+        - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v7
           with:
             name: VATValidation-cli-linux-${{ github.ref_name }}            
 
-        - uses: actions/download-artifact@v7
+        - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v7
           with:
             name: VATValidation-windows-${{ github.ref_name }}.exe
 
-        - uses: actions/download-artifact@v7
+        - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v7
           with:
             name: VATValidation-cli-windows-${{ github.ref_name }}.exe            
 
@@ -227,7 +227,7 @@ jobs:
 
         - name: Create Release
           id: create_release
-          uses: softprops/action-gh-release@v2.5.0
+          uses: softprops/action-gh-release@7b4da11513bf3f43f9999e90eabced41ab8bb048 # v2.5.0
           with:
             tag_name: ${{ github.ref_name }}
             name: Release ${{ github.ref_name }}
