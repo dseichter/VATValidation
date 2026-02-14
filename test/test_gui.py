@@ -1,7 +1,6 @@
 import pytest
-from PySide6.QtWidgets import QApplication,QMessageBox
-from PySide6.QtCore import Qt, QTimer
-from PySide6.QtGui import QScreen
+from PySide6.QtWidgets import QMessageBox
+from PySide6.QtCore import Qt
 from PIL import ImageGrab
 import sys
 import os
