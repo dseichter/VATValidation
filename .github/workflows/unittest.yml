@@ -1,21 +1,12 @@
-name: Run Unit Tests
+name: Tests & Coverage
 
 on:
   push:
     branches:
       - main
       - dseichter/*
-    paths-ignore:
-      - 'docs/**'
-      - '.github/workflows/gh-page.yml'
   pull_request:
-    branches:
-      - '*'
-    paths-ignore:
-      - 'docs/**'
-      - '.github/workflows/gh-page.yml'
   workflow_dispatch:
-   
 
 jobs:
   test:
@@ -23,12 +14,17 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v6.0.2
+      uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v6
 
     - name: Set up Python
-      uses: actions/setup-python@v6.2.0
+      uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
       with:
         python-version: '3.14'
+
+    - name: Install system dependencies for GUI
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y xvfb libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-xinerama0 libxcb-xfixes0 libglvnd0 libgl1 libegl1 libdbus-1-3
 
     - name: Install dependencies
       run: |
@@ -36,16 +32,23 @@ jobs:
         pip install -r src/requirements.txt
         pip install -r test/requirements.txt
 
-    - name: Run tests
+    - name: Run tests with Xvfb
       run: |
-        pytest test/ -v --html=test-report.html --self-contained-html --tb=short --color=yes --cov=src --cov-report=xml --cov-report=html 2>&1 | tee unittest_output.log
+        xvfb-run -a pytest test/ -v --html=test-report.html --self-contained-html --tb=short --color=yes --cov=src --cov-report=xml --cov-report=html 2>&1 | tee unittest_output.log
 
     - name: Upload test report
       if: always()
-      uses: actions/upload-artifact@v6.0.0
+      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
       with:
         name: test-report
         path: test-report.html
+
+    - name: Upload GUI screenshots
+      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+      if: always()
+      with:
+        name: gui-screenshots
+        path: test/screenshots/*.png
 
     - name: Add test summary to workflow
       if: always()
