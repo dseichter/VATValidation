@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <url>
+        <loc>https://dseichter.github.io/VATValidation/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/"/>
+    </url>
+    <url>
+        <loc>https://dseichter.github.io/VATValidation/about/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/about/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/about/"/>
+    </url>
+    <url>
+        <loc>https://dseichter.github.io/VATValidation/commandline/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/commandline/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/commandline/"/>
+    </url>
+    <url>
+        <loc>https://dseichter.github.io/VATValidation/configuration/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/configuration/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/configuration/"/>
+    </url>
+    <url>
+        <loc>https://dseichter.github.io/VATValidation/development/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/development/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/development/"/>
+    </url>
+    <url>
+        <loc>https://dseichter.github.io/VATValidation/file_formats/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/file_formats/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/file_formats/"/>
+    </url>
+    <url>
+        <loc>https://dseichter.github.io/VATValidation/gui/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/gui/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/gui/"/>
+    </url>
+    <url>
+        <loc>https://dseichter.github.io/VATValidation/de/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/"/>
+    </url>
+    <url>
+        <loc>https://dseichter.github.io/VATValidation/de/about/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/about/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/about/"/>
+    </url>
+    <url>
+        <loc>https://dseichter.github.io/VATValidation/de/commandline/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/commandline/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/commandline/"/>
+    </url>
+    <url>
+        <loc>https://dseichter.github.io/VATValidation/de/configuration/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/configuration/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/configuration/"/>
+    </url>
+    <url>
+        <loc>https://dseichter.github.io/VATValidation/de/development/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/development/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/development/"/>
+    </url>
+    <url>
+        <loc>https://dseichter.github.io/VATValidation/de/file_formats/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/file_formats/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/file_formats/"/>
+    </url>
+    <url>
+        <loc>https://dseichter.github.io/VATValidation/de/gui/</loc>
+        <lastmod>2026-02-20</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://dseichter.github.io/VATValidation/de/gui/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dseichter.github.io/VATValidation/gui/"/>
+    </url>
+</urlset>
