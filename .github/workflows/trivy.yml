@@ -5,18 +5,9 @@ on:
   push:
     branches:
       - main
-      - dseichter/*
-    paths-ignore:
-      - 'docs/**'
-      - '.github/workflows/gh-page.yml'
   pull_request:
-    branches:
-      - '*'
-    paths-ignore:
-      - 'docs/**'
-      - '.github/workflows/gh-page.yml'
+
   workflow_dispatch:
- 
 
 jobs:
   build:
