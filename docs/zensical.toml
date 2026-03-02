@@ -1,0 +1,48 @@
+[project]
+site_name = "VATValidation"
+site_url = "https://dseichter.github.io/VATValidation/"
+site_description = "A tool to validate VAT numbers and check their status."
+site_author = "Daniel Seichter"
+copyright = "Copyright © 2025-2026 Daniel Seichter"
+repo_url = "https://github.com/dseichter/VATValidation"
+repo_name = "dseichter/VATValidation"
+docs_dir = "docs"
+site_dir = "site"
+nav = [
+  {"Home" = "index.md"},
+  {"Command Line" = "commandline.md"},
+  {"Configuration" = "configuration.md"},
+  {"File Formats and Fields" = "file_formats.md"},
+  {"Graphical User Interface" = "gui.md"},
+  {"Development" = "development.md"},
+  {"About" = "about.md"},
+]
+
+[project.theme]
+language = "en"
+logo = "assets/select_check_box_48dp_097E23_FILL1_wght400_GRAD0_opsz48.png"
+favicon = "assets/select_check_box_48dp_097E23_FILL1_wght400_GRAD0_opsz48.png"
+
+[project.theme.icon]
+alternate = "fontawesome/solid/globe"
+
+[project.extra]
+alternate = [
+  { name = "English", link = "/VATValidation/", lang = "en" },
+  { name = "Deutsch", link = "/VATValidation/de/", lang = "de" }
+]
+
+[[project.theme.palette]]
+scheme = "slate"
+primary = "cyan"
+accent = "green"
+default = true
+toggle.icon = "material/weather-sunny"
+toggle.name = "Switch to light mode"
+
+[[project.theme.palette]]
+scheme = "default"
+primary = "cyan"
+accent = "green"
+toggle.icon = "material/weather-night"
+toggle.name = "Switch to dark mode"

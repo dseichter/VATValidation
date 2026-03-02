@@ -1,0 +1,48 @@
+[project]
+site_name = "VATValidation"
+site_url = "https://dseichter.github.io/VATValidation/de/"
+site_description = "Ein Werkzeug zur Validierung von Umsatzsteuernummern und zur Prüfung ihres Status."
+site_author = "Daniel Seichter"
+copyright = "Copyright © 2025-2026 Daniel Seichter"
+repo_url = "https://github.com/dseichter/VATValidation"
+repo_name = "dseichter/VATValidation"
+docs_dir = "docs"
+site_dir = "site/de"
+nav = [
+  {"Startseite" = "index.de.md"},
+  {"Kommandozeile" = "commandline.de.md"},
+  {"Konfiguration" = "configuration.de.md"},
+  {"Dateiformate und Felder" = "file_formats.de.md"},
+  {"Grafische Benutzeroberfläche" = "gui.de.md"},
+  {"Entwicklung" = "development.de.md"},
+  {"Über" = "about.de.md"},
+]
+
+[project.theme]
+language = "de"
+logo = "assets/select_check_box_48dp_097E23_FILL1_wght400_GRAD0_opsz48.png"
+favicon = "assets/select_check_box_48dp_097E23_FILL1_wght400_GRAD0_opsz48.png"
+
+[project.theme.icon]
+alternate = "fontawesome/solid/globe"
+
+[project.extra]
+alternate = [
+  { name = "English", link = "/VATValidation/", lang = "en" },
+  { name = "Deutsch", link = "/VATValidation/de/", lang = "de" }
+]
+
+[[project.theme.palette]]
+scheme = "slate"
+primary = "cyan"
+accent = "green"
+default = true
+toggle.icon = "material/weather-sunny"
+toggle.name = "Zu hellem Modus wechseln"
+
+[[project.theme.palette]]
+scheme = "default"
+primary = "cyan"
+accent = "green"
+toggle.icon = "material/weather-night"
+toggle.name = "Zu dunklem Modus wechseln"
