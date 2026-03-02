@@ -1,4 +1,4 @@
-name: Build and Deploy Zensical
+name: Build and Deploy Documentation
 
 on:
   push:
@@ -6,8 +6,6 @@ on:
       - main
     paths:
       - 'docs/**'
-      - 'docs/zensical.toml'
-      - 'docs/zensical.de.toml'
 
   workflow_dispatch:
 
