@@ -2,7 +2,6 @@
 
 ![ruff](https://github.com/dseichter/VATValidation/actions/workflows/ruff.yml/badge.svg)
 ![bandit](https://github.com/dseichter/VATValidation/actions/workflows/bandit.yml/badge.svg)
-![trivy](https://github.com/dseichter/VATValidation/actions/workflows/trivy.yml/badge.svg)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dseichter_VATValidation&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=dseichter_VATValidation)
 
 Validate VAT numbers using the interfaces of BZSt, VIES and/or HMRC. Provides single or batch validation with support for CSV, XLSX and JSON.
