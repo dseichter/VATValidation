@@ -10,10 +10,11 @@ Validate VAT numbers using the interfaces of BZSt, VIES and/or HMRC. Provides si
 
 Binaries for Windows and Linux are available (see [releases](https://github.com/dseichter/VATValidation/releases)).
 
-[![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/dseichter/VATValidation/total)](https://github.com/dseichter/VATValidation/releases)
-![GitHub License](https://img.shields.io/github/license/dseichter/VATValidation)
-[![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/dseichter/VATValidation)](https://github.com/dseichter/VATValidation/issues)
-[![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/dseichter/VATValidation)](https://github.com/dseichter/VATValidation/pulls)
+[![GitHub Downloads (latest release assets)](https://badgen.net/github/assets-dl/dseichter/VATValidation)](https://github.com/dseichter/VATValidation/releases)
+[![GitHub Stars](https://badgen.net/github/stars/dseichter/VATValidation)](https://github.com/dseichter/VATValidation/stargazers)
+![GitHub License](https://badgen.net/github/license/dseichter/VATValidation)
+[![GitHub Open Issues](https://badgen.net/github/open-issues/dseichter/VATValidation)](https://github.com/dseichter/VATValidation/issues)
+[![GitHub Open Pull Requests](https://badgen.net/github/open-prs/dseichter/VATValidation)](https://github.com/dseichter/VATValidation/pulls)
 
 ## Features
 
