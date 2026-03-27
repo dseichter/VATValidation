@@ -1,5 +1,5 @@
 import pytest
-from PySide6.QtWidgets import QMessageBox
+from PySide6.QtWidgets import QMessageBox, QApplication
 from PySide6.QtCore import Qt
 from PIL import ImageGrab
 import sys
@@ -47,6 +47,10 @@ def app(qtbot, tmp_path, monkeypatch):
         "delimiter": ";",
         "logfilename": "",
         "loglevel": "ERROR",
+        "proxy_mode": "none",
+        "proxy_password": "",
+        "proxy_url": "",
+        "proxy_username": "",
         "theme": "light"
     }
     config_file.write_text(json.dumps(config_data))
@@ -78,7 +82,38 @@ def test_single_tab(app, qtbot, monkeypatch):
     qtbot.wait(200)
 
     monkeypatch.setattr(QMessageBox, "information", lambda *args, **kwargs: QMessageBox.Ok)
+    monkeypatch.setattr(
+        "single.validatesingle",
+        lambda **kwargs: {
+            "key1": "",
+            "key2": "",
+            "ownvat": kwargs.get("ownvat", ""),
+            "foreignvat": kwargs.get("foreignvat", ""),
+            "type": "vies",
+            "valid": True,
+            "errorcode": "VALID",
+            "errorcode_description": "VAT number is valid",
+            "valid_from": "",
+            "valid_to": "",
+            "timestamp": "2026-03-27T00:00:00",
+            "company": "",
+            "address": "",
+            "town": "",
+            "zip": "",
+            "street": "",
+        },
+    )
     qtbot.mouseClick(app.buttonValidateSingle, Qt.LeftButton, delay=1)
+    qtbot.waitUntil(lambda: app.textResultIsValid.text() in ("Yes", "No"), timeout=3000)
+    qtbot.waitUntil(lambda: app.textResultCode.text() == "VALID", timeout=3000)
+    qtbot.waitUntil(
+        lambda: "Interface:" in app.m_staticText_ValidationResult.text(),
+        timeout=3000,
+    )
+    qtbot.waitUntil(lambda: app.textResultDetails.toPlainText() != "", timeout=3000)
+    # Flush queued paint events so screenshots reflect the final rendered state.
+    QApplication.processEvents()
+    qtbot.wait(200)
     
     take_screenshot(app, "test/screenshots/single_tab.png")
     take_full_screenshot(app, "docs/docs/assets/single.png")
@@ -118,6 +153,10 @@ def test_config_tab(app, qtbot):
     app.comboBoxConfigInterface.setCurrentText("vies")
     app.comboBoxConfigLanguage.setCurrentText("en")
     app.textConfigCSVdelimiter.setText(";")
+    app.comboBoxConfigProxyMode.setCurrentText("manual")
+    app.textConfigProxyUrl.setText("http://proxy.example.com:8080") # NOSONAR
+    app.textConfigProxyUsername.setText("user")
+    app.textConfigProxyPassword.setText("secret")
     qtbot.wait(200)
     
     take_screenshot(app, "test/screenshots/config_tab.png")

@@ -4,13 +4,13 @@ import validate_hmrc
 
 
 class TestValidateHMRC(unittest.TestCase):
-    @patch('validate_hmrc.http')
-    def test_start_validation_success(self, mock_http):
+    @patch('validate_hmrc.network.request')
+    def test_start_validation_success(self, mock_request):
         # Mock response for a successful lookup
         mock_response = MagicMock()
         mock_response.status = 200
         mock_response.data = b'{"target": {"name": "Test Company", "address": {"line1": "Street 1", "line2": "Line 2", "postcode": "12345"}}}'
-        mock_http.request.return_value = mock_response
+        mock_request.return_value = mock_response
 
         payload = {
             "key1": "k1",
@@ -31,13 +31,13 @@ class TestValidateHMRC(unittest.TestCase):
         self.assertEqual(result["ownvat"], "DE123456789")
         self.assertEqual(result["foreignvat"], "GB987654321")
 
-    @patch('validate_hmrc.http')
-    def test_start_validation_error(self, mock_http):
+    @patch('validate_hmrc.network.request')
+    def test_start_validation_error(self, mock_request):
         # Mock response for an error lookup
         mock_response = MagicMock()
         mock_response.status = 404
         mock_response.data = b'{"errorcode": "NOT_FOUND", "message": "NOT_FOUND: VAT number not found"}'
-        mock_http.request.return_value = mock_response
+        mock_request.return_value = mock_response
 
         payload = {
             "key1": "k1",

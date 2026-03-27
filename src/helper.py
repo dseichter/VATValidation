@@ -13,14 +13,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-import urllib3
 import json
 import logging
 from packaging import version
+import network
 
 logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
 
-VERSION = "v2026-02-15"
+VERSION = "v2026-03-27"
 UPDATEURL = 'https://api.github.com/repos/dseichter/VATValidation/releases/latest'
 RELEASES = 'https://github.com/dseichter/VATValidation/releases'
 NAME = 'VATValidation'
@@ -29,8 +29,7 @@ LICENCE = 'GPL-3.0'
 
 def check_for_new_release():
     try:
-        http = urllib3.PoolManager()
-        r = http.request('GET', UPDATEURL)
+        r = network.request('GET', UPDATEURL)
         releases = json.loads(r.data.decode('utf-8'))
         # Find the latest stable (not prerelease) release
         for release in releases:

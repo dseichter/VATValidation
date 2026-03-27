@@ -66,6 +66,35 @@ parser.add_argument(
     required=False,
 )
 
+parser.add_argument(
+    "--proxy-mode",
+    type=str,
+    choices=["system", "manual", "none"],
+    help="Proxy mode for network requests.",
+    required=False,
+)
+
+parser.add_argument(
+    "--proxy-url",
+    type=str,
+    help="Manual proxy URL, e.g. http://proxy.example.com:8080",
+    required=False,
+)
+
+parser.add_argument(
+    "--proxy-username",
+    type=str,
+    help="Username for manual proxy authentication.",
+    required=False,
+)
+
+parser.add_argument(
+    "--proxy-password",
+    type=str,
+    help="Password for manual proxy authentication.",
+    required=False,
+)
+
 # Check if no arguments were passed
 if len(sys.argv) == 1:
     parser.print_help(sys.stderr)
@@ -106,6 +135,15 @@ if getattr(args, 'interface', None):
         sys.exit(2)
     else:
         interface_type=val         
+
+if getattr(args, 'proxy_mode', None):
+    settings.save_config("proxy_mode", args.proxy_mode)
+if getattr(args, 'proxy_url', None) is not None:
+    settings.save_config("proxy_url", args.proxy_url)
+if getattr(args, 'proxy_username', None) is not None:
+    settings.save_config("proxy_username", args.proxy_username)
+if getattr(args, 'proxy_password', None) is not None:
+    settings.save_config("proxy_password", args.proxy_password)
 
 print(f"Start batch validation with input file: {args.input} and output file: {args.output} using {interface_type} interface.")
 response = batch.validatebatch(

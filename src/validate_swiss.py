@@ -14,15 +14,14 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 import datetime
-import urllib3
 import defusedxml.ElementTree as ET
 
 import logging_config  # Setup the logging  # noqa: F401
+import network
 import logging
 
 logger = logging.getLogger(__name__)
 
-http = urllib3.PoolManager()
 SOAP_URL = "https://www.uid-wse.admin.ch/V5.0/PublicServices.svc"
 
 def start_validation(payload):
@@ -55,7 +54,7 @@ def start_validation(payload):
             'SOAPAction': 'http://www.uid.admin.ch/xmlns/uid-wse/IPublicServices/ValidateVatNumber'  # NOSONAR - SOAP namespace, not actual URL
         }
         
-        resp = http.request(
+        resp = network.request(
             "POST",
             SOAP_URL,
             headers=headers,

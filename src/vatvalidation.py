@@ -29,6 +29,7 @@ import batch
 import helper
 import settings
 import about_ui
+import network
 
 # Import common libraries
 import webbrowser
@@ -59,6 +60,8 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
         self.buttonConfigLogfile.clicked.connect(self.openLogfile)
         self.buttonSaveConfig.clicked.connect(self.saveConfig)
         self.comboBoxConfigTheme.currentTextChanged.connect(self.themeChanged)
+        self.comboBoxConfigProxyMode.currentTextChanged.connect(self.proxyModeChanged)
+        self.buttonTestProxy.clicked.connect(self.testProxy)
         
         # Strip whitespace from input file when text changes (fixes the drop issue with spaces)
         self.textInputFile.textChanged.connect(self.on_input_file_changed)
@@ -158,21 +161,19 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
         self.textCtrlConfigLogfile.setText(settings.load_value_from_json_file("logfilename") or "")
         self.comboBoxConfigLoglevel.setCurrentText(settings.load_value_from_json_file("loglevel") or "ERROR")
         self.comboBoxConfigTheme.setCurrentText(settings.load_value_from_json_file("theme") or "system")
+        self.comboBoxConfigProxyMode.setCurrentText(settings.load_value_from_json_file("proxy_mode") or "none")
+        self.textConfigProxyUrl.setText(settings.load_value_from_json_file("proxy_url") or "")
+        self.textConfigProxyUsername.setText(settings.load_value_from_json_file("proxy_username") or "")
+        self.textConfigProxyPassword.setText(settings.load_value_from_json_file("proxy_password") or "")
+        self.proxyModeChanged(self.comboBoxConfigProxyMode.currentText())
         
         # Apply current theme
         theme_manager.ThemeManager.apply_theme(settings.load_value_from_json_file("theme") or "system")
     
     def saveConfig(self):
         """Save configuration to file"""
-        settings.save_config("ownvat", self.textCtrlConfigOwnVat.text())
-        settings.save_config("interface", self.comboBoxConfigInterface.currentText())
-        settings.save_config("language", self.comboBoxConfigLanguage.currentText())
-        settings.save_config("delimiter", self.textConfigCSVdelimiter.text())
-        settings.save_config("logfilename", self.textCtrlConfigLogfile.text())
-        settings.save_config("loglevel", self.comboBoxConfigLoglevel.currentText())
-        settings.save_config("theme", self.comboBoxConfigTheme.currentText())
-        self.textOwnvat.setText(settings.load_value_from_json_file("ownvat"))
-        
+        self._persistConfig()
+
         # Apply new theme
         theme_manager.ThemeManager.apply_theme(self.comboBoxConfigTheme.currentText())
         QMessageBox.information(
@@ -180,6 +181,45 @@ class VATValidationFrame(gui_vatvalidation.MainFrame):
             "Configuration saved",
             "Your changes of your configuration have been saved."
         )
+
+    def _persistConfig(self):
+        """Persist configuration values without showing UI feedback."""
+        settings.save_config("ownvat", self.textCtrlConfigOwnVat.text())
+        settings.save_config("interface", self.comboBoxConfigInterface.currentText())
+        settings.save_config("language", self.comboBoxConfigLanguage.currentText())
+        settings.save_config("delimiter", self.textConfigCSVdelimiter.text())
+        settings.save_config("logfilename", self.textCtrlConfigLogfile.text())
+        settings.save_config("loglevel", self.comboBoxConfigLoglevel.currentText())
+        settings.save_config("theme", self.comboBoxConfigTheme.currentText())
+        settings.save_config("proxy_mode", self.comboBoxConfigProxyMode.currentText())
+        settings.save_config("proxy_url", self.textConfigProxyUrl.text().strip())
+        settings.save_config("proxy_username", self.textConfigProxyUsername.text())
+        settings.save_config("proxy_password", self.textConfigProxyPassword.text())
+        self.textOwnvat.setText(settings.load_value_from_json_file("ownvat"))
+
+    def proxyModeChanged(self, proxy_mode):
+        """Enable manual proxy fields only when needed."""
+        is_manual = proxy_mode == "manual"
+        self.textConfigProxyUrl.setEnabled(is_manual)
+        self.textConfigProxyUsername.setEnabled(is_manual)
+        self.textConfigProxyPassword.setEnabled(is_manual)
+
+    def testProxy(self):
+        """Test configured proxy settings against all validation endpoints."""
+        self._persistConfig()
+        results = network.test_validation_endpoints()
+        message_lines = []
+        has_failure = False
+        for result in results:
+            prefix = "OK" if result["ok"] else "FAIL"
+            if not result["ok"]:
+                has_failure = True
+            message_lines.append(f"{prefix}: {result['name']} ({result['url']}): {result['message']}")
+
+        if has_failure:
+            QMessageBox.warning(self, "Proxy test result", "\n".join(message_lines))
+        else:
+            QMessageBox.information(self, "Proxy test result", "\n".join(message_lines))
     
     def clearFields(self):
         """Clear form fields"""

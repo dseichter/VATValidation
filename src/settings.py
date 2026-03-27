@@ -17,6 +17,7 @@ import json
 import tempfile
 
 CONFIGFILE = 'config.json'
+EMPTY_VALUE = ''
 
 
 # load value from json file with given key
@@ -56,6 +57,14 @@ def create_config():
         data['loglevel'] = 'ERROR'
     if 'theme' not in data:
         data['theme'] = 'system'
+    if 'proxy_mode' not in data:
+        data['proxy_mode'] = 'none'
+    if 'proxy_url' not in data:
+        data['proxy_url'] = EMPTY_VALUE
+    if 'proxy_username' not in data:
+        data['proxy_username'] = EMPTY_VALUE
+    if 'proxy_password' not in data:
+        data['proxy_password'] = EMPTY_VALUE
 
     with open(CONFIGFILE, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=4, sort_keys=True)
