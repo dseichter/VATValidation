@@ -199,10 +199,34 @@ jobs:
             # Get commits since last tag
             LAST_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
             if [ -z "$LAST_TAG" ]; then
-              COMMITS=$(git log --pretty=format:"* %s by @%an in %H" --no-merges)
+              COMMIT_SHAS=$(git rev-list --no-merges HEAD)
             else
-              COMMITS=$(git log ${LAST_TAG}..HEAD --pretty=format:"* %s by @%an in %H" --no-merges)
+              COMMIT_SHAS=$(git rev-list --no-merges ${LAST_TAG}..HEAD)
             fi
+
+            COMMITS=""
+            for SHA in $COMMIT_SHAS; do
+              SUBJECT=$(git log -1 --pretty=format:%s "$SHA")
+              AUTHOR_NAME=$(git log -1 --pretty=format:%an "$SHA")
+              AUTHOR_EMAIL=$(git log -1 --pretty=format:%ae "$SHA")
+
+              # Prefer GitHub login from noreply email formats:
+              # 12345+login@users.noreply.github.com or login@users.noreply.github.com
+              AUTHOR_LOGIN=$(echo "$AUTHOR_EMAIL" | sed -nE 's/^[0-9]+\+([^@]+)@users\.noreply\.github\.com$/\1/p')
+              if [ -z "$AUTHOR_LOGIN" ]; then
+                AUTHOR_LOGIN=$(echo "$AUTHOR_EMAIL" | sed -nE 's/^([^@]+)@users\.noreply\.github\.com$/\1/p')
+              fi
+
+              if [ -n "$AUTHOR_LOGIN" ]; then
+                AUTHOR_DISPLAY="@${AUTHOR_LOGIN}"
+              else
+                AUTHOR_DISPLAY="${AUTHOR_NAME}"
+              fi
+
+              COMMITS="${COMMITS}* ${SUBJECT} by ${AUTHOR_DISPLAY} in ${SHA}\n"
+            done
+
+            COMMITS=$(echo -e "$COMMITS" | sed '/^$/d')
             
             # Separate dependabot and regular changes
             DEPENDABOT_CHANGES=$(echo "$COMMITS" | grep -i "dependabot" || true)
