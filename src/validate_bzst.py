@@ -15,15 +15,13 @@
 
 import datetime
 import json
-import urllib3
 
 import codes_bzst
+import network
 import logging_config  # Setup the logging  # noqa: F401
 import logging
 
 logger = logging.getLogger(__name__)
-
-http = urllib3.PoolManager()
 
 BASE_URL = "https://api.evatr.vies.bzst.de"
 
@@ -66,7 +64,7 @@ def start_validation(payload):
             'Accept': 'application/json'
         }
         
-        resp = http.request(
+        resp = network.request(
             "POST", 
             f"{BASE_URL}/app/v1/abfrage", 
             headers=headers,

@@ -47,6 +47,10 @@ def app(qtbot, tmp_path, monkeypatch):
         "delimiter": ";",
         "logfilename": "",
         "loglevel": "ERROR",
+        "proxy_mode": "none",
+        "proxy_password": "",
+        "proxy_url": "",
+        "proxy_username": "",
         "theme": "light"
     }
     config_file.write_text(json.dumps(config_data))
@@ -118,6 +122,10 @@ def test_config_tab(app, qtbot):
     app.comboBoxConfigInterface.setCurrentText("vies")
     app.comboBoxConfigLanguage.setCurrentText("en")
     app.textConfigCSVdelimiter.setText(";")
+    app.comboBoxConfigProxyMode.setCurrentText("manual")
+    app.textConfigProxyUrl.setText("http://proxy.example.com:8080") # NOSONAR
+    app.textConfigProxyUsername.setText("user")
+    app.textConfigProxyPassword.setText("secret")
     qtbot.wait(200)
     
     take_screenshot(app, "test/screenshots/config_tab.png")

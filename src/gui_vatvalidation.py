@@ -260,11 +260,38 @@ class MainFrame(QMainWindow):
         self.comboBoxConfigTheme = QComboBox()
         self.comboBoxConfigTheme.addItems(["system", "light", "dark"])
         config_layout.addWidget(self.comboBoxConfigTheme, 6, 1)
+
+        # Proxy mode
+        config_layout.addWidget(QLabel("Proxy mode"), 7, 0)
+        self.comboBoxConfigProxyMode = QComboBox()
+        self.comboBoxConfigProxyMode.addItems(["system", "manual", "none"])
+        config_layout.addWidget(self.comboBoxConfigProxyMode, 7, 1)
+
+        # Proxy URL
+        config_layout.addWidget(QLabel("Proxy URL"), 8, 0)
+        self.textConfigProxyUrl = QLineEdit()
+        self.textConfigProxyUrl.setPlaceholderText("http://proxy.example.com:8080") # NOSONAR
+        config_layout.addWidget(self.textConfigProxyUrl, 8, 1, 1, 2)
+
+        # Proxy username
+        config_layout.addWidget(QLabel("Proxy username"), 9, 0)
+        self.textConfigProxyUsername = QLineEdit()
+        config_layout.addWidget(self.textConfigProxyUsername, 9, 1)
+
+        # Proxy password
+        config_layout.addWidget(QLabel("Proxy password"), 10, 0)
+        self.textConfigProxyPassword = QLineEdit()
+        self.textConfigProxyPassword.setEchoMode(QLineEdit.Password)
+        config_layout.addWidget(self.textConfigProxyPassword, 10, 1)
+
+        self.buttonTestProxy = QPushButton("Test proxy")
+        self.buttonTestProxy.setIcon(icons.get_icon('globe_24dp_097e23_fill1_wght400_grad0_opsz24'))
+        config_layout.addWidget(self.buttonTestProxy, 11, 1)
         
         # Save button
         self.buttonSaveConfig = QPushButton("Save")
         self.buttonSaveConfig.setIcon(icons.get_icon('save_24dp_097e23_fill1_wght400_grad0_opsz24'))
-        config_layout.addWidget(self.buttonSaveConfig, 7, 0)
+        config_layout.addWidget(self.buttonSaveConfig, 12, 0)
         
         layout.addLayout(config_layout)
         layout.addStretch()

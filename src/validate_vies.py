@@ -15,17 +15,15 @@
 
 import datetime
 from decimal import Decimal
-import urllib3
 import defusedxml.minidom as minidom
 
 import codes_vies
+import network
 
 import logging_config  # Setup the logging  # noqa: F401
 import logging
 
 logger = logging.getLogger(__name__)
-
-http = urllib3.PoolManager()
 
 URL = "https://ec.europa.eu/taxation_customs/vies/services/checkVatService"
 
@@ -146,7 +144,7 @@ def start_validation(payload):
                     </Body>
                 </Envelope>"""
     try:
-        resp = http.request("POST", URL, headers=HEADERS, body=requestpayload)
+        resp = network.request("POST", URL, headers=HEADERS, body=requestpayload)
 
         # example response:
         # <env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/"><env:Header/><env:Body>

@@ -15,17 +15,15 @@
 
 import datetime
 from decimal import Decimal
-import urllib3
 import json
 
 import codes_hmrc
+import network
 
 import logging_config  # noqa: F401
 import logging
 
 logger = logging.getLogger(__name__)
-
-http = urllib3.PoolManager()
 
 URL = "https://api.service.hmrc.gov.uk/organisations/vat/check-vat-number/lookup/"
 
@@ -83,7 +81,7 @@ def start_validation(payload):
     logger.debug("Starting validation with payload: %s", payload)
 
     try:
-        resp = http.request("GET", URL + payload["foreignvat"][2:])
+        resp = network.request("GET", URL + payload["foreignvat"][2:])
         logger.debug("Response status: %s, data: %s", resp.status, resp.data)
         result = json.loads(resp.data)
 

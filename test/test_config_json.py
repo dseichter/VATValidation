@@ -32,7 +32,11 @@ class TestConfigJson(unittest.TestCase):
             "loglevel",
             "delimiter",
             "language",
-            "interface"
+            "interface",
+            "proxy_mode",
+            "proxy_url",
+            "proxy_username",
+            "proxy_password"
         ]
         with open(self.config_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
