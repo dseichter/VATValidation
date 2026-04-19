@@ -48,7 +48,7 @@ jobs:
         zensical build --clean --config-file docs/zensical.de.toml
 
     - name: Upload pages artifact
-      uses: actions/upload-pages-artifact@v4
+      uses: actions/upload-pages-artifact@v5
       with:
         path: docs/site
 
