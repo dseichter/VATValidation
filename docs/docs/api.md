@@ -13,19 +13,21 @@ Download them from [releases](https://github.com/dseichter/VATValidation/release
 
 ## Start API Server
 
-Windows:
+Windows (localhost default):
 
 ```shell
-VATValidation-api-windows-v2026-03-27.exe --host 0.0.0.0 --port 8080 --proxy-mode manual --proxy-url http://127.0.0.1:8080
+VATValidation-api-windows-v2026-03-27.exe --port 8080 --proxy-mode manual --proxy-url http://127.0.0.1:8080
 ```
 
-Linux:
+Linux (localhost default):
 
 ```shell
-./VATValidation-api-linux-v2026-03-27 --host 0.0.0.0 --port 8080 --proxy-mode system
+./VATValidation-api-linux-v2026-03-27 --port 8080 --proxy-mode system
 ```
 
-Default host is `0.0.0.0` and default port is `8080`.
+Default host is `127.0.0.1` and default port is `8080`.
+
+If you intentionally want to expose the API on all interfaces, pass `--host 0.0.0.0` explicitly.
 
 Proxy settings are configured once at process start and written to the config file, not passed in request payload.
 

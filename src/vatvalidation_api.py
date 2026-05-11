@@ -212,7 +212,7 @@ def _parse_args():
         description=helper.NAME + " API" + " - " + helper.VERSION,
     )
     parser.add_argument("--version", action="version", version=helper.VERSION)
-    parser.add_argument("--host", type=str, default="0.0.0.0", help="Host to bind the API server")
+    parser.add_argument("--host", type=str, default="127.0.0.1", help="Host to bind the API server")
     parser.add_argument("--port", type=int, default=8080, help="Port to bind the API server")
     parser.add_argument(
         "--proxy-mode",
