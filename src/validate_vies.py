@@ -189,4 +189,22 @@ def start_validation(payload):
         return validationresult
     except Exception as e:
         logger.error(repr(e))
-        return {"vatError": "VAT1500", "vatErrorMessage": repr(e)}
+        # Return standard format with input data preserved, even on error
+        return {
+            "key1": payload["key1"],
+            "key2": payload["key2"],
+            "ownvat": payload["ownvat"],
+            "foreignvat": payload["foreignvat"],
+            "type": "vies",
+            "valid": False,
+            "errorcode": "EXCEPTION",
+            "errorcode_description": repr(e),
+            "valid_from": "",
+            "valid_to": "",
+            "timestamp": "",
+            "company": payload.get("company", ""),
+            "address": "",
+            "town": payload.get("town", ""),
+            "zip": payload.get("zip", ""),
+            "street": payload.get("street", ""),
+        }

@@ -110,9 +110,20 @@ def start_validation(payload):
         
         # Handle other error statuses (5xx, etc.)
         error_msg = f"BZST API error: {resp.status}"
+        # Try to extract data from error response
+        error_company = ""
+        error_town = ""
+        error_zip = ""
+        error_street = ""
+        
         try:
             error_data = json.loads(resp.data.decode('utf-8'))
             error_msg = error_data.get('message', error_msg)
+            # Extract company data from error response if available
+            error_company = error_data.get('ergFirmenname', '')
+            error_town = error_data.get('ergOrt', '')
+            error_zip = error_data.get('ergPlz', '')
+            error_street = error_data.get('ergStrasse', '')
         except Exception as e:
             logger.warning(f"Failed to parse error response: {e}")
         
@@ -131,15 +142,16 @@ def start_validation(payload):
                 "valid_from": "",
                 "valid_to": "",
                 "timestamp": datetime.datetime.now().isoformat(),
-                "company": "",
+                "company": error_company,
                 "address": "",
-                "town": "",
-                "zip": "",
-                "street": "",
+                "town": error_town,
+                "zip": error_zip,
+                "street": error_street,
             }
             
     except Exception as e:
         logger.error(f"BZST validation error: {e}")
+        # Try to return at least the requested company data from payload
         return {
             "key1": payload["key1"],
             "key2": payload["key2"],
@@ -152,9 +164,9 @@ def start_validation(payload):
             "valid_from": "",
             "valid_to": "",
             "timestamp": datetime.datetime.now().isoformat(),
-            "company": "",
+            "company": payload.get("company", ""),
             "address": "",
-            "town": "",
-            "zip": "",
-            "street": "",
+            "town": payload.get("town", ""),
+            "zip": payload.get("zip", ""),
+            "street": payload.get("street", ""),
         }

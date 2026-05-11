@@ -25,7 +25,7 @@ Binärdateien für Windows und Linux stehen zur Verfügung (siehe [Releases](htt
 - 🇪🇺 Validierung über VIES
 - 🇬🇧 Validierung mit HMRC (u.a. für mit `UK` beginnende USt-Id)
 - 🇨🇭 Validierung mit Schweizer UID (Prüfung von Schweizer USt-Nummern)
-- 🛠️ CLI Batch-Verarbeitung ((siehe [Kommandozeile](commandline.md)))
+- 🛠️ CLI Verarbeitung ((siehe [Kommandozeile](commandline.md)))
 - 🔒 Für die Release-Binärdateien ist keine manuelle Installation von Python-Abhängigkeiten erforderlich
 
 Seit 2026 ist die alte BZSt-Schnittstelle nicht mehr verfügbar. Die neue BZSt-API wird jetzt unterstützt.

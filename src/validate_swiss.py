@@ -104,11 +104,11 @@ def start_validation(payload):
             "valid_from": "",
             "valid_to": "",
             "timestamp": datetime.datetime.now().isoformat(),
-            "company": "",
+            "company": payload.get("company", ""),
             "address": "",
-            "town": "",
-            "zip": "",
-            "street": "",
+            "town": payload.get("town", ""),
+            "zip": payload.get("zip", ""),
+            "street": payload.get("street", ""),
         }
         
     except Exception as e:
@@ -125,9 +125,9 @@ def start_validation(payload):
             "valid_from": "",
             "valid_to": "",
             "timestamp": datetime.datetime.now().isoformat(),
-            "company": "",
+            "company": payload.get("company", ""),
             "address": "",
-            "town": "",
-            "zip": "",
-            "street": "",
+            "town": payload.get("town", ""),
+            "zip": payload.get("zip", ""),
+            "street": payload.get("street", ""),
         }
