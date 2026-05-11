@@ -112,7 +112,6 @@ def start_validation(payload):
         error_msg = f"BZST API error: {resp.status}"
         # Try to extract data from error response
         error_company = ""
-        error_address = ""
         error_town = ""
         error_zip = ""
         error_street = ""
