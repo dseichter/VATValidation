@@ -170,11 +170,11 @@ def _process_batch_data(data, type, lang, statusupdate, skip_header=False):
                 "valid": False,
                 "errorcode": "VALIDATION_ERROR",
                 "errorcode_description": str(e),
-                "company": "",
+                "company": row["company"],
                 "address": "",
-                "town": "",
-                "zip": "",
-                "street": ""
+                "town": row["town"],
+                "zip": row["zip"],
+                "street": row["street"]
             }
 
         # parse everything as string to easily replace newlines

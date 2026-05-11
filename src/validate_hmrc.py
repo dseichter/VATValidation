@@ -114,4 +114,22 @@ def start_validation(payload):
         return validationresult
     except Exception as e:
         logger.error(repr(e))
-        return {"vatError": "VAT2500", "vatErrorMessage": repr(e)}
+        # Return standard format with input data preserved, even on error
+        return {
+            "key1": payload["key1"],
+            "key2": payload["key2"],
+            "ownvat": payload["ownvat"],
+            "foreignvat": payload["foreignvat"],
+            "type": "HMRC",
+            "valid": False,
+            "errorcode": "EXCEPTION",
+            "errorcode_description": repr(e),
+            "valid_from": "",
+            "valid_to": "",
+            "timestamp": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S"),
+            "company": payload.get("company", ""),
+            "address": "",
+            "town": "",
+            "zip": "",
+            "street": "",
+        }
