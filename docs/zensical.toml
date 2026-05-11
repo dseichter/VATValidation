@@ -11,6 +11,7 @@ site_dir = "site"
 nav = [
   {"Home" = "index.md"},
   {"Command Line" = "commandline.md"},
+  {"REST API" = "api.md"},
   {"Configuration" = "configuration.md"},
   {"File Formats and Fields" = "file_formats.md"},
   {"Graphical User Interface" = "gui.md"},

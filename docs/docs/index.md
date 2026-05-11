@@ -26,6 +26,7 @@ Binaries for Windows and Linux are available (see [releases](https://github.com/
 - 🇬🇧 Validation using HMRC (including VAT IDs beginning with `UK`)
 - 🇨🇭 Validation using Swiss UID (check Swiss VAT numbers)
 - 🛠️ CLI processing (see [commandline](commandline.md))
+- 🌐 REST API (see [REST API](api.md)) (new in v2026-05-12 (not released yet))
 - 🔒 No manual Python dependency installation required for release binaries
 
 Since 2026 the old BZSt interface has been shutdown. The new BZSt API is now supported.

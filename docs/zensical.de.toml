@@ -11,6 +11,7 @@ site_dir = "site/de"
 nav = [
   {"Startseite" = "index.de.md"},
   {"Kommandozeile" = "commandline.de.md"},
+  {"REST API" = "api.de.md"},
   {"Konfiguration" = "configuration.de.md"},
   {"Dateiformate und Felder" = "file_formats.de.md"},
   {"Grafische Benutzeroberfläche" = "gui.de.md"},

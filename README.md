@@ -42,7 +42,8 @@ Binaries for Windows and Linux are available in the <a href="https://github.com/
 - 🇪🇺 Validation using VIES (EU VAT numbers)
 - 🇬🇧 Validation using HMRC (check UK VAT numbers)
 - 🇨🇭 Validation using Swiss UID (check Swiss VAT numbers)
-- 🛠️ CLI batch processing (see releases)
+- 🛠️ CLI processing (see releases)
+- 🌐 FastAPI-based REST API (see documentation) (new in v2026-05-12 (not released yet))
 - 🔒 No manual Python dependency installation required for release binaries
 
 Since 2026 the old BZSt interface has been shutdown. The new BZSt API is now supported.
@@ -59,6 +60,8 @@ If you like this software, please give it a ⭐ or send a 💰 donation in the a
 
 For full documentation, usage instructions, configuration, screenshots, and contributing guidelines,  
 please visit the [project documentation](https://dseichter.github.io/VATValidation/).
+
+Runtime settings are persisted in `src/config.json` (or the generated runtime config file), including proxy and logging values (`proxy_mode`, `proxy_url`, `proxy_username`, `proxy_password`, `logfilename`, `loglevel`).
 
 ---
 
