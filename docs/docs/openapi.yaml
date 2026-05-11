@@ -1,0 +1,112 @@
+openapi: 3.1.0
+info:
+  title: VATValidation REST API
+  version: v2026-03-27
+  description: REST API wrapper for VATValidation single and batch validation
+servers:
+  - url: http://localhost:8080
+paths:
+  /health:
+    get:
+      summary: Health check
+      operationId: health
+      responses:
+        "200":
+          description: Service is healthy
+  /api/v1/validate/single:
+    post:
+      summary: Validate a single VAT number
+      operationId: validateSingle
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SingleValidationRequest'
+      responses:
+        "200":
+          description: Validation response
+        "422":
+          description: Invalid request
+  /api/v1/validate/batch:
+    post:
+      summary: Start an asynchronous batch validation job
+      operationId: validateBatch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchValidationRequest'
+      responses:
+        "200":
+          description: Job accepted
+        "422":
+          description: Invalid request
+  /api/v1/jobs/{job_id}:
+    get:
+      summary: Get batch job status
+      operationId: getJobStatus
+      parameters:
+        - name: job_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Job status
+        "404":
+          description: Job not found
+  /api/v1/jobs:
+    get:
+      summary: List all batch jobs in memory
+      operationId: listJobs
+      responses:
+        "200":
+          description: Jobs list
+components:
+  schemas:
+    SingleValidationRequest:
+      type: object
+      required: [ownvat, vat, company, street, zip, town]
+      properties:
+        ownvat:
+          type: string
+        vat:
+          type: string
+        company:
+          type: string
+        street:
+          type: string
+        zip:
+          type: string
+        town:
+          type: string
+        interface:
+          type: string
+          enum: [bzst, vies]
+          default: vies
+        lang:
+          type: string
+          default: en
+    BatchValidationRequest:
+      type: object
+      required: [input, output]
+      properties:
+        input:
+          type: string
+        output:
+          type: string
+        delimiter:
+          type: string
+        interface:
+          type: string
+          enum: [bzst, vies]
+          default: vies
+        lang:
+          type: string
+          default: en
+        ignore_validation_errors:
+          type: boolean
+          default: false

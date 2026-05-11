@@ -135,3 +135,15 @@ export HTTP_PROXY=http://127.0.0.1:8080
 export HTTPS_PROXY=http://127.0.0.1:8080
 ./vatvalidation_cli --input input.csv --output output.csv --proxy-mode system
 ```
+
+## REST API Proxy Note
+
+For the REST API binary, proxy settings are configured at process start and written to the config file, not passed in API payload.
+
+Example:
+
+```shell
+VATValidation-api-windows-v2026-03-27.exe --host 0.0.0.0 --port 8080 --proxy-mode manual --proxy-url http://127.0.0.1:8080
+```
+
+See [REST API](api.md) for details.
