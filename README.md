@@ -7,10 +7,10 @@
 </p>
 
 <p align="center">
-  <img src="https://badgen.net/github/release/dseichter/VATValidation" alt="Release">
-  <img src="https://badgen.net/github/assets-dl/dseichter/VATValidation" alt="Downloads (latest release assets)">
-  <img src="https://badgen.net/github/stars/dseichter/VATValidation" alt="Stars">
-  <img src="https://badgen.net/github/license/dseichter/VATValidation" alt="License">
+  <img src="https://img.shields.io/github/v/release/dseichter/VATValidation" alt="Release">
+  <img src="https://img.shields.io/github/downloads/dseichter/VATValidation/total" alt="Downloads">
+  <img src="https://img.shields.io/github/stars/dseichter/VATValidation" alt="Stars">
+  <img src="https://img.shields.io/github/license/dseichter/VATValidation" alt="License">
 </p>
 
 <p align="center">
