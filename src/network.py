@@ -15,7 +15,9 @@
 
 from urllib.parse import urlparse, urlunparse, quote
 
+import certifi
 import urllib3
+import ssl
 
 import settings
 
@@ -89,10 +91,14 @@ def resolve_proxy_url(url):
 
 def create_http_client(url):
     proxy_url = resolve_proxy_url(url)
+    tls_kwargs = {
+        "cert_reqs": ssl.CERT_REQUIRED,
+        "ca_certs": certifi.where(),
+    }
     if proxy_url:
         logger.debug("Using proxy for %s via %s", url, proxy_url)
-        return urllib3.ProxyManager(proxy_url, timeout=DEFAULT_TIMEOUT)
-    return urllib3.PoolManager(timeout=DEFAULT_TIMEOUT)
+        return urllib3.ProxyManager(proxy_url, timeout=DEFAULT_TIMEOUT, **tls_kwargs)
+    return urllib3.PoolManager(timeout=DEFAULT_TIMEOUT, **tls_kwargs)
 
 
 def request(method, url, **kwargs):
