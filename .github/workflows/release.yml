@@ -301,36 +301,31 @@ jobs:
 
         - name: Generate Release Notes
           id: release_notes
+          env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           run: |
             # Get commits since last tag
             LAST_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+            
             if [ -z "$LAST_TAG" ]; then
-              COMMIT_SHAS=$(git rev-list --no-merges HEAD)
+              COMMIT_SHAS=$(git log --pretty=format:"%H" --no-merges)
             else
-              COMMIT_SHAS=$(git rev-list --no-merges ${LAST_TAG}..HEAD)
+              COMMIT_SHAS=$(git log ${LAST_TAG}..HEAD --pretty=format:"%H" --no-merges)
             fi
 
             COMMITS=""
-            for SHA in $COMMIT_SHAS; do
-              SUBJECT=$(git log -1 --pretty=format:%s "$SHA")
-              AUTHOR_NAME=$(git log -1 --pretty=format:%an "$SHA")
-              AUTHOR_EMAIL=$(git log -1 --pretty=format:%ae "$SHA")
+            while IFS= read -r SHA; do
+              [ -z "$SHA" ] && continue
 
-              # Prefer GitHub login from noreply email formats:
-              # 12345+login@users.noreply.github.com or login@users.noreply.github.com
-              AUTHOR_LOGIN=$(echo "$AUTHOR_EMAIL" | sed -nE 's/^[0-9]+\+([^@]+)@users\.noreply\.github\.com$/\1/p')
-              if [ -z "$AUTHOR_LOGIN" ]; then
-                AUTHOR_LOGIN=$(echo "$AUTHOR_EMAIL" | sed -nE 's/^([^@]+)@users\.noreply\.github\.com$/\1/p')
+              SUBJECT=$(git log -n 1 --format=%s "$SHA")
+              AUTHOR_LOGIN=$(gh api "repos/${{ github.repository }}/commits/${SHA}" --jq '.author.login // .committer.login // ""' 2>/dev/null || true)
+
+              if [ -z "$AUTHOR_LOGIN" ] || [ "$AUTHOR_LOGIN" = "null" ]; then
+                AUTHOR_LOGIN=$(git log -n 1 --format=%an "$SHA" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
               fi
 
-              if [ -n "$AUTHOR_LOGIN" ]; then
-                AUTHOR_DISPLAY="@${AUTHOR_LOGIN}"
-              else
-                AUTHOR_DISPLAY="${AUTHOR_NAME}"
-              fi
-
-              COMMITS="${COMMITS}* ${SUBJECT} by ${AUTHOR_DISPLAY} in ${SHA}\n"
-            done
+              COMMITS="${COMMITS}* ${SUBJECT} by @${AUTHOR_LOGIN} in ${SHA}\n"
+            done <<< "$COMMIT_SHAS"
 
             COMMITS=$(echo -e "$COMMITS" | sed '/^$/d')
             
