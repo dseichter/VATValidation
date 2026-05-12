@@ -150,7 +150,7 @@ def start_validation(payload):
             }
             
     except Exception as e:
-        logger.error(f"BZST validation error: {e}")
+        logger.exception(f"BZST validation error: {e}")
         # Try to return at least the requested company data from payload
         return {
             "key1": payload["key1"],

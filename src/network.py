@@ -127,7 +127,7 @@ def test_validation_endpoints():
                 }
             )
         except Exception as exc:
-            logger.error("Proxy test failed for %s: %s", url, exc)
+            logger.exception("Proxy test failed for %s: %s", url, exc)
             results.append(
                 {
                     "name": name,

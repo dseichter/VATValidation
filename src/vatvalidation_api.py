@@ -20,7 +20,7 @@ import uuid
 from datetime import datetime, timezone
 
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 
 import batch
 import helper
@@ -51,6 +51,11 @@ class SingleValidationRequest(BaseModel):
     town: str
     interface: str = "vies"
     lang: str = "en"
+
+    @field_validator("vat", "ownvat", mode="before")
+    @classmethod
+    def sanitize_vat(cls, v: str) -> str:
+        return v.strip().upper()
 
 
 class BatchValidationRequest(BaseModel):

@@ -16,6 +16,8 @@
 import datetime
 from decimal import Decimal
 import json
+import re
+from urllib.parse import quote
 
 import codes_hmrc
 import network
@@ -81,7 +83,10 @@ def start_validation(payload):
     logger.debug("Starting validation with payload: %s", payload)
 
     try:
-        resp = network.request("GET", URL + payload["foreignvat"][2:])
+        vrn = payload["foreignvat"][2:]
+        if not re.fullmatch(r"\d{9}", vrn):
+            raise ValueError(f"Invalid UK VAT number format: {payload['foreignvat']!r}")
+        resp = network.request("GET", URL + quote(vrn, safe=""))
         logger.debug("Response status: %s, data: %s", resp.status, resp.data)
         result = json.loads(resp.data)
 
@@ -113,7 +118,7 @@ def start_validation(payload):
 
         return validationresult
     except Exception as e:
-        logger.error(repr(e))
+        logger.exception(repr(e))
         # Return standard format with input data preserved, even on error
         return {
             "key1": payload["key1"],
