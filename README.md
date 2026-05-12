@@ -43,7 +43,7 @@ Binaries for Windows and Linux are available in the <a href="https://github.com/
 - 🇬🇧 Validation using HMRC (check UK VAT numbers)
 - 🇨🇭 Validation using Swiss UID (check Swiss VAT numbers)
 - 🛠️ CLI processing (see releases)
-- 🌐 FastAPI-based REST API (see documentation) (new in v2026-05-12 (not released yet))
+- 🌐 FastAPI-based REST API (see documentation)
 - 🔒 No manual Python dependency installation required for release binaries
 
 Since 2026 the old BZSt interface has been shutdown. The new BZSt API is now supported.
