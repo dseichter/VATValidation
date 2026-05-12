@@ -6,8 +6,6 @@
 
 Validierung von Umsatzsteuernummern über die Schnittstellen von BZSt, VIES und/oder HMRC. Bietet Einzel- oder Batch-Validierung mit Unterstützung für CSV, XLSX und JSON.
 
-![VATValidation](assets/single.png)
-
 Binärdateien für Windows und Linux stehen zur Verfügung (siehe [Releases](https://github.com/dseichter/VATValidation/releases)).
 
 [![GitHub Downloads](https://img.shields.io/github/downloads/dseichter/VATValidation/total)](https://github.com/dseichter/VATValidation/releases)
@@ -25,11 +23,13 @@ Binärdateien für Windows und Linux stehen zur Verfügung (siehe [Releases](htt
 - 🇪🇺 Validierung über VIES
 - 🇬🇧 Validierung mit HMRC (u.a. für mit `UK` beginnende USt-Id)
 - 🇨🇭 Validierung mit Schweizer UID (Prüfung von Schweizer USt-Nummern)
-- 🛠️ CLI Verarbeitung ((siehe [Kommandozeile](commandline.md)))
+- 🛠️ CLI Verarbeitung ((siehe [Kommandozeile](commandline.de.md)))
 - 🌐 REST API (siehe [REST API](api.de.md))
 - 🔒 Für die Release-Binärdateien ist keine manuelle Installation von Python-Abhängigkeiten erforderlich
 
 Seit 2026 ist die alte BZSt-Schnittstelle nicht mehr verfügbar. Die neue BZSt-API wird jetzt unterstützt.
+
+![VATValidation](assets/single.png)
 
 Dies ist der Nachfolger meiner VAT-Validation. Jetzt als Open Source veröffentlicht.
 

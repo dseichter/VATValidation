@@ -27,8 +27,6 @@
 
 ---
 
-![VATValidation](docs/docs/assets/single.png)
-
 Binaries for Windows and Linux are available in the <a href="https://github.com/dseichter/VATValidation/releases">releases</a>.
 
 ---
@@ -47,6 +45,10 @@ Binaries for Windows and Linux are available in the <a href="https://github.com/
 - 🔒 No manual Python dependency installation required for release binaries
 
 Since 2026 the old BZSt interface has been shutdown. The new BZSt API is now supported.
+
+---
+
+![VATValidation](docs/docs/assets/single.png)
 
 ---
 
