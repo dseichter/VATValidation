@@ -1,6 +1,6 @@
 # VATValidation
 
-**VATValidation** is a powerful, open-source tool for validating VAT numbers using the official interfaces of BZSt, VIES and HMRC. It supports both single and batch validation with CSV, XLSX, and JSON formats. Including a command line interface (cli) to use it into other software, automation scripts, CI/CD pipelines, or scheduled tasks.
+**VATValidation** is an open-source VAT validation tool with three interfaces: GUI, CLI, and REST API. It validates VAT numbers via the official interfaces of BZSt, VIES, HMRC, and Swiss UID, and supports single and batch processing with CSV, XLSX, and JSON formats.
 
 <p align="center">
   <img src="docs/docs/assets/select_check_box_48dp_097E23_FILL1_wght400_GRAD0_opsz48.png" alt="VATValidation Logo"/>
@@ -31,17 +31,63 @@ Binaries for Windows and Linux are available in the <a href="https://github.com/
 
 ---
 
+## Choose Your Workflow
+
+VATValidation can be used in three ways, depending on your workflow.
+
+### Desktop App
+
+Best for interactive checks and office use.
+
+- Guide: [Graphical User Interface](https://dseichter.github.io/VATValidation/gui/)
+
+### Automation and Scripts
+
+Best for automation, scripting, and CI/CD.
+
+- Guide: [Command Line](https://dseichter.github.io/VATValidation/commandline/)
+
+### Developer Integration
+
+Best for integrating validation into your own applications.
+
+- Guide: [REST API](https://dseichter.github.io/VATValidation/api/)
+
+## Quick Start
+
+### GUI
+
+Download and run the latest GUI binary from [releases](https://github.com/dseichter/VATValidation/releases).
+
+### CLI
+
+```shell
+vatvalidation_cli.exe --input input.csv --output results.csv
+```
+
+On Linux:
+
+```shell
+./vatvalidation_cli --input input.csv --output results.csv
+```
+
+### API
+
+```shell
+./VATValidation-api-linux-<version> --port 8080 --proxy-mode system
+```
+
 ## 🚀 Features
 
 - 🖥️ Graphical user interface
+- 🛠️ CLI processing for single and batch validation
+- 🌐 FastAPI-based REST API
 - ✅ Single VAT number validation
 - 📦 Batch processing of CSV, JSON, or XLSX
 - 🇩🇪 Validation using BZSt (German Federal Central Tax Office)
 - 🇪🇺 Validation using VIES (EU VAT numbers)
 - 🇬🇧 Validation using HMRC (check UK VAT numbers)
 - 🇨🇭 Validation using Swiss UID (check Swiss VAT numbers)
-- 🛠️ CLI processing (see releases)
-- 🌐 FastAPI-based REST API (see documentation)
 - 🔒 No manual Python dependency installation required for release binaries
 
 Since 2026 the old BZSt interface has been shutdown. The new BZSt API is now supported.

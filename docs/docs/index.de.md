@@ -4,7 +4,7 @@
 ![bandit](https://github.com/dseichter/VATValidation/actions/workflows/bandit.yml/badge.svg)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dseichter_VATValidation&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=dseichter_VATValidation)
 
-Validierung von Umsatzsteuernummern über die Schnittstellen von BZSt, VIES und/oder HMRC. Bietet Einzel- oder Batch-Validierung mit Unterstützung für CSV, XLSX und JSON.
+Validierung von Umsatzsteuernummern über die Schnittstellen von BZSt, VIES, HMRC und Schweizer UID. Bietet Einzel- oder Batch-Validierung mit Unterstützung für CSV, XLSX und JSON.
 
 Binärdateien für Windows und Linux stehen zur Verfügung (siehe [Releases](https://github.com/dseichter/VATValidation/releases)).
 
@@ -14,17 +14,63 @@ Binärdateien für Windows und Linux stehen zur Verfügung (siehe [Releases](htt
 [![GitHub Open Issues](https://img.shields.io/github/issues/dseichter/VATValidation)](https://github.com/dseichter/VATValidation/issues)
 [![GitHub Open Pull Requests](https://img.shields.io/github/issues-pr/dseichter/VATValidation)](https://github.com/dseichter/VATValidation/pulls)
 
+## Wählen Sie Ihren Workflow
+
+VATValidation kann je nach Anwendungsfall auf drei Arten genutzt werden.
+
+### Desktop-App
+
+Am besten für interaktive Prüfungen und den Einsatz am Arbeitsplatz.
+
+- Anleitung: [Grafische Benutzeroberfläche](gui.de.md)
+
+### Automatisierung und Skripte
+
+Am besten für Automatisierung, Skripte und CI/CD.
+
+- Anleitung: [Kommandozeile](commandline.de.md)
+
+### Entwickler-Integration
+
+Am besten für die Integration der Validierung in eigene Anwendungen.
+
+- Anleitung: [REST API](api.de.md)
+
+## Schnellstart
+
+### GUI
+
+Laden Sie die neueste GUI-Binärdatei über [Releases](https://github.com/dseichter/VATValidation/releases) herunter und starten Sie sie.
+
+### CLI
+
+```shell
+vatvalidation_cli.exe --input input.csv --output results.csv
+```
+
+Unter Linux:
+
+```shell
+./vatvalidation_cli --input input.csv --output results.csv
+```
+
+### API
+
+```shell
+./VATValidation-api-linux-<version> --port 8080 --proxy-mode system
+```
+
 ## Merkmale
 
 - 🖥️ Grafische Benutzeroberfläche
+- 🛠️ CLI-Verarbeitung für Einzel- und Stapelvalidierung
+- 🌐 REST API
 - ✅ Einfache Validierung
 - 📦 Stapelverarbeitung von CSV, JSON oder XLSX
 - 🇩🇪 Validierung mittels BZSt (Bundeszentralamt für Steuern)
 - 🇪🇺 Validierung über VIES
 - 🇬🇧 Validierung mit HMRC (u.a. für mit `UK` beginnende USt-Id)
 - 🇨🇭 Validierung mit Schweizer UID (Prüfung von Schweizer USt-Nummern)
-- 🛠️ CLI Verarbeitung ((siehe [Kommandozeile](commandline.de.md)))
-- 🌐 REST API (siehe [REST API](api.de.md))
 - 🔒 Für die Release-Binärdateien ist keine manuelle Installation von Python-Abhängigkeiten erforderlich
 
 Seit 2026 ist die alte BZSt-Schnittstelle nicht mehr verfügbar. Die neue BZSt-API wird jetzt unterstützt.
