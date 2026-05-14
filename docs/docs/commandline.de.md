@@ -145,7 +145,7 @@ Bei der REST-API-Binaerdatei werden Proxy-Einstellungen beim Start des Prozesses
 Beispiel:
 
 ```shell
-VATValidation-api-windows-v2026-03-27.exe --host 0.0.0.0 --port 8080 --proxy-mode manual --proxy-url http://127.0.0.1:8080
+VATValidation-api-windows-v2026-05-12.exe --host 0.0.0.0 --port 8080 --proxy-mode manual --proxy-url http://127.0.0.1:8080
 ```
 
 Details siehe [REST API](api.de.md).

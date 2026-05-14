@@ -16,13 +16,13 @@ Download them from [releases](https://github.com/dseichter/VATValidation/release
 Windows (localhost default):
 
 ```shell
-VATValidation-api-windows-v2026-03-27.exe --port 8080 --proxy-mode manual --proxy-url http://127.0.0.1:8080
+VATValidation-api-windows-v2026-05-12.exe --port 8080 --proxy-mode manual --proxy-url http://127.0.0.1:8080
 ```
 
 Linux (localhost default):
 
 ```shell
-./VATValidation-api-linux-v2026-03-27 --port 8080 --proxy-mode system
+./VATValidation-api-linux-v2026-05-12 --port 8080 --proxy-mode system
 ```
 
 Default host is `127.0.0.1` and default port is `8080`.
@@ -158,11 +158,11 @@ You can also export the OpenAPI specification from the binary:
 Windows:
 
 ```shell
-VATValidation-api-windows-v2026-03-27.exe --export-openapi openapi.json
+VATValidation-api-windows-v2026-05-12.exe --export-openapi openapi.json
 ```
 
 Linux:
 
 ```shell
-./VATValidation-api-linux-v2026-03-27 --export-openapi openapi.json
+./VATValidation-api-linux-v2026-05-12 --export-openapi openapi.json
 ```

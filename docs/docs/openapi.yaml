@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: VATValidation REST API
-  version: v2026-03-27
+  version: v2026-05-12
   description: REST API wrapper for VATValidation single and batch validation
 servers:
   - url: http://localhost:8080
