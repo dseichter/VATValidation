@@ -8,4 +8,4 @@ pyinstaller==6.20.0
 defusedxml==0.7.1
 watchdog==6.0.0
 fastapi==0.136.1
-uvicorn==0.46.0
+uvicorn==0.47.0
