@@ -1,5 +1,5 @@
 PySide6==6.11.1
-certifi==2026.4.22
+certifi==2026.5.20
 urllib3==2.7.0
 pandas==3.0.3
 numpy==2.4.5
