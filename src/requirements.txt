@@ -7,5 +7,5 @@ openpyxl==3.1.5
 pyinstaller==6.20.0
 defusedxml==0.7.1
 watchdog==6.0.0
-fastapi==0.136.1
+fastapi==0.136.3
 uvicorn==0.47.0
