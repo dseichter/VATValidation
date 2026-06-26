@@ -30,7 +30,7 @@ jobs:
       uses: actions/configure-pages@v6
 
     - name: Checkout repository
-      uses: actions/checkout@v6.0.3
+      uses: actions/checkout@v7.0.0
 
     - name: Set up Python
       uses: actions/setup-python@v6.2.0
