@@ -1,0 +1,32 @@
+name: Sync to GitHub
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:  # Erlaubt den manuellen Start über die Gitea-Oberfläche
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Holt den gesamten Verlauf, um alle Branches zu kennen
+
+      - name: Push specific branches to GitHub
+        env:
+          GITHUB_PAT: ${{ secrets.PAT_TOKEN }}
+        run: |
+          GITHUB_USER="dseichter"
+          REPO_NAME=$(echo "dev/GithubIssueClient" | cut -d'/' -f2)
+
+          REMOTE_URL="https://x-access-token:${GITHUB_PAT}@github.com/$GITHUB_USER/${REPO_NAME}.git"
+
+          git remote add github "$REMOTE_URL"
+          
+          echo "=== Starte Synchronisation für $TARGET_REPO ==="
+          git push github main --force
+          
+          echo "=== Synchronisation erfolgreich abgeschlossen ==="
