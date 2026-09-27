@@ -1,11 +1,11 @@
 PySide6==6.11.2
 certifi==2026.7.22
-urllib3==2.7.0
-pandas==3.0.5
+urllib3==2.8.0
+pandas==3.0.6
 numpy==2.5.2
 openpyxl==3.1.5
 pyinstaller==6.22.3
 defusedxml==0.7.1
 watchdog==6.0.0
 fastapi==0.141.1
-uvicorn==0.52.4
+uvicorn==0.54.0
