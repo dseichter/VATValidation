@@ -13,16 +13,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-from urllib.parse import urlparse, urlunparse, quote
+import logging
+import ssl
+from urllib.parse import quote, urlparse, urlunparse
 
 import certifi
 import urllib3
-import ssl
-
-import settings
 
 import logging_config  # Setup the logging  # noqa: F401
-import logging
+import settings
 
 logger = logging.getLogger(__name__)
 
@@ -127,7 +126,7 @@ def test_validation_endpoints():
                 }
             )
         except Exception as exc:
-            logger.exception("Proxy test failed for %s: %s", url, exc)
+            logger.exception("Proxy test failed for %s", url)
             results.append(
                 {
                     "name": name,

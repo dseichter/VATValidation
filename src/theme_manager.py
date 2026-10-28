@@ -17,8 +17,8 @@ import logging
 import os
 import subprocess  # nosec B404
 
+from PySide6.QtGui import QColor, QPalette
 from PySide6.QtWidgets import QApplication
-from PySide6.QtGui import QPalette, QColor
 
 
 class ThemeManager:
@@ -85,18 +85,18 @@ class ThemeManager:
         if os.name == 'posix' and 'darwin' in os.uname().sysname.lower():
             try:
                 result = subprocess.run(['defaults', 'read', '-g', 'AppleInterfaceStyle'],  # nosec B603, B607
-                                      capture_output=True, text=True)
+                                      capture_output=True, text=True, check=False)
                 is_dark = result.stdout.strip() == 'Dark'
-            except Exception as e:  # pylint: disable=broad-except
+            except (OSError, subprocess.SubprocessError) as e:
                 logger.debug('Failed to detect macOS dark mode: %s', e)
         
         # Linux (check for dark theme)
         elif os.name == 'posix':
             try:
                 result = subprocess.run(['gsettings', 'get', 'org.gnome.desktop.interface', 'gtk-theme'],  # nosec B603, B607
-                                      capture_output=True, text=True)
+                                      capture_output=True, text=True, check=False)
                 is_dark = 'dark' in result.stdout.lower()
-            except Exception as e:  # pylint: disable=broad-except
+            except (OSError, subprocess.SubprocessError) as e:
                 logger.debug('Failed to detect Linux dark mode: %s', e)
         
         if is_dark:

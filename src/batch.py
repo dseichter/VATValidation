@@ -14,17 +14,16 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 # Import the VATValidation library
-import single
-import settings
-
 # import common libraries
 import json
-import pandas as pd
+import logging
 import pathlib
 
-import logging_config  # Setup the logging  # noqa: F401
-import logging
+import pandas as pd
 
+import logging_config  # Setup the logging  # noqa: F401
+import settings
+import single
 
 logger = logging.getLogger(__name__)
 
@@ -112,7 +111,7 @@ def _load_data_from_file(inputfile, ext, delimiter=None):
     except pd.errors.EmptyDataError as e:
         logger.error(f"Empty data error: {e}")
         return None, 2
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         logger.error(f"An unexpected error occurred: {e}")
         return None, 99
 
@@ -126,7 +125,7 @@ def _save_results_to_file(dataframe, outputfile, ext, delimiter=None):
             dataframe.to_excel(outputfile, index=False, header=False)
         elif ext == "json":
             dataframe.to_json(outputfile, orient="records", lines=False, indent=2)
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         logger.error(f"Error saving file: {e}")
         return 99
     return 0
@@ -159,7 +158,7 @@ def _process_batch_data(data, type, lang, statusupdate, skip_header=False):
                 type=type,
                 lang=lang
             )
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             logger.error(f"Validation error for row {index}: {e}")
             message = {
                 "key1": row["key1"],

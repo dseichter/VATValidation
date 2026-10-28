@@ -15,11 +15,11 @@
 
 import datetime
 import json
+import logging
 
 import codes_bzst
-import network
 import logging_config  # Setup the logging  # noqa: F401
-import logging
+import network
 
 logger = logging.getLogger(__name__)
 
@@ -124,7 +124,7 @@ def start_validation(payload):
             error_town = error_data.get('ergOrt', '')
             error_zip = error_data.get('ergPlz', '')
             error_street = error_data.get('ergStrasse', '')
-        except Exception as e:
+        except json.JSONDecodeError as e:
             logger.warning(f"Failed to parse error response: {e}")
         
         # Set valid to "n/a" for 5xx server errors
@@ -150,7 +150,7 @@ def start_validation(payload):
             }
             
     except Exception as e:
-        logger.exception(f"BZST validation error: {e}")
+        logger.exception("BZST validation error")
         # Try to return at least the requested company data from payload
         return {
             "key1": payload["key1"],

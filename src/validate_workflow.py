@@ -13,17 +13,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-import json
 import datetime
+import json
+import logging
 from decimal import Decimal
 
-import validate_vies
-import validate_hmrc
-import validate_bzst
-import validate_swiss
-
 import logging_config  # Setup the logging  # noqa: F401
-import logging
+import validate_bzst
+import validate_hmrc
+import validate_swiss
+import validate_vies
 
 logger = logging.getLogger(__name__)
 

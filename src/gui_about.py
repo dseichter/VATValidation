@@ -13,8 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-from PySide6.QtWidgets import QDialog, QVBoxLayout, QLabel, QDialogButtonBox
 from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QDialog, QDialogButtonBox, QLabel, QVBoxLayout
 
 import helper
 import icons
@@ -77,4 +77,3 @@ class DialogAbout(QDialog):
     
     def openGithub(self, event):
         """Virtual event handler - to be implemented in subclass"""
-        pass

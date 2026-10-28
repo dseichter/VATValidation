@@ -13,34 +13,34 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-import sys
+import json
+import logging
+import os
 import pathlib
-from PySide6.QtWidgets import QApplication, QMessageBox, QFileDialog
-from PySide6.QtCore import QTimer, QEvent
-
-import theme_manager
-
-# Import the newly created GUI file
-import gui_vatvalidation
-
-# Import the VATValidation library
-import single
-import batch
-import helper
-import settings
-import about_ui
-import network
+import sys
+import threading
 
 # Import common libraries
 import webbrowser
-import json
-import os
-from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
-import threading
 
+from PySide6.QtCore import QEvent, QTimer
+from PySide6.QtWidgets import QApplication, QFileDialog, QMessageBox
+from watchdog.events import FileSystemEventHandler
+from watchdog.observers import Observer
+
+import about_ui
+import batch
+
+# Import the newly created GUI file
+import gui_vatvalidation
+import helper
 import logging_config  # Setup the logging  # noqa: F401
-import logging
+import network
+import settings
+
+# Import the VATValidation library
+import single
+import theme_manager
 
 logger = logging.getLogger(__name__)
 

@@ -14,15 +14,15 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 import argparse
-import sys
 import json
-import helper
-import batch
-import single
-import settings
-
-import logging_config  # Setup the logging  # noqa: F401
 import logging
+import sys
+
+import batch
+import helper
+import logging_config  # Setup the logging  # noqa: F401
+import settings
+import single
 
 logger = logging.getLogger(__name__)
 
@@ -147,7 +147,7 @@ single_mode = bool(getattr(args, 'ownvat', None) or getattr(args, 'vat', None))
 
 if not batch_mode and not single_mode:
     print("Error: You must provide either batch mode (--input and --output) or single mode (--ownvat and --vat) parameters.")
-    print("")
+    print()
     parser.print_help(sys.stderr)
     sys.exit(1)
 
@@ -190,7 +190,7 @@ if batch_mode:
                 inner = val[1:-1]
                 try:
                     inner_decoded = inner.encode('utf-8').decode('unicode_escape')
-                except Exception:
+                except UnicodeError:
                     inner_decoded = inner
                 if len(inner_decoded) != 1:
                     print("Delimiter must be a single character (after unquoting/escape processing).")
@@ -212,13 +212,13 @@ if batch_mode:
     match response:
         case 0:
             print("Validation successful")
-            exit(0)
+            sys.exit(0)
         case 127:
             print("Unsupported file format")
-            exit(127 if not args.ignore_validation_errors else 0)
+            sys.exit(127 if not args.ignore_validation_errors else 0)
         case _:
             print("Validation failed: " + str(response))
-            exit(0 if args.ignore_validation_errors else 1)
+            sys.exit(0 if args.ignore_validation_errors else 1)
 
 # Single mode processing
 elif single_mode:
@@ -261,12 +261,11 @@ elif single_mode:
         # Check status code for exit code
         status_code = response.get("statusCode", 200) if isinstance(response, dict) else 200
         if status_code == 200:
-            exit(0)
+            sys.exit(0)
         else:
-            exit(0 if args.ignore_validation_errors else 1)
-    except Exception as e:
+            sys.exit(0 if args.ignore_validation_errors else 1)
+    except Exception as e:  # noqa: BLE001
         logger.error(f"Error processing response: {e}")
         print(f"Error processing response: {e}")
         print(json.dumps(response, indent=2, default=str))
-        exit(0 if args.ignore_validation_errors else 1)
-
+        sys.exit(0 if args.ignore_validation_errors else 1)

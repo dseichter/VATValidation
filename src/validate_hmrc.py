@@ -14,16 +14,15 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 import datetime
-from decimal import Decimal
 import json
+import logging
 import re
+from decimal import Decimal
 from urllib.parse import quote
 
 import codes_hmrc
-import network
-
 import logging_config  # noqa: F401
-import logging
+import network
 
 logger = logging.getLogger(__name__)
 
@@ -103,7 +102,7 @@ def start_validation(payload):
             ),
             "valid_from": "",
             "valid_to": "",
-            "timestamp": datetime.datetime.now(datetime.timezone.utc).strftime(
+            "timestamp": datetime.datetime.now(datetime.UTC).strftime(
                 "%Y-%m-%dT%H:%M:%S"
             ),
         }
@@ -118,7 +117,7 @@ def start_validation(payload):
 
         return validationresult
     except Exception as e:
-        logger.exception(repr(e))
+        logger.exception("HMRC validation error")
         # Return standard format with input data preserved, even on error
         return {
             "key1": payload["key1"],
@@ -131,7 +130,7 @@ def start_validation(payload):
             "errorcode_description": repr(e),
             "valid_from": "",
             "valid_to": "",
-            "timestamp": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%S"),
+            "timestamp": datetime.datetime.now(datetime.UTC).strftime("%Y-%m-%dT%H:%M:%S"),
             "company": payload.get("company", ""),
             "address": "",
             "town": "",

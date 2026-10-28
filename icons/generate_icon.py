@@ -13,9 +13,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-import os
 import base64
+import os
+
 from PIL import Image
+
 
 def generate_icons_py():
     """Generate src/icons.py with base64-encoded icon data for PySide6"""

@@ -14,14 +14,14 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 import datetime
+import logging
 from decimal import Decimal
-import defusedxml.minidom as minidom
+
+from defusedxml import minidom
 
 import codes_vies
-import network
-
 import logging_config  # Setup the logging  # noqa: F401
-import logging
+import network
 
 logger = logging.getLogger(__name__)
 
@@ -85,7 +85,7 @@ def parse_vies_response(xml_data):
         result["traderName"] = (
             node.getElementsByTagName("ns2:traderName")[0].childNodes[0].nodeValue
         )
-    except Exception:
+    except IndexError:
         result["traderName"] = None
     try:
         result["traderAddress"] = (
@@ -93,28 +93,25 @@ def parse_vies_response(xml_data):
             .childNodes[0]
             .nodeValue
         )
-    except Exception:
+    except IndexError:
         result["traderAddress"] = None
     try:
         result["valid"] = (
             node.getElementsByTagName("ns2:valid")[0].childNodes[0].nodeValue
         )
-    except Exception:
+    except IndexError:
         result["valid"] = None
-    try:
-        result["requestDate"] = datetime.datetime.now(
-            datetime.timezone.utc
-        ).strftime("%Y-%m-%dT%H:%M:%S")
-    except Exception:
-        result["requestDate"] = None
+    result["requestDate"] = datetime.datetime.now(datetime.UTC).strftime(
+        "%Y-%m-%dT%H:%M:%S"
+    )
     # in case of faultcode
+    result["errorcode"] = ""
     try:
-        result["errorcode"] = ""
         if node.getElementsByTagName("faultstring"):
             result["errorcode"] = (
                 node.getElementsByTagName("faultstring")[0].childNodes[0].nodeValue
             )
-    except Exception:
+    except IndexError:
         result["errorcode"] = "INVALID_INPUT"
     return result
 
@@ -188,7 +185,7 @@ def start_validation(payload):
         }
         return validationresult
     except Exception as e:
-        logger.error(repr(e))
+        logger.exception("VIES validation error")
         # Return standard format with input data preserved, even on error
         return {
             "key1": payload["key1"],

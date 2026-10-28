@@ -14,11 +14,12 @@
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 import datetime
+import logging
+
 import defusedxml.ElementTree as ET
 
 import logging_config  # Setup the logging  # noqa: F401
 import network
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -111,7 +112,7 @@ def start_validation(payload):
             "street": payload.get("street", ""),
         }
         
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         logger.error(f"Swiss UID validation error: {e}")
         return {
             "key1": payload["key1"],

@@ -15,8 +15,12 @@
 
 import json
 import logging
+
 from packaging import version
+
 import network
+
+logger = logging.getLogger(__name__)
 
 logging.basicConfig(level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -37,6 +41,6 @@ def check_for_new_release():
                 latest_version = release.get('tag_name')
                 return version.parse(latest_version) > version.parse(VERSION)
         return False  # No stable release found
-    except Exception as e:
-        logging.error(f"Error checking for new release: {e}")
+    except Exception as e:  # noqa: BLE001
+        logger.error(f"Error checking for new release: {e}")
         return False

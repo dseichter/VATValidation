@@ -15,20 +15,19 @@
 
 import argparse
 import json
+import logging
 import threading
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, field_validator
 
 import batch
 import helper
+import logging_config  # Setup the logging  # noqa: F401
 import settings
 import single
-
-import logging_config  # Setup the logging  # noqa: F401
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -83,7 +82,7 @@ def _configure_proxy_from_args(args):
 
 
 def _now_iso() -> str:
-    return datetime.now(timezone.utc).isoformat()
+    return datetime.now(UTC).isoformat()
 
 
 def _run_batch_job(job_id: str, payload: BatchValidationRequest):

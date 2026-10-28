@@ -13,14 +13,26 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-from PySide6.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, 
-                               QTabWidget, QLabel, QLineEdit, QPushButton, 
-                               QTextEdit, QComboBox, QProgressBar,
-                               QGridLayout, QFrame, QStatusBar)
 from PySide6.QtGui import QAction
+from PySide6.QtWidgets import (
+    QComboBox,
+    QFrame,
+    QGridLayout,
+    QHBoxLayout,
+    QLabel,
+    QLineEdit,
+    QMainWindow,
+    QProgressBar,
+    QPushButton,
+    QStatusBar,
+    QTabWidget,
+    QTextEdit,
+    QVBoxLayout,
+    QWidget,
+)
 
-import icons
 import helper
+import icons
 
 ID_CLOSE = 6000
 ID_GITHUB = 6001

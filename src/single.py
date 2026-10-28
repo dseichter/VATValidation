@@ -13,10 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-import validate_workflow
+import logging
 
 import logging_config  # Setup the logging  # noqa: F401
-import logging
+import validate_workflow
 
 logger = logging.getLogger(__name__)
 
